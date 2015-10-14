@@ -1,0 +1,506 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		770D42BE1BCF047300C2C3A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770D42BD1BCF047300C2C3A6 /* AppDelegate.swift */; };
+		770D42C01BCF047300C2C3A6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770D42BF1BCF047300C2C3A6 /* ViewController.swift */; };
+		770D42C31BCF047300C2C3A6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 770D42C11BCF047300C2C3A6 /* Main.storyboard */; };
+		770D42C51BCF047300C2C3A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 770D42C41BCF047300C2C3A6 /* Assets.xcassets */; };
+		770D42C81BCF047300C2C3A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 770D42C61BCF047300C2C3A6 /* LaunchScreen.storyboard */; };
+		770D42D31BCF047300C2C3A6 /* ActivWikiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770D42D21BCF047300C2C3A6 /* ActivWikiTests.swift */; };
+		770D42DE1BCF047300C2C3A6 /* ActivWikiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770D42DD1BCF047300C2C3A6 /* ActivWikiUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		770D42CF1BCF047300C2C3A6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 770D42B21BCF047300C2C3A6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 770D42B91BCF047300C2C3A6;
+			remoteInfo = ActivWiki;
+		};
+		770D42DA1BCF047300C2C3A6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 770D42B21BCF047300C2C3A6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 770D42B91BCF047300C2C3A6;
+			remoteInfo = ActivWiki;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		770D42BA1BCF047300C2C3A6 /* ActivWiki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActivWiki.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		770D42BD1BCF047300C2C3A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		770D42BF1BCF047300C2C3A6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		770D42C21BCF047300C2C3A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		770D42C41BCF047300C2C3A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		770D42C71BCF047300C2C3A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		770D42C91BCF047300C2C3A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		770D42CE1BCF047300C2C3A6 /* ActivWikiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ActivWikiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		770D42D21BCF047300C2C3A6 /* ActivWikiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivWikiTests.swift; sourceTree = "<group>"; };
+		770D42D41BCF047300C2C3A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		770D42D91BCF047300C2C3A6 /* ActivWikiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ActivWikiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		770D42DD1BCF047300C2C3A6 /* ActivWikiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivWikiUITests.swift; sourceTree = "<group>"; };
+		770D42DF1BCF047300C2C3A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		770D42B71BCF047300C2C3A6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		770D42CB1BCF047300C2C3A6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		770D42D61BCF047300C2C3A6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		770D42B11BCF047300C2C3A6 = {
+			isa = PBXGroup;
+			children = (
+				770D42BC1BCF047300C2C3A6 /* ActivWiki */,
+				770D42D11BCF047300C2C3A6 /* ActivWikiTests */,
+				770D42DC1BCF047300C2C3A6 /* ActivWikiUITests */,
+				770D42BB1BCF047300C2C3A6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		770D42BB1BCF047300C2C3A6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				770D42BA1BCF047300C2C3A6 /* ActivWiki.app */,
+				770D42CE1BCF047300C2C3A6 /* ActivWikiTests.xctest */,
+				770D42D91BCF047300C2C3A6 /* ActivWikiUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		770D42BC1BCF047300C2C3A6 /* ActivWiki */ = {
+			isa = PBXGroup;
+			children = (
+				770D42BD1BCF047300C2C3A6 /* AppDelegate.swift */,
+				770D42BF1BCF047300C2C3A6 /* ViewController.swift */,
+				770D42C11BCF047300C2C3A6 /* Main.storyboard */,
+				770D42C41BCF047300C2C3A6 /* Assets.xcassets */,
+				770D42C61BCF047300C2C3A6 /* LaunchScreen.storyboard */,
+				770D42C91BCF047300C2C3A6 /* Info.plist */,
+			);
+			path = ActivWiki;
+			sourceTree = "<group>";
+		};
+		770D42D11BCF047300C2C3A6 /* ActivWikiTests */ = {
+			isa = PBXGroup;
+			children = (
+				770D42D21BCF047300C2C3A6 /* ActivWikiTests.swift */,
+				770D42D41BCF047300C2C3A6 /* Info.plist */,
+			);
+			path = ActivWikiTests;
+			sourceTree = "<group>";
+		};
+		770D42DC1BCF047300C2C3A6 /* ActivWikiUITests */ = {
+			isa = PBXGroup;
+			children = (
+				770D42DD1BCF047300C2C3A6 /* ActivWikiUITests.swift */,
+				770D42DF1BCF047300C2C3A6 /* Info.plist */,
+			);
+			path = ActivWikiUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		770D42B91BCF047300C2C3A6 /* ActivWiki */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 770D42E21BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "ActivWiki" */;
+			buildPhases = (
+				770D42B61BCF047300C2C3A6 /* Sources */,
+				770D42B71BCF047300C2C3A6 /* Frameworks */,
+				770D42B81BCF047300C2C3A6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ActivWiki;
+			productName = ActivWiki;
+			productReference = 770D42BA1BCF047300C2C3A6 /* ActivWiki.app */;
+			productType = "com.apple.product-type.application";
+		};
+		770D42CD1BCF047300C2C3A6 /* ActivWikiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 770D42E51BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "ActivWikiTests" */;
+			buildPhases = (
+				770D42CA1BCF047300C2C3A6 /* Sources */,
+				770D42CB1BCF047300C2C3A6 /* Frameworks */,
+				770D42CC1BCF047300C2C3A6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				770D42D01BCF047300C2C3A6 /* PBXTargetDependency */,
+			);
+			name = ActivWikiTests;
+			productName = ActivWikiTests;
+			productReference = 770D42CE1BCF047300C2C3A6 /* ActivWikiTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		770D42D81BCF047300C2C3A6 /* ActivWikiUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 770D42E81BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "ActivWikiUITests" */;
+			buildPhases = (
+				770D42D51BCF047300C2C3A6 /* Sources */,
+				770D42D61BCF047300C2C3A6 /* Frameworks */,
+				770D42D71BCF047300C2C3A6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				770D42DB1BCF047300C2C3A6 /* PBXTargetDependency */,
+			);
+			name = ActivWikiUITests;
+			productName = ActivWikiUITests;
+			productReference = 770D42D91BCF047300C2C3A6 /* ActivWikiUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		770D42B21BCF047300C2C3A6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Daniel Mueller";
+				TargetAttributes = {
+					770D42B91BCF047300C2C3A6 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+					770D42CD1BCF047300C2C3A6 = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = 770D42B91BCF047300C2C3A6;
+					};
+					770D42D81BCF047300C2C3A6 = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = 770D42B91BCF047300C2C3A6;
+					};
+				};
+			};
+			buildConfigurationList = 770D42B51BCF047300C2C3A6 /* Build configuration list for PBXProject "ActivWiki" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 770D42B11BCF047300C2C3A6;
+			productRefGroup = 770D42BB1BCF047300C2C3A6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				770D42B91BCF047300C2C3A6 /* ActivWiki */,
+				770D42CD1BCF047300C2C3A6 /* ActivWikiTests */,
+				770D42D81BCF047300C2C3A6 /* ActivWikiUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		770D42B81BCF047300C2C3A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				770D42C81BCF047300C2C3A6 /* LaunchScreen.storyboard in Resources */,
+				770D42C51BCF047300C2C3A6 /* Assets.xcassets in Resources */,
+				770D42C31BCF047300C2C3A6 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		770D42CC1BCF047300C2C3A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		770D42D71BCF047300C2C3A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		770D42B61BCF047300C2C3A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				770D42C01BCF047300C2C3A6 /* ViewController.swift in Sources */,
+				770D42BE1BCF047300C2C3A6 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		770D42CA1BCF047300C2C3A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				770D42D31BCF047300C2C3A6 /* ActivWikiTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		770D42D51BCF047300C2C3A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				770D42DE1BCF047300C2C3A6 /* ActivWikiUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		770D42D01BCF047300C2C3A6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 770D42B91BCF047300C2C3A6 /* ActivWiki */;
+			targetProxy = 770D42CF1BCF047300C2C3A6 /* PBXContainerItemProxy */;
+		};
+		770D42DB1BCF047300C2C3A6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 770D42B91BCF047300C2C3A6 /* ActivWiki */;
+			targetProxy = 770D42DA1BCF047300C2C3A6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		770D42C11BCF047300C2C3A6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				770D42C21BCF047300C2C3A6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		770D42C61BCF047300C2C3A6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				770D42C71BCF047300C2C3A6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		770D42E01BCF047300C2C3A6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		770D42E11BCF047300C2C3A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		770D42E31BCF047300C2C3A6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = ActivWiki/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.ActivWiki;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		770D42E41BCF047300C2C3A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = ActivWiki/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.ActivWiki;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		770D42E61BCF047300C2C3A6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = ActivWikiTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.ActivWikiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ActivWiki.app/ActivWiki";
+			};
+			name = Debug;
+		};
+		770D42E71BCF047300C2C3A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = ActivWikiTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.ActivWikiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ActivWiki.app/ActivWiki";
+			};
+			name = Release;
+		};
+		770D42E91BCF047300C2C3A6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = ActivWikiUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.ActivWikiUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = ActivWiki;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		770D42EA1BCF047300C2C3A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = ActivWikiUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.ActivWikiUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = ActivWiki;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		770D42B51BCF047300C2C3A6 /* Build configuration list for PBXProject "ActivWiki" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				770D42E01BCF047300C2C3A6 /* Debug */,
+				770D42E11BCF047300C2C3A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		770D42E21BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "ActivWiki" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				770D42E31BCF047300C2C3A6 /* Debug */,
+				770D42E41BCF047300C2C3A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		770D42E51BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "ActivWikiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				770D42E61BCF047300C2C3A6 /* Debug */,
+				770D42E71BCF047300C2C3A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		770D42E81BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "ActivWikiUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				770D42E91BCF047300C2C3A6 /* Debug */,
+				770D42EA1BCF047300C2C3A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 770D42B21BCF047300C2C3A6 /* Project object */;
+}
