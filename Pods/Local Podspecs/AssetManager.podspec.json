@@ -1,0 +1,35 @@
+{
+  "name": "AssetManager",
+  "version": "0.4.0",
+  "summary": "A framework for updating and maintaing local client assets from the server",
+  "description": "Requires a server conforming to AssetManager's format.",
+  "homepage": "https://www.bloomberg.com",
+  "license": "???",
+  "authors": {
+    "Mani Ghasemlou": "mghasemlou@bloomberg.net",
+    "Daniel Mueller": "dmueller39@bloomberg.net"
+  },
+  "source": {
+    "git": "https://github.com/BloombergMedia/MobileAssetManager.git",
+    "tag": "0.4.0"
+  },
+  "platforms": {
+    "ios": "7.0"
+  },
+  "requires_arc": true,
+  "source_files": "Pod/Classes/**/*",
+  "resource_bundles": {
+    "AssetManager": [
+      "Pod/Assets/AssetManager.xcdatamodeld"
+    ]
+  },
+  "frameworks": "CoreData",
+  "dependencies": {
+    "Typhoon": [
+
+    ],
+    "NSHash": [
+
+    ]
+  }
+}

@@ -1,0 +1,710 @@
+<html>
+    <head>
+        <style>
+            .canvas{
+                position:absolute;
+                left:0;
+                top:0;
+            }
+            .score{
+                position:absolute;
+                left:5;
+                top:5;
+            }
+            .debug{
+                position:absolute;
+                left:5;
+            }
+            body{
+                -webkit-tap-highlight-color: rgba(0,0,0,0);
+            }
+        </style>
+        <title>NBack</title>
+    </head>
+    <body>
+        <script>
+            
+            var ButtonStateNone = 0;
+            var ButtonStateOver = 1;
+            var ButtonStateDown = 2;
+            
+            /************************************************/
+            /* VARIABLES                                    */
+            /************************************************/
+            
+            var canvas = null;
+            var scoreLabel = null;
+            var prerenderedBuffers = {};
+            var boardWidth = window.innerWidth;
+            var boardHeight = window.innerHeight;
+            var ticksPerItem = 1000;
+            
+            var gameState = null;
+            
+            /************************************************/
+            /* META CONTROLLER                              */
+            /************************************************/
+            
+            // this is available to be easily swapped out by the container with
+            // custom logic (WKWebView on iOS, WebView on android)
+            var metaController = {
+                didComplete:function(){
+                    gameState = null;
+                    startRendering();
+                },
+            };
+            
+            /************************************************/
+            /* Query String                                 */
+            /************************************************/
+            
+            function getNFromQueryString(queryString){
+                var n = new Number(getValueFromQueryString("n",queryString));
+                return n > 0 ? n : 1;
+            }
+            
+            function getDebugFromQueryString(queryString){
+                return getValueFromQueryString("debug", queryString) == "true";
+            }
+            
+            function getValueFromQueryString(key,queryString){
+                
+                if(queryString[0] == "?"){
+                    queryString = queryString.substring(1)
+                }
+                
+                var params = queryString.split("&");
+                
+                var value = null;
+                
+                for ( var index = 0; index < params.length; index++){
+                    var pieces = params[index].split("=")
+                    if(pieces[0] == key && pieces[1] != null && pieces[1].length > 0){
+                        value = pieces[1]
+                    }
+                }
+                
+                return value;
+                
+            }
+            
+            /************************************************/
+            /* DOM SETUP                                    */
+            /************************************************/
+            
+            function updateScoreLabel(state){
+                var score = state.indexOffset + state.firstIndex;
+                scoreLabel.innerText = "count: "+score + " highscore: "+state.highscore;
+            }
+            
+            function showSummary(state){
+            }
+            
+            function hideSummary(){
+            }
+            
+
+            
+            function setupCanvas(){
+                
+                var isDebug = getDebugFromQueryString(window.location.search);
+                
+                if(isDebug){
+                    boardWidth = Math.floor(window.innerWidth/2.0);
+                    boardHeight = Math.floor(window.innerHeight/2.0);
+                }
+                
+                canvas = document.createElement('canvas');
+                canvas.className = "canvas";
+                
+                canvas.width = boardWidth;
+                canvas.height = boardHeight;
+                
+                document.body.appendChild(canvas);
+                
+                
+                scoreLabel = document.createElement('div');
+                scoreLabel.className = "score";
+                
+                scoreLabel.innerText = "count: - highscore: - ";
+                document.body.appendChild(scoreLabel);
+                
+                if(isDebug){
+                
+                    var pElement = document.createElement('p');
+                    pElement.className = "debug";
+                    pElement.style.top = ""+boardHeight+"px"
+                    var startElement = document.createElement('a');
+                    startElement.href = "javascript:void(0)";
+                    startElement.onclick = reset;
+                    startElement.innerText = "Reset";
+                    pElement.appendChild(startElement);
+                
+                    var spanElement0 = document.createElement('span');
+                    spanElement0.innerText = " - ";
+                    pElement.appendChild(spanElement0);
+                
+                    var startElement = document.createElement('a');
+                    startElement.href = "javascript:void(0)";
+                    startElement.onclick = startRendering;
+                    startElement.innerText = "Start";
+                    pElement.appendChild(startElement);
+                
+                    var spanElement = document.createElement('span');
+                    spanElement.innerText = " - ";
+                    pElement.appendChild(spanElement);
+                
+                    var stopElement = document.createElement('a');
+                    stopElement.href = "javascript:void(0)";
+                    stopElement.onclick = pauseRendering;
+                    stopElement.innerText = "Pause";
+                    pElement.appendChild(stopElement);
+                
+                    document.body.appendChild(pElement);
+                }
+            }
+            
+            
+            /************************************************/
+            /* EVENT HANDLING                               */
+            /************************************************/
+            
+            function isTouchDevice() {
+               var el = document.createElement('div');
+               el.setAttribute('ontouchstart', 'return;'); // or try "ontouchstart"
+               return typeof el.ontouchstart === "function";
+            }
+            
+            function mouseoverCanvas(){
+                gameState.buttonState = ButtonStateOver;
+            }
+            
+            function mousedownCanvas(){
+                gameState.buttonState = ButtonStateDown;
+            }
+            
+            function mouseupCanvas(){
+                gameState.buttonState = ButtonStateOver;
+            }
+            
+            function mouseoutCanvas(){
+                gameState.buttonState = ButtonStateNone;
+            }
+            
+            function touchstartCanvas(){
+                gameState.buttonState = ButtonStateDown;
+            }
+            
+            function touchcancelCanvas(){
+                gameState.buttonState = ButtonStateNone;
+            }
+            
+            function touchendCanvas(){
+                gameState.buttonState = ButtonStateNone;
+            }
+            
+            function touchleaveCanvas(){
+                gameState.buttonState = ButtonStateNone;
+            }
+            
+            function didClickCanvas(event){
+                if( hasValidButtonEvent(event,gameState,canvas) ){
+                    gameState.lastMatch = hashForCurrentIndexes(gameState)
+                    if(!userGaveCorrectInput(gameState)){
+                        gameOver();
+                    }
+                }
+            }
+            
+            function hasValidButtonEvent(event,state,canvas){
+                var isInGeometry = gameState.buttonRect["x"] < event.offsetX &&
+                        gameState.buttonRect["y"] < event.offsetY &&
+                        gameState.buttonRect["x"] + gameState.buttonRect["width"] > event.offsetX &&
+                        gameState.buttonRect["y"] + gameState.buttonRect["height"] > event.offsetY;
+
+                return  gameState.isRunning && 
+                        event.target == canvas &&
+                        isInGeometry;
+            }
+            
+
+            
+            function startListeningForEvents(){
+                canvas.addEventListener("click",didClickCanvas);
+                if(isTouchDevice()){
+                    canvas.addEventListener("touchstart", touchstartCanvas);
+                    canvas.addEventListener("touchend", touchendCanvas);
+                    canvas.addEventListener("touchcancel", touchcancelCanvas);
+                    canvas.addEventListener("touchleave", touchleaveCanvas);
+                }else{
+                    canvas.addEventListener("mouseover",mouseoverCanvas);
+                    canvas.addEventListener("mousedown",mousedownCanvas);
+                    canvas.addEventListener("mouseup",mouseupCanvas);
+                    canvas.addEventListener("mouseout",mouseoutCanvas);
+                }
+            }
+            
+            function stopListeningForEvents(){
+                canvas.removeEventListener("click",didClickCanvas);
+                if(isTouchDevice()){
+                    canvas.removeEventListener("touchstart", touchstartCanvas);
+                    canvas.removeEventListener("touchend", touchendCanvas);
+                    canvas.removeEventListener("touchcancel", touchcancelCanvas);
+                    canvas.removeEventListener("touchleave", touchleaveCanvas);
+                }else{
+                    canvas.removeEventListener("mouseover",mouseoverCanvas);
+                    canvas.removeEventListener("mousedown",mousedownCanvas);
+                    canvas.removeEventListener("mouseup",mouseupCanvas);
+                    canvas.removeEventListener("mouseout",mouseoutCanvas);
+                }
+            }
+            
+            /************************************************/
+            /* START/STOP                                   */
+            /************************************************/
+            
+            function startRendering(){
+                
+                hideSummary();
+                
+                if(gameState == null){
+                    reset()
+                }
+                
+                gameState.isRunning = true;
+                
+                gameState.lastTimestamp = (new Date()).getTime();
+                
+                startListeningForEvents();
+                
+                window.requestAnimationFrame(render);
+            }
+            
+            function pauseRendering(){
+                gameState.isRunning = false;
+            }
+            
+            function reset(){
+                gameState = getNewGameState();
+            }
+            
+            function gameOver(){
+                if(gameState != null){
+                    var n = gameState.secondIndex - gameState.firstIndex;
+                    
+                    var highscore = highscoreForN(n)
+                    
+                    var score = gameState.indexOffset + gameState.firstIndex;
+                    
+                    if(score > highscore){
+                        setHighscoreForN(n, score)
+                    }
+                    
+                    showSummary(gameState)
+                    
+                    gameState = null;
+                    
+                    
+                }
+                
+                stopListeningForEvents();
+                
+                metaController.didComplete()
+                
+            }
+            
+
+            /************************************************/
+            /* RENDERING                                    */
+            /************************************************/
+            
+            function render(){
+                
+                if( gameState && gameState.isRunning ) {
+                    
+                    updateState(gameState);
+                    
+                    drawState(gameState);
+                    
+                    updateScoreLabel(gameState);
+                    
+                    window.requestAnimationFrame(render);
+                    
+                }else{
+                
+                    clear();
+                    
+                }
+                
+            }
+            
+            /************************************************/
+            /* GAME STATE                                   */
+            /************************************************/
+            
+            function getNewGameState(){
+                var n = getNFromQueryString( window.location.search );
+                
+                var itemCount = 3 + n;
+                
+                var highscore = highscoreForN(n);
+                
+                var items = [];
+                
+                for(var i = 0; i < itemCount; i++){
+                    items.push(getRandomSymbol());
+                }
+                
+                return {
+                                "isRunning":false,
+                                "ticks":0,
+                                "lastTimestamp":0,
+                                "indexOffset":0,
+                                "firstIndex":0,
+                                "secondIndex":itemCount-3,
+                                "items":items,
+                                "maxItemCount":itemCount,
+                                "pixelsPerTick":boardWidth/(ticksPerItem*(itemCount - 1)),
+                                "lastMatch":null,
+                                "ticksToStartCover":ticksPerItem*itemCount,
+                                "ticksToFullCover":ticksPerItem*itemCount + 16000,
+                                "ticksToStartSpeed":ticksPerItem*itemCount + 21000,
+                                "ticksToFullSpeed":ticksPerItem*itemCount + 60000,
+                                "buttonState":0,
+                                "highscore":highscore,
+                                "buttonRect":{
+                                    "x":boardWidth*0.25,
+                                    "y":boardHeight*0.8,
+                                    "width":boardWidth*0.5,
+                                    "height":boardHeight*0.2,
+                                }
+                            };
+            }
+            
+            
+            function getCurrentTicks(state){
+                var timestamp = (new Date()).getTime();
+                
+                var t = timestamp - state.lastTimestamp; //in milleseconds
+                
+                var speed = 0.6;
+                var fullSpeed = 2.0;
+                
+                if(state.ticks > state.ticksToStartSpeed){
+                    if(state.ticks > state.ticksToFullSpeed){
+                        speed = fullSpeed;
+                    }else{
+                        speed = ( fullSpeed - speed ) * (state.ticks - state.ticksToStartSpeed) / (state.ticksToFullSpeed - state.ticksToStartSpeed)  + speed;
+                    }
+                }
+                
+                
+                var ticks = state.ticks + t*speed;
+                
+                return ticks;
+                
+            }
+            
+            function updateState(state){
+                
+                state.ticks = getCurrentTicks(state);
+                
+                state.lastTimestamp = (new Date()).getTime();
+                
+                var itemIndex = state.ticks/ticksPerItem;
+                
+                //we highlight the 0 index at the very start
+                //following that, we highlight the 1 index, and the initial secondIndex + 1
+                //This allows the 0 index to travel offscreen
+                if( state.firstIndex == 0 &&  itemIndex - state.indexOffset > state.maxItemCount - 1 )
+                {
+                    if(!userGaveCorrectInput(gameState)){
+                        gameOver();
+                        return;
+                    }
+                    state.firstIndex++;
+                    state.secondIndex++;
+                }
+                
+                if( itemIndex - state.indexOffset > state.maxItemCount )
+                {
+                    if(!userGaveCorrectInput(gameState)){
+                        gameOver();
+                        return;
+                    }
+                    state.items.shift();
+                    state.items.push(getRandomSymbol());
+                    state.indexOffset= state.indexOffset+1;
+                }
+                
+                //add new elements, get rid of old elements
+                
+                state.buttonRect = {
+                                    "x":boardWidth*0.25,
+                                    "y":boardHeight*0.8,
+                                    "width":boardWidth*0.5,
+                                    "height":boardHeight*0.2,
+                                };
+                
+            }
+            
+            function userGaveCorrectInput(state){
+                //if we have a match, then the user should have indicated 
+                var matches = state.items[state.firstIndex] == state.items[state.secondIndex];
+                
+                var hash = hashForCurrentIndexes( state )
+                
+                return (state.lastMatch == hash && matches ) || (state.lastMatch != hash && !matches )
+            }
+            
+            function getRandomSymbol(){
+                var symbols = ["A","B","C","D"];
+                var index = Math.floor(Math.random()*symbols.length)
+                return symbols[index]
+            }
+            
+            function clear(){
+                var ctx = canvas.getContext('2d');
+                ctx.clearRect(0,0,boardWidth,boardHeight); // clear canvas
+            }
+            
+            function highscoreForN(n){
+                var key = "highscore-"+n;
+                return (new Number(localStorage.getItem(key)))
+            }
+            
+            function setHighscoreForN(n, score){
+                var key = "highscore-"+n;
+                localStorage.setItem(key, score)
+            }
+            
+            function hashForCurrentIndexes(state){
+                return (gameState.firstIndex + gameState.indexOffset) + " - " + (gameState.secondIndex + gameState.indexOffset)
+            }
+            
+            /************************************************/
+            /* DRAWING                                      */
+            /************************************************/
+            
+            function drawState(state){
+            
+                var ctx = canvas.getContext('2d');
+                
+                ctx['prerenderedBuffers'] = prerenderedBuffers;
+                
+                ctx.clearRect(0,0,boardWidth,boardHeight); // clear canvas
+                
+                var y = Math.floor(boardHeight /4);
+                var height = Math.floor(boardHeight /4);
+                var xOffset = boardWidth /(state.maxItemCount - 1)
+                var width = Math.floor(xOffset*(1 - 1/(state.maxItemCount-1)));
+                
+                var xPositions = [];
+                
+                for(var i = 0; i < state.items.length; i++){
+                    var item = state.items[i];
+                    var xPosition = boardWidth - state.ticks*state.pixelsPerTick + (i+state.indexOffset) * xOffset;
+                    xPositions.push(xPosition);
+                    
+                    var x = xPosition+ (xOffset - width)/2.0
+                    drawMemoryElement(ctx, item , x , y, width, height);
+                }
+                
+                drawFrame(ctx, xOffset*0.90, xPositions[state.firstIndex] + xOffset/2.0, xPositions[state.secondIndex] + xOffset/2.0);
+                
+                var visibleMargin = Math.floor(boardHeight*0.05);
+                var coverWidth = 0;
+                if(state.ticks > state.ticksToStartCover){
+                    var fullCoverWidth = (state.secondIndex - state.firstIndex + 1)*xOffset;
+                    if(state.ticks > state.ticksToFullCover){
+                        coverWidth = fullCoverWidth;
+                    }else{
+                        coverWidth = fullCoverWidth*( ( state.ticks - state.ticksToStartCover ) / (state.ticksToFullCover - state.ticksToStartCover ) );
+                    }
+                }
+                drawCover(ctx, 0, y + visibleMargin, coverWidth,height - visibleMargin*2);
+                
+                drawMatchButton(ctx,"Matches",
+                    state.buttonState,
+                    state.buttonRect["x"],
+                    state.buttonRect["y"],
+                    state.buttonRect["width"],
+                    state.buttonRect["height"]);
+                
+            }
+
+            function drawCover(ctx, x,y,width, height ){
+                ctx.fillStyle = 'rgb(128,128,128)';
+                ctx.strokeStyle = 'rgba(0,0,0,0.0)';
+                ctx.lineWidth =0.0;
+                
+                ctx.beginPath();
+                ctx.moveTo(x,y);
+                ctx.lineTo(x,y+height);
+                ctx.lineTo(x+width,y+ height);
+                ctx.lineTo(x+width,y);
+                ctx.lineTo(x,y);
+                ctx.closePath();
+                
+                ctx.fill()
+                
+
+            }
+            
+            function drawFrame(ctx, width, firstX, secondX ){
+                ctx.strokeStyle = 'rgba(0,0,0,1.0)';
+                
+                ctx.beginPath();
+                ctx.lineWidth = 2;
+                
+                ctx.moveTo(boardWidth/2.0,boardHeight*0.8);
+                ctx.lineTo(boardWidth/2.0,boardHeight*0.7);
+                ctx.lineTo(secondX,boardHeight*0.7);
+                ctx.lineTo(secondX,boardHeight*0.6);
+                
+                ctx.moveTo(boardWidth/2.0,boardHeight*0.8);
+                ctx.lineTo(boardWidth/2.0,boardHeight*0.7);
+                ctx.lineTo(firstX,boardHeight*0.7);
+                ctx.lineTo(firstX,boardHeight*0.6);
+                
+                ctx.moveTo(secondX,boardHeight*0.7);
+                ctx.lineTo(secondX,boardHeight*0.6);
+                
+                ctx.moveTo(firstX-width/2.0,boardHeight*0.6);
+                ctx.lineTo(firstX+width/2.0,boardHeight*0.6);
+                
+                ctx.moveTo(secondX-width/2.0,boardHeight*0.6);
+                ctx.lineTo(secondX+width/2.0,boardHeight*0.6);
+                
+                ctx.moveTo(secondX-width/2.0,boardHeight*0.6);
+                ctx.lineTo(secondX-width/2.0,boardHeight*0.55);
+                
+                ctx.moveTo(secondX+width/2.0,boardHeight*0.6);
+                ctx.lineTo(secondX+width/2.0,boardHeight*0.55);
+                
+                ctx.moveTo(firstX-width/2.0,boardHeight*0.6);
+                ctx.lineTo(firstX-width/2.0,boardHeight*0.55);
+                
+                ctx.moveTo(firstX+width/2.0,boardHeight*0.6);
+                ctx.lineTo(firstX+width/2.0,boardHeight*0.55);
+                
+                ctx.closePath();
+                
+                ctx.stroke()
+                
+            }
+            
+            function drawMemoryElement(ctx, symbol, x,y,width,height){
+                
+                var key = symbol+"-"+width+"-"+height;
+                
+                var image = ctx['prerenderedBuffers'][key];
+                
+                if( image == null){
+                    image = prerenderMemoryElement(symbol,width,height);
+                    ctx['prerenderedBuffers'][key] = image;
+                }
+                
+                ctx.drawImage(image, x, y);
+                
+            }
+            
+            function prerenderMemoryElement(symbol,width,height){
+                var m_canvas = document.createElement('canvas');
+                m_canvas.width = width;
+                m_canvas.height = height;
+                var m_context = m_canvas.getContext('2d');
+                
+                m_context.fillStyle = 'rgba(0,0,0,0.4)';
+                m_context.strokeStyle = 'rgba(0,0,0,1.0)';
+            
+                m_context.beginPath();
+                m_context.lineWidth = Math.floor(0.05*width);
+                m_context.moveTo(0,0);
+                m_context.lineTo(0,height);
+                m_context.lineTo(width,height);
+                m_context.lineTo(width,0);
+                m_context.lineTo(0,0);
+                m_context.closePath();
+            
+                //stroke then fill
+                m_context.fill()
+                m_context.stroke()
+            
+                var fontHeight = 40;
+            
+                m_context.font = 'italic 40pt Calibri, sans-serif';
+                m_context.fillText(symbol, (width-fontHeight)/2.0, (height-fontHeight)/2.0+fontHeight);
+                return m_canvas;
+            }
+
+            function drawMatchButton(ctx, title, buttonState, x,y,width,height){
+                
+                var key = title+"-"+buttonState+"-"+width+"-"+height;
+                
+                var image = ctx['prerenderedBuffers'][key];
+                
+                if( image == null ){
+                    image = prerenderMatchButton(title, buttonState,width,height);
+                    ctx['prerenderedBuffers'][key] = image;
+                }
+                
+                ctx.drawImage(image, x, y);
+                
+            }
+            
+            function prerenderMatchButton(title, buttonState,width,height){
+                var m_canvas = document.createElement('canvas');
+                m_canvas.width = width;
+                m_canvas.height = height;
+                
+                var m_context = m_canvas.getContext('2d');
+                
+                switch(buttonState){
+                    case 0:
+                        m_context.fillStyle = 'rgba(255,255,255,1.0)';
+                        break;
+                    case 1:
+                        m_context.fillStyle = 'rgba(255,0,255,1.0)';
+                        break;
+                    case 2:
+                        m_context.fillStyle = 'rgba(255,255,0,1.0)';
+                        break;
+                }
+                m_context.strokeStyle = 'rgba(0,0,0,1.0)';
+                
+                m_context.beginPath();
+                m_context.lineWidth = Math.floor(0.02*width);
+                m_context.moveTo(0,0);
+                m_context.lineTo(0,height);
+                m_context.lineTo(width,height);
+                m_context.lineTo(width,0);
+                m_context.lineTo(0,0);
+                m_context.closePath();
+                
+                //stroke then fill
+                m_context.fill()
+                m_context.stroke()
+                
+                var fontHeight = 40;
+                
+                m_context.fillStyle = 'rgba(128,128,128,1.0)';
+                m_context.font = 'italic 40pt Calibri, sans-serif';
+                m_context.fillText(title, 10.0, (height-fontHeight)/2.0+fontHeight);
+                
+                return m_canvas;
+            }
+            
+            setupCanvas();
+            
+            gameState = getNewGameState();
+            
+            if(!getDebugFromQueryString(window.location.search)){
+                startRendering()
+            }
+            
+        </script>
+    </body>
+</html>
+
+
