@@ -19,6 +19,23 @@ public class GamesBundle: NSBundle {
         
     }
     
+    lazy private(set) var savedBundle:NSBundle? = {
+        guard   let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first else{
+            return nil
+        }
+        
+        let savedurl = NSURL(fileURLWithPath: documentspath).URLByAppendingPathComponent("saved")
+        
+        do{
+            try NSFileManager.defaultManager().createDirectoryAtURL(savedurl, withIntermediateDirectories: true, attributes: nil)
+            
+        }catch _ {
+            return nil
+        }
+        
+        return NSBundle(URL: savedurl)
+        
+    }()
     
     lazy public private(set) var manifest:[[String:AnyObject]] = {
         
@@ -43,13 +60,49 @@ public class GamesBundle: NSBundle {
         
     }()
     
-    public func nextItem() -> NSURL? {
-        guard   let item = manifest.first,
-                let name:String = item["name"] as? String,
-                let URL = self.URLForResource(name, withExtension: nil) else {
+    public func nextItem() -> [String:AnyObject]? {
+        return manifest.first
+    }
+    
+    public func getHTMLString(item:[String:AnyObject]) -> String? {
+        
+        if let savedURL = self.URL(item, baseURL: self.savedBundle?.bundleURL){
+            
+            do{
+                let string = try String(contentsOfURL: savedURL)
+                return string
+            }catch _ { }
+        }
+        
+        if let bundledURL = self.URL(item, baseURL: self.bundleURL){
+            
+            do{
+                let string = try String(contentsOfURL: bundledURL)
+                return string
+            }catch _ { }
+        }
+        
+        return nil
+        
+    }
+    
+    public func setHTMLString( string:String, item:[String:AnyObject] ) -> Void {
+        
+        guard let htmlURL = self.URL(item, baseURL: self.savedBundle?.bundleURL) else {
+            return
+        }
+        do{
+            try string.writeToURL(htmlURL, atomically: true, encoding: NSUTF8StringEncoding)
+        }catch _ { }
+    }
+    
+    func URL(item:[String:AnyObject], baseURL:NSURL?) -> NSURL? {
+        guard let url = baseURL else{
             return nil
         }
-        return URL
+        guard let name = item["name"] as? String else{
+            return nil
+        }
+        return url.URLByAppendingPathComponent(name)
     }
-        
 }

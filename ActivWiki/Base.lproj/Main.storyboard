@@ -18,9 +18,83 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="N9H-l7-dfO" kind="presentation" identifier="Edit" id="S8b-A9-qM0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="99W-f2-JSB">
+            <objects>
+                <navigationController id="N9H-l7-dfO" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FJL-6U-Pn9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="nby-Bq-eyd" kind="relationship" relationship="rootViewController" id="A2x-0b-Hr9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x7P-EV-nOP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="878" y="-324"/>
+        </scene>
+        <!--Source Code Editor View Controller-->
+        <scene sceneID="vaB-om-NLA">
+            <objects>
+                <viewController id="nby-Bq-eyd" customClass="SourceCodeEditorViewController" customModule="SourceCodeEditor" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ghi-BT-A9L"/>
+                        <viewControllerLayoutGuide type="bottom" id="fu0-Gg-IZl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wff-dX-CYw">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="2jm-uy-p3b">
+                        <barButtonItem key="rightBarButtonItem" title="Test" id="kyo-Q0-GcM">
+                            <connections>
+                                <segue destination="U8G-Ua-1Z4" kind="show" id="w6F-qd-1Eq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LHi-xf-FQr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1580" y="-324"/>
+        </scene>
+        <!--Activity Testing View Controller-->
+        <scene sceneID="E31-3P-RdD">
+            <objects>
+                <viewController id="U8G-Ua-1Z4" customClass="ActivityTestingViewController" customModule="ActivWiki" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sSr-kL-acF"/>
+                        <viewControllerLayoutGuide type="bottom" id="3ow-EX-uTJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="CQf-C7-8cW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="LgC-vx-1ky">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="8Dw-YG-wz0">
+                            <connections>
+                                <action selector="didTapSaveButton:" destination="U8G-Ua-1Z4" id="dTD-D7-hhC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <nil key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y10-FF-kG8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2364" y="-324"/>
         </scene>
     </scenes>
 </document>

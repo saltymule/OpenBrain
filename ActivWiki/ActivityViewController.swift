@@ -27,24 +27,54 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
         self.loadNextActivity()
     }
     
+    var bundleItem:[String:AnyObject]? = nil
+    
     func loadNextActivity(){
-        guard let URL = self.gamesBundle.nextItem() else {
-            assertionFailure()
+        
+        bundleItem = self.gamesBundle.nextItem()
+        
+        guard let item = bundleItem, let string = self.gamesBundle.getHTMLString(item) else  {
             return
         }
         
-        do{
-            let string = try String(contentsOfURL: URL)
-            self.webViewComponent.htmlString = string
-        }catch _ { }
+        self.webViewComponent.htmlString = string
+        
     }
     
     func editActivity(){
-        let controller = SourceCodeEditorViewController(nibName: nil, bundle: nil)
+        self.performSegueWithIdentifier("Edit", sender: nil)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        controller.sourceCode = self.webViewComponent.htmlString
+        guard   let navController:UINavigationController = segue.destinationViewController as? UINavigationController,
+                let editorController:SourceCodeEditorViewController = navController.viewControllers.first as? SourceCodeEditorViewController else{
+                return;
+        }
         
-        self.presentViewController(controller, animated: true, completion: nil)
+        editorController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "didTapSourceCodeCancelButton:")
+        
+        editorController.sourceCode = self.webViewComponent.htmlString
+
+    }
+    
+    func didTapSourceCodeCancelButton(sender:AnyObject?){
+        self.dismissViewControllerAnimated(true, completion: nil)
+        self.loadNextActivity()
+    }
+    
+    func saveSourceCode(){
+        guard   let navController:UINavigationController = self.presentedViewController as? UINavigationController,
+                let editorController:SourceCodeEditorViewController = navController.viewControllers.first as? SourceCodeEditorViewController,
+                let item = bundleItem,
+                let htmlString = editorController.sourceCode else{
+                return;
+        }
+        
+        self.gamesBundle.setHTMLString(htmlString, item: item)
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+        self.loadNextActivity()
     }
     
     func webViewComponentDidComplete(component: WebViewComponent) {
