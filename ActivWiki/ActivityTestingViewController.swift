@@ -34,7 +34,7 @@ class ActivityTestingViewController: UIViewController , WebViewComponentDelegate
         }
     }
     
-    func webViewComponentDidComplete(component:WebViewComponent, options:[String:AnyObject]?){
+    func webViewComponentDidComplete(component:WebViewComponent, options:[String:AnyObject]?, message:String?){
         //show completion screen
         //Enable saving
     }

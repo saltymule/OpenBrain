@@ -80,14 +80,16 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
         self.loadNextActivity()
     }
     
-    func webViewComponentDidComplete(component: WebViewComponent, options:[String:AnyObject]?) {
+    func webViewComponentDidComplete(component: WebViewComponent, options:[String:AnyObject]?, message:String?) {
         //show completion screen
         
         if let options = options{
             self.save(options, item: bundleItem)
         }
         
-        let controller = UIAlertController(title: "Menu", message: "Game Ended", preferredStyle: .ActionSheet)
+        let menuMessage = message ?? "Game Ended"
+        
+        let controller = UIAlertController(title: "Menu", message: menuMessage, preferredStyle: .ActionSheet)
         
         controller.addAction(UIAlertAction(title: "Edit", style: .Default, handler: { (action) -> Void in
             self.editActivity()

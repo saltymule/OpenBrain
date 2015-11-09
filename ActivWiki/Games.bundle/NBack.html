@@ -51,6 +51,8 @@
             var ButtonStateOver = 1;
             var ButtonStateDown = 2;
             
+            var TicksPerItem = 1000;
+            
             /************************************************/
             /* VARIABLES                                    */
             /************************************************/
@@ -61,7 +63,6 @@
             var prerenderedBuffers = {};
             var boardWidth = window.innerWidth;
             var boardHeight = window.innerHeight;
-            var ticksPerItem = 1000;
             
             var gameState = null;
             
@@ -74,8 +75,9 @@
             // this is available to be easily swapped out by the container with
             // custom logic (WKWebView on iOS, WebView on android)
             var metaController = {
-                didComplete:function(opts){
+                didComplete:function(opts, message){
                     setSavedOptions(opts);
+                    alert(message)
                 },
                 didLoad:function(){
                     var opts = savedOptions();
@@ -337,9 +339,22 @@
                         setHighscoreForN(n, score)
                     }
                     
-                    if (gameState.ticks >= gameState.ticksToFullSpeed){
+                    var message = "";
+                    
+                    if (gameState.ticks >= gameState.ticksToNextLevel){
+                        
                         n++
+                        
+                        message = "next level n = "+n
+                        
+                    }else{
+                        
+                        var pointsLeft = Math.ceil(gameState.ticksToNextLevel/TicksPerItem - gameState.ticks/TicksPerItem)
+                        
+                        message = ""+pointsLeft+" points to the next level"
+                        
                     }
+                    
                     
                     options["n"] = n
                     
@@ -349,7 +364,7 @@
                     
                     stopListeningForEvents();
                     
-                    metaController.didComplete(options)
+                    metaController.didComplete(options, message)
                     
                 }else{
                     location.href = location.href
@@ -411,12 +426,13 @@
                                 "secondIndex":itemCount-3,
                                 "items":items,
                                 "maxItemCount":itemCount,
-                                "pixelsPerTick":boardWidth/(ticksPerItem*(itemCount - 1)),
+                                "pixelsPerTick":boardWidth/(TicksPerItem*(itemCount - 1)),
                                 "lastMatch":null,
-                                "ticksToStartCover":ticksPerItem*itemCount,
-                                "ticksToFullCover":ticksPerItem*itemCount + 16000,
-                                "ticksToStartSpeed":ticksPerItem*itemCount + 21000,
-                                "ticksToFullSpeed":ticksPerItem*itemCount + 60000,
+                                "ticksToStartCover":TicksPerItem*itemCount,
+                                "ticksToFullCover":TicksPerItem*itemCount + 16000,
+                                "ticksToStartSpeed":TicksPerItem*itemCount + 21000,
+                                "ticksToFullSpeed":TicksPerItem*itemCount + 60000,
+                                "ticksToNextLevel":TicksPerItem*itemCount + 50000,
                                 "buttonState":0,
                                 "highscore":highscore,
                                 "buttonRect":{
@@ -458,7 +474,7 @@
                 
                 state.lastTimestamp = (new Date()).getTime();
                 
-                var itemIndex = state.ticks/ticksPerItem;
+                var itemIndex = state.ticks/TicksPerItem;
                 
                 //we highlight the 0 index at the very start
                 //following that, we highlight the 1 index, and the initial secondIndex + 1
