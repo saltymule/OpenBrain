@@ -10,11 +10,11 @@ import UIKit
 import WebKit
 
 protocol WebViewComponentDelegate{
-    func webViewComponentDidComplete(component:WebViewComponent)
+    func webViewComponentDidComplete(component:WebViewComponent, options:[String:AnyObject]?)
 }
 
 enum Action: String{
-    case None="none", Complete="complete", ForceComplete="forcecomplete"
+    case None="none", Load="load", Complete="complete", ForceComplete="forcecomplete"
 };
 
 class WebViewComponent: NSObject, WKScriptMessageHandler {
@@ -58,27 +58,58 @@ class WebViewComponent: NSObject, WKScriptMessageHandler {
         return self.createWebView()
     }()
     
-    var htmlString:String = "" {
-        didSet{
-            webView.loadHTMLString(htmlString, baseURL: NSBundle.mainBundle().bundleURL)
-        }
+    private(set) var htmlString:String = ""
+
+    private(set) var options:[String:AnyObject] = [:]
+
+    func start(html:String, options:[String:AnyObject]){
+        
+        self.htmlString = html
+        
+        webView.loadHTMLString(htmlString, baseURL: NSBundle.mainBundle().bundleURL)
+        
+        self.options = options
+        
     }
     
     func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
-        if let actionString:String = (message.body as? [String:AnyObject])?["action"] as? String {
-            if let action:Action = Action(rawValue: actionString){
-                switch( action ){
-                case .None:
-                    break
-                case .Complete:
-                    self.delegate?.webViewComponentDidComplete(self)
-                    break
-                case .ForceComplete:
-                    self.delegate?.webViewComponentDidComplete(self)
-                    break
-                }
-            }
+        
+        guard let body = message.body as? [String:AnyObject],
+            let actionString:String = body["action"] as? String,
+            let action:Action = Action(rawValue: actionString) else{
+                return
         }
+        
+        switch( action ){
+        case .None:
+            break
+        case .Load:
+            self.webView.evaluateJavaScript(self.getStartJavascript(), completionHandler: nil)
+            break
+        case .Complete:
+            let options = body["options"] as? [String:AnyObject]
+            self.delegate?.webViewComponentDidComplete(self, options: options)
+            break
+        case .ForceComplete:
+            self.delegate?.webViewComponentDidComplete(self, options:nil)
+            break
+        }
+    }
+    
+    private func getStartJavascript() -> String{
+        
+        var result = "start(null)"
+        
+        do{
+            let data = try NSJSONSerialization.dataWithJSONObject(self.options, options: .PrettyPrinted)
+            guard let stringOptions = String(data: data , encoding: NSUTF8StringEncoding) else {
+                return result
+            }
+            result = "start("+stringOptions+")"
+        }catch _ { }
+        
+        return result
+        
     }
     
 }

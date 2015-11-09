@@ -24,6 +24,29 @@
     <body>
         <script>
             
+            /************************************************/
+            /* START                                        */
+            /************************************************/
+            
+            function start(opts){
+                options = opts;
+                
+                if(options == null || options["n"] == null){
+                    options = {"n":2}
+                }
+                
+                if(getDebugFromQueryString(window.location.search)){
+                    options["n"] = getNFromQueryString( window.location.search );
+                }
+                
+                gameState = getNewGameState(options);
+                startRendering()
+            }
+            
+            /************************************************/
+            /* CONSTANTS                                    */
+            /************************************************/
+            
             var ButtonStateNone = 0;
             var ButtonStateOver = 1;
             var ButtonStateDown = 2;
@@ -32,6 +55,7 @@
             /* VARIABLES                                    */
             /************************************************/
             
+            var options = null;
             var canvas = null;
             var scoreLabel = null;
             var prerenderedBuffers = {};
@@ -41,6 +65,8 @@
             
             var gameState = null;
             
+            var isDebug = getDebugFromQueryString(window.location.search);
+            
             /************************************************/
             /* META CONTROLLER                              */
             /************************************************/
@@ -48,12 +74,23 @@
             // this is available to be easily swapped out by the container with
             // custom logic (WKWebView on iOS, WebView on android)
             var metaController = {
-                didComplete:function(){
-                    gameState = null;
-                    startRendering();
+                didComplete:function(opts){
+                    setSavedOptions(opts);
                 },
+                didLoad:function(){
+                    var opts = savedOptions();
+                    start(opts)
+                }
             };
-            
+        
+            if(isDebug){
+                
+                //DEBUG customization goes here
+                
+            }
+        
+
+
             /************************************************/
             /* Query String                                 */
             /************************************************/
@@ -105,9 +142,7 @@
             
 
             
-            function setupCanvas(){
-                
-                var isDebug = getDebugFromQueryString(window.location.search);
+            function setupCanvas(isDebug){
                 
                 if(isDebug){
                     boardWidth = Math.floor(window.innerWidth/2.0);
@@ -267,10 +302,6 @@
                 
                 hideSummary();
                 
-                if(gameState == null){
-                    reset()
-                }
-                
                 gameState.isRunning = true;
                 
                 gameState.lastTimestamp = (new Date()).getTime();
@@ -285,11 +316,17 @@
             }
             
             function reset(){
-                gameState = getNewGameState();
+                options = {"n":2}
+                gameState = getNewGameState(options);
             }
             
             function gameOver(){
+                
+                
                 if(gameState != null){
+                    
+                    var options = {};
+                    
                     var n = gameState.secondIndex - gameState.firstIndex;
                     
                     var highscore = highscoreForN(n)
@@ -300,16 +337,25 @@
                         setHighscoreForN(n, score)
                     }
                     
+                    if (gameState.ticks >= gameState.ticksToFullSpeed){
+                        n++
+                    }
+                    
+                    options["n"] = n
+                    
                     showSummary(gameState)
                     
                     gameState = null;
                     
+                    stopListeningForEvents();
                     
+                    metaController.didComplete(options)
+                    
+                }else{
+                    location.href = location.href
                 }
                 
-                stopListeningForEvents();
                 
-                metaController.didComplete()
                 
             }
             
@@ -342,8 +388,9 @@
             /* GAME STATE                                   */
             /************************************************/
             
-            function getNewGameState(){
-                var n = getNFromQueryString( window.location.search );
+            function getNewGameState(options){
+                
+                var n = options["n"];
                 
                 var itemCount = 3 + n;
                 
@@ -388,7 +435,7 @@
                 var t = timestamp - state.lastTimestamp; //in milleseconds
                 
                 var speed = 0.6;
-                var fullSpeed = 2.0;
+                var fullSpeed = 1.6;
                 
                 if(state.ticks > state.ticksToStartSpeed){
                     if(state.ticks > state.ticksToFullSpeed){
@@ -476,6 +523,16 @@
             function setHighscoreForN(n, score){
                 var key = "highscore-"+n;
                 localStorage.setItem(key, score)
+            }
+            
+            function savedOptions(){
+                var key = "options";
+                return localStorage.getItem(key)
+            }
+        
+            function setSavedOptions(options){
+                var key = "options";
+                localStorage.setItem(key, options)
             }
             
             function hashForCurrentIndexes(state){
@@ -695,13 +752,9 @@
                 return m_canvas;
             }
             
-            setupCanvas();
+            setupCanvas(isDebug);
             
-            gameState = getNewGameState();
-            
-            if(!getDebugFromQueryString(window.location.search)){
-                startRendering()
-            }
+            window.addEventListener("load", metaController.didLoad,false)
             
         </script>
     </body>

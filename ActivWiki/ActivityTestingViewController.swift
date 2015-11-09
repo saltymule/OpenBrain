@@ -29,12 +29,12 @@ class ActivityTestingViewController: UIViewController , WebViewComponentDelegate
     var sourceCode:String?{
         didSet{
             if let sourceCode = self.sourceCode{
-                self.webViewComponent.htmlString = sourceCode
+                self.webViewComponent.start(sourceCode,options:[:])
             }
         }
     }
     
-    func webViewComponentDidComplete(component: WebViewComponent) {
+    func webViewComponentDidComplete(component:WebViewComponent, options:[String:AnyObject]?){
         //show completion screen
         //Enable saving
     }

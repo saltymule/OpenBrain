@@ -33,11 +33,14 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
         
         bundleItem = self.gamesBundle.nextItem()
         
-        guard let item = bundleItem, let string = self.gamesBundle.getHTMLString(item) else  {
+        guard   let item = bundleItem,
+                let string = self.gamesBundle.getHTMLString(item) else  {
             return
         }
         
-        self.webViewComponent.htmlString = string
+        let options  = self.loadOptions(item) ?? [:]
+        
+        self.webViewComponent.start(string, options:options)
         
     }
     
@@ -77,8 +80,12 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
         self.loadNextActivity()
     }
     
-    func webViewComponentDidComplete(component: WebViewComponent) {
+    func webViewComponentDidComplete(component: WebViewComponent, options:[String:AnyObject]?) {
         //show completion screen
+        
+        if let options = options{
+            self.save(options, item: bundleItem)
+        }
         
         let controller = UIAlertController(title: "Menu", message: "Game Ended", preferredStyle: .ActionSheet)
         
@@ -93,5 +100,19 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
         self.presentViewController(controller, animated: true, completion: nil)
     }
     
+    func save(options:[String:AnyObject],item:[String:AnyObject]?){
+        guard let item = item, let name = item["name"] as? String else{
+            return
+        }
+        NSUserDefaults.standardUserDefaults().setObject(options, forKey: name)
+    }
+
+    func loadOptions(item:[String:AnyObject]?)->[String:AnyObject]?{
+        guard let item = item, let name = item["name"] as? String else{
+            return nil
+        }
+        return NSUserDefaults.standardUserDefaults().objectForKey(name) as? [String:AnyObject]
+    }
+
 }
 
