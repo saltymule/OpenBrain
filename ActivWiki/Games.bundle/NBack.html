@@ -420,6 +420,7 @@
                 return {
                                 "isRunning":false,
                                 "ticks":0,
+                                "internalTicks":0,
                                 "lastTimestamp":0,
                                 "indexOffset":0,
                                 "firstIndex":0,
@@ -443,36 +444,45 @@
                                 }
                             };
             }
-            
-            
-            function getCurrentTicks(state){
+        
+            //returns
+            function incrementTicks(state){
+                
                 var timestamp = (new Date()).getTime();
                 
                 var t = timestamp - state.lastTimestamp; //in milleseconds
                 
-                var speed = 0.6;
+                var speed = 0.6; //average speed
+                var startingSpeed = 0.6;
                 var fullSpeed = 1.6;
                 
-                if(state.ticks > state.ticksToStartSpeed){
-                    if(state.ticks > state.ticksToFullSpeed){
+                if(state.internalTicks > state.ticksToStartSpeed){
+                    if(state.internalTicks > state.ticksToFullSpeed){
                         speed = fullSpeed;
                     }else{
-                        speed = ( fullSpeed - speed ) * (state.ticks - state.ticksToStartSpeed) / (state.ticksToFullSpeed - state.ticksToStartSpeed)  + speed;
+                        speed = ( fullSpeed - startingSpeed ) * (state.internalTicks - state.ticksToStartSpeed) / (state.ticksToFullSpeed - state.ticksToStartSpeed)  + startingSpeed;
                     }
                 }
                 
+                state.internalTicks = state.internalTicks + t*speed;
                 
-                var ticks = state.ticks + t*speed;
+                state.lastTimestamp = (new Date()).getTime();
                 
-                return ticks;
+                var partialTicks = state.internalTicks%TicksPerItem;
+                var ticks = state.internalTicks - partialTicks
+                
+                var stillRatio = 0.6
+                if(partialTicks > stillRatio*TicksPerItem){
+                    ticks = ticks + (partialTicks - stillRatio*TicksPerItem)/(1 - stillRatio)
+                }
+                
+                state.ticks = ticks ;
                 
             }
             
             function updateState(state){
                 
-                state.ticks = getCurrentTicks(state);
-                
-                state.lastTimestamp = (new Date()).getTime();
+                incrementTicks(state);
                 
                 var itemIndex = state.ticks/TicksPerItem;
                 
