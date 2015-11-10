@@ -85,6 +85,10 @@
                 }
             };
         
+            function didLoadHandler(){
+                metaController.didLoad()
+            }
+        
             if(isDebug){
                 
                 //DEBUG customization goes here
@@ -780,7 +784,7 @@
             
             setupCanvas(isDebug);
             
-            window.addEventListener("load", metaController.didLoad,false)
+            window.addEventListener("load", didLoadHandler,false)
             
         </script>
     </body>
