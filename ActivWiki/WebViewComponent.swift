@@ -113,5 +113,9 @@ class WebViewComponent: NSObject, WKScriptMessageHandler {
         
     }
     
+    func clear(){
+        self.webView.loadRequest(NSURLRequest(URL: NSURL(string: "about:blank")!))
+    }
+    
 }
 

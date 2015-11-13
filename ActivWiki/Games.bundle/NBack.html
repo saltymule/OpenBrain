@@ -140,19 +140,10 @@
                 scoreLabel.innerText = "count: "+score + " highscore: "+state.highscore;
             }
             
-            function showSummary(state){
-            }
-            
-            function hideSummary(){
-            }
-            
-
-            
             function setupCanvas(isDebug){
                 
                 if(isDebug){
-                    boardWidth = Math.floor(window.innerWidth/2.0);
-                    boardHeight = Math.floor(window.innerHeight/2.0);
+                    boardHeight = Math.floor(window.innerHeight*0.9);
                 }
                 
                 canvas = document.createElement('canvas');
@@ -306,8 +297,6 @@
             
             function startRendering(){
                 
-                hideSummary();
-                
                 gameState.isRunning = true;
                 
                 gameState.lastTimestamp = (new Date()).getTime();
@@ -331,21 +320,23 @@
                 
                 if(gameState != null){
                     
-                    var options = {};
+                    if(options == null){
+                        options = {}
+                    }
                     
                     var n = gameState.secondIndex - gameState.firstIndex;
                     
-                    var highscore = highscoreForN(n)
+                    var highscore = highscoreForN(n, options)
                     
                     var score = gameState.indexOffset + gameState.firstIndex;
                     
                     if(score > highscore){
-                        setHighscoreForN(n, score)
+                        setHighscoreForN(n, options, score)
                     }
                     
                     var message = "";
                     
-                    if (gameState.ticks >= gameState.ticksToNextLevel){
+                    if (gameState.indexOffset >= gameState.itemsToNextLevel){
                         
                         n++
                         
@@ -353,7 +344,7 @@
                         
                     }else{
                         
-                        var pointsLeft = Math.ceil(gameState.ticksToNextLevel/TicksPerItem - gameState.ticks/TicksPerItem)
+                        var pointsLeft = gameState.itemsToNextLevel - gameState.indexOffset
                         
                         message = ""+pointsLeft+" points to the next level"
                         
@@ -361,8 +352,6 @@
                     
                     
                     options["n"] = n
-                    
-                    showSummary(gameState)
                     
                     gameState = null;
                     
@@ -386,9 +375,12 @@
             function render(){
                 
                 if( gameState && gameState.isRunning ) {
-                    
+                    //we might call game over here
                     updateState(gameState);
-                    
+                }
+                
+                if( gameState && gameState.isRunning ) {
+                        
                     drawState(gameState);
                     
                     updateScoreLabel(gameState);
@@ -413,7 +405,7 @@
                 
                 var itemCount = 3 + n;
                 
-                var highscore = highscoreForN(n);
+                var highscore = highscoreForN(n, options);
                 
                 var items = [];
                 
@@ -422,31 +414,31 @@
                 }
                 
                 return {
-                                "isRunning":false,
-                                "ticks":0,
-                                "internalTicks":0,
-                                "lastTimestamp":0,
-                                "indexOffset":0,
-                                "firstIndex":0,
-                                "secondIndex":itemCount-3,
-                                "items":items,
-                                "maxItemCount":itemCount,
-                                "pixelsPerTick":boardWidth/(TicksPerItem*(itemCount - 1)),
-                                "lastMatch":null,
-                                "ticksToStartCover":TicksPerItem*itemCount,
-                                "ticksToFullCover":TicksPerItem*itemCount + 16000,
-                                "ticksToStartSpeed":TicksPerItem*itemCount + 21000,
-                                "ticksToFullSpeed":TicksPerItem*itemCount + 60000,
-                                "ticksToNextLevel":TicksPerItem*itemCount + 50000,
-                                "buttonState":0,
-                                "highscore":highscore,
-                                "buttonRect":{
-                                    "x":boardWidth*0.25,
-                                    "y":boardHeight*0.8,
-                                    "width":boardWidth*0.5,
-                                    "height":boardHeight*0.2,
-                                }
-                            };
+                    "isRunning":false,
+                    "ticks":0,
+                    "internalTicks":0,
+                    "lastTimestamp":0,
+                    "indexOffset":0,
+                    "firstIndex":0,
+                    "secondIndex":itemCount-3,
+                    "items":items,
+                    "maxItemCount":itemCount,
+                    "pixelsPerTick":boardWidth/(TicksPerItem*(itemCount - 1)),
+                    "lastMatch":null,
+                    "ticksToStartCover":TicksPerItem*itemCount,
+                    "ticksToFullCover":TicksPerItem*itemCount + 16000,
+                    "ticksToStartSpeed":TicksPerItem*itemCount + 21000,
+                    "ticksToFullSpeed":TicksPerItem*itemCount + 60000,
+                    "itemsToNextLevel":50,
+                    "buttonState":0,
+                    "highscore":highscore,
+                    "buttonRect":{
+                        "x":boardWidth*0.25,
+                        "y":boardHeight*0.8,
+                        "width":boardWidth*0.5,
+                        "height":boardHeight*0.2,
+                    }
+                };
             }
         
             //returns
@@ -495,7 +487,7 @@
                 //This allows the 0 index to travel offscreen
                 if( state.firstIndex == 0 &&  itemIndex - state.indexOffset > state.maxItemCount - 1 )
                 {
-                    if(!userGaveCorrectInput(gameState)){
+                    if(!userGaveCorrectInput(state)){
                         gameOver();
                         return;
                     }
@@ -505,13 +497,14 @@
                 
                 if( itemIndex - state.indexOffset > state.maxItemCount )
                 {
-                    if(!userGaveCorrectInput(gameState)){
+                    if(!userGaveCorrectInput(state)){
                         gameOver();
                         return;
                     }
                     state.items.shift();
-                    state.items.push(getRandomSymbol());
+                    state.items.push(getNextSymbol(state, getRandomSymbol));
                     state.indexOffset= state.indexOffset+1;
+                    
                 }
                 
                 //add new elements, get rid of old elements
@@ -533,7 +526,20 @@
                 
                 return (state.lastMatch == hash && matches ) || (state.lastMatch != hash && !matches )
             }
-            
+        
+            function getNextSymbol(state, randFunc){
+                
+                var n = state["secondIndex"] - state["firstIndex"]
+                
+                if(Math.random() < 0.1){//one tenth of the time, enforce a match
+                    console.log("enforcing match on "+ state.items[state.items.length - n])
+                    return state.items[state.items.length - n]
+                }else{
+                    return randFunc()
+                }
+
+            }
+        
             function getRandomSymbol(){
                 var symbols = ["A","B","C","D"];
                 var index = Math.floor(Math.random()*symbols.length)
@@ -545,24 +551,34 @@
                 ctx.clearRect(0,0,boardWidth,boardHeight); // clear canvas
             }
             
-            function highscoreForN(n){
+            function highscoreForN(n, options){
                 var key = "highscore-"+n;
-                return (new Number(localStorage.getItem(key)))
+                var val = options[key] ;
+                if(isNaN(val)){
+                    return 0
+                }else{
+                    return val
+                }
             }
             
-            function setHighscoreForN(n, score){
+            function setHighscoreForN(n, options, score){
                 var key = "highscore-"+n;
-                localStorage.setItem(key, score)
+                options[key] = score;
             }
             
             function savedOptions(){
                 var key = "options";
-                return localStorage.getItem(key)
+                var options = null;
+                try{
+                    options = JSON.parse(localStorage.getItem(key))
+                }catch(err){
+                }
+                return options
             }
         
             function setSavedOptions(options){
                 var key = "options";
-                localStorage.setItem(key, options)
+                localStorage.setItem(key, JSON.stringify( options ) )
             }
             
             function hashForCurrentIndexes(state){

@@ -25,6 +25,13 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
         self.view.addSubview( self.webViewComponent.webView )
         
         self.loadNextActivity()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleUIApplicationWillResignActiveNotification:", name: UIApplicationWillResignActiveNotification, object: nil)
+    }
+    
+    func handleUIApplicationWillResignActiveNotification(notification:NSNotification){
+        self.webViewComponent.clear()
+        self.presentMenu("Game Cancelled")
     }
     
     var bundleItem:[String:AnyObject]? = nil
@@ -87,6 +94,11 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
             self.save(options, item: bundleItem)
         }
         
+        self.presentMenu(message)
+        
+    }
+    
+    func presentMenu(message:String?){
         let menuMessage = message ?? "Game Ended"
         
         let controller = UIAlertController(title: "Menu", message: menuMessage, preferredStyle: .ActionSheet)
