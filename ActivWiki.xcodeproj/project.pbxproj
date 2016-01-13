@@ -14,12 +14,12 @@
 		770D42C81BCF047300C2C3A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 770D42C61BCF047300C2C3A6 /* LaunchScreen.storyboard */; };
 		770D42D31BCF047300C2C3A6 /* ActivWikiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770D42D21BCF047300C2C3A6 /* ActivWikiTests.swift */; };
 		770D42DE1BCF047300C2C3A6 /* ActivWikiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770D42DD1BCF047300C2C3A6 /* ActivWikiUITests.swift */; };
-		770D42EC1BCF094700C2C3A6 /* Games.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 770D42EB1BCF094700C2C3A6 /* Games.bundle */; settings = {ASSET_TAGS = (); }; };
-		77DF26271BD113CB0013696A /* WebViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF26261BD113CB0013696A /* WebViewComponent.swift */; settings = {ASSET_TAGS = (); }; };
-		77DF262B1BD595970013696A /* GamesBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF262A1BD595970013696A /* GamesBundle.swift */; settings = {ASSET_TAGS = (); }; };
-		77DF262D1BD5996C0013696A /* GamesBundleUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF262C1BD5996C0013696A /* GamesBundleUnitTests.swift */; settings = {ASSET_TAGS = (); }; };
-		77DF26351BD6EA550013696A /* metacontroller.js in Resources */ = {isa = PBXBuildFile; fileRef = 77DF26341BD6EA550013696A /* metacontroller.js */; settings = {ASSET_TAGS = (); }; };
-		77E86F251BD8F3D400A1FA89 /* ActivityTestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E86F241BD8F3D400A1FA89 /* ActivityTestingViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		770D42EC1BCF094700C2C3A6 /* Games.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 770D42EB1BCF094700C2C3A6 /* Games.bundle */; };
+		77DF26271BD113CB0013696A /* WebViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF26261BD113CB0013696A /* WebViewComponent.swift */; };
+		77DF262B1BD595970013696A /* GamesBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF262A1BD595970013696A /* GamesBundle.swift */; };
+		77DF262D1BD5996C0013696A /* GamesBundleUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF262C1BD5996C0013696A /* GamesBundleUnitTests.swift */; };
+		77DF26351BD6EA550013696A /* metacontroller.js in Resources */ = {isa = PBXBuildFile; fileRef = 77DF26341BD6EA550013696A /* metacontroller.js */; };
+		77E86F251BD8F3D400A1FA89 /* ActivityTestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E86F241BD8F3D400A1FA89 /* ActivityTestingViewController.swift */; };
 		7C30783A137809FE195C49D3 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 750F1EB845F0D6DFBDCC270E /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -237,6 +237,7 @@
 				TargetAttributes = {
 					770D42B91BCF047300C2C3A6 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = NF8KPUS6K2;
 					};
 					770D42CD1BCF047300C2C3A6 = {
 						CreatedOnToolsVersion = 7.0;
@@ -244,6 +245,7 @@
 					};
 					770D42D81BCF047300C2C3A6 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = NF8KPUS6K2;
 						TestTargetID = 770D42B91BCF047300C2C3A6;
 					};
 				};
@@ -498,10 +500,13 @@
 			baseConfigurationReference = 1EA66DB4A1B0753626CD9693 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ActivWiki/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.ActivWiki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -510,10 +515,13 @@
 			baseConfigurationReference = 9519DCBE1B89510AA2D2A03F /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ActivWiki/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.ActivWiki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -544,10 +552,13 @@
 		770D42E91BCF047300C2C3A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ActivWikiUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.ActivWikiUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_TARGET_NAME = ActivWiki;
 				USES_XCTRUNNER = YES;
 			};
@@ -556,10 +567,13 @@
 		770D42EA1BCF047300C2C3A6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ActivWikiUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.ActivWikiUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_TARGET_NAME = ActivWiki;
 				USES_XCTRUNNER = YES;
 			};

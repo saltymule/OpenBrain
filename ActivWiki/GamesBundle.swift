@@ -39,6 +39,9 @@ public class GamesBundle: NSBundle {
     
     lazy public private(set) var manifest:[[String:AnyObject]] = {
         
+        //seed the rand function
+        srand(UInt32( time(nil) ))
+        
         guard let URL = self.URLForResource("manifest", withExtension: "json") else {
             assertionFailure()
             return [];
@@ -61,7 +64,7 @@ public class GamesBundle: NSBundle {
     }()
     
     public func nextItem() -> [String:AnyObject]? {
-        return manifest.first
+        return manifest[ Int(rand()) % manifest.count ]
     }
     
     public func getHTMLString(item:[String:AnyObject]) -> String? {

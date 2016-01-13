@@ -9,29 +9,42 @@
 import UIKit
 import SourceCodeEditor
 
+func CGRectOffsetTop(rect:CGRect, offset:CGFloat) -> CGRect {
+    var result = rect
+    result.origin.y += offset
+    result.size.height -= offset
+    return result
+}
+
 class ActivityViewController: UIViewController, WebViewComponentDelegate {
     
     lazy var webViewComponent:WebViewComponent = WebViewComponent()
     
     lazy var gamesBundle:GamesBundle = GamesBundle.gamesBundle()!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.webViewComponent.webView.frame = self.view.bounds
+        self.edgesForExtendedLayout = .None;
+        
+        self.webViewComponent.webView.frame = CGRectOffsetTop(self.view.bounds, offset:20 )
         
         self.webViewComponent.delegate = self
         
         self.view.addSubview( self.webViewComponent.webView )
         
-        self.loadNextActivity()
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleUIApplicationWillResignActiveNotification:", name: UIApplicationWillResignActiveNotification, object: nil)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.presentMenu("Greetings!", isFirst: true)
+        
     }
     
     func handleUIApplicationWillResignActiveNotification(notification:NSNotification){
         self.webViewComponent.clear()
-        self.presentMenu("Game Cancelled")
+        self.presentMenu("Game Cancelled", isFirst: false)
     }
     
     var bundleItem:[String:AnyObject]? = nil
@@ -90,24 +103,28 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
     func webViewComponentDidComplete(component: WebViewComponent, options:[String:AnyObject]?, message:String?) {
         //show completion screen
         
-        if let options = options{
+        if let options = options {
             self.save(options, item: bundleItem)
         }
         
-        self.presentMenu(message)
+        self.presentMenu(message, isFirst: false)
         
     }
     
-    func presentMenu(message:String?){
+    func presentMenu(message:String?, isFirst:Bool){
         let menuMessage = message ?? "Game Ended"
         
         let controller = UIAlertController(title: "Menu", message: menuMessage, preferredStyle: .ActionSheet)
+//        
+//        if !isFirst {
+//            controller.addAction(UIAlertAction(title: "Edit", style: .Default, handler: { (action) -> Void in
+//                self.editActivity()
+//            }))
+//        }
         
-        controller.addAction(UIAlertAction(title: "Edit", style: .Default, handler: { (action) -> Void in
-            self.editActivity()
-        }))
+        let startTitle = isFirst ? "Start" : "Next"
         
-        controller.addAction(UIAlertAction(title: "Next", style: .Default, handler: { (action) -> Void in
+        controller.addAction(UIAlertAction(title: startTitle, style: .Default, handler: { (action) -> Void in
             self.loadNextActivity()
         }))
         
@@ -121,11 +138,21 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
         NSUserDefaults.standardUserDefaults().setObject(options, forKey: name)
     }
 
-    func loadOptions(item:[String:AnyObject]?)->[String:AnyObject]?{
-        guard let item = item, let name = item["name"] as? String else{
-            return nil
+    func loadOptions(item:[String:AnyObject]?)->[String:AnyObject]{
+        guard let item = item,
+            let name = item["name"] as? String,
+            let options = NSUserDefaults.standardUserDefaults().objectForKey(name) as? [String:AnyObject] else{
+            return self.defaultOptions(nil)
         }
-        return NSUserDefaults.standardUserDefaults().objectForKey(name) as? [String:AnyObject]
+        
+        return self.defaultOptions(options)
+        
+    }
+    
+    func defaultOptions(options:[String:AnyObject]?)->[String:AnyObject]{
+        let result:[String:AnyObject] = options ?? [:]
+        
+        return result
     }
 
 }

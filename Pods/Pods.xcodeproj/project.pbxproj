@@ -7,15 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		087B06415AA7CCCF75113BB77DEEBD2A /* SourceCodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0CEA044A6DB3FBC0B367C375E91297 /* SourceCodeModel.swift */; };
+		0C415952E5D7417E69952FE715E89A6E /* SourceCodeEditor-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D251758CFDB529952F0498C02F93A40D /* SourceCodeEditor-dummy.m */; };
+		267D206E858907195B25711920801514 /* UIFont+SourceCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B66BF2BC85EF7D55FBF198B4B26D8C /* UIFont+SourceCode.swift */; };
 		4013458FCDDE47E9C3C80AFE7A56A18F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */; };
 		476EE42B1A768A89EE69B154303C3479 /* SourceCodeEditor.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 90B84A742D08E0BAFF1E397A03E28B59 /* SourceCodeEditor.bundle */; };
+		4E43A21344A519750DA07489ADF01CF3 /* SourceCodeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE24B8D144BBC0A2FBC872B73C51002 /* SourceCodeLabel.swift */; };
 		4FF9493C298C34FC15054A48797515A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */; };
+		548FDE3F08DBD317D2C0EF62A1827B25 /* SCControlComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882D9A911952C747E3B768B7E0EFD2CD /* SCControlComponent.swift */; };
+		63E1A913722B6B5F86CAB7B7051B0573 /* SourceCodeConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCB40649F0509DE9345EA471A8E8AC7 /* SourceCodeConsumer.swift */; };
 		74D379696E1825EF811699C3C8B451F3 /* Pods-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BCC458FDD5F692BBB2BFC64BB5701FC /* Pods-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		884D79578E67E412D32D41A2357A196C /* UIFont+SourceCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2F6C5E84F01B56E569EEEE5846BB63 /* UIFont+SourceCode.swift */; };
+		7FDDF322603B9A3F663801E95D62DA4C /* SourceCodeEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C38638E7739198D3D2AEFE1F99276A1 /* SourceCodeEditorViewController.swift */; };
+		B74A5C560960158DA7153D5FF3B1F919 /* SCCursorControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0612720253BC15260EF57E1870941FB1 /* SCCursorControl.swift */; };
+		CC763DA6284991324C13B6C730F9EC4E /* SCTableViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25C525B5D636CEEBF332AF56F463038 /* SCTableViewComponent.swift */; };
 		CC8DACE7250ADB06D1D80C9BBB7BECAA /* Pods-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 894E5DA93A9F359521A89826BE6DA777 /* Pods-dummy.m */; };
-		D61750AB6440A366FE5BB0E109A84AFD /* SourceCodeEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A032AEBF53EC4C010BB930DE0FB49D /* SourceCodeEditorViewController.swift */; };
-		E2CD409E137F26BB18B1BA4FE4287BEE /* SourceCodeConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247B3F088C0F4142E2D723991F836F32 /* SourceCodeConsumer.swift */; };
-		E8112240371F722FAE4ABCD61FDA3434 /* SourceCodeEditor-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D251758CFDB529952F0498C02F93A40D /* SourceCodeEditor-dummy.m */; };
+		F554AF6AEC1F77749B499C237BDCE45A /* SCTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F55D75943B508083A349A818ECC1F98 /* SCTableViewCell.swift */; };
 		FF790A9C66CFB90D5729500A88028C45 /* SourceCodeEditor-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 14DFA36AFE4049B391E6D2EF73033924 /* SourceCodeEditor-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -38,29 +44,35 @@
 
 /* Begin PBXFileReference section */
 		031F076C4C3B26EC489E17BFBC5B8D17 /* SourceCodeEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SourceCodeEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0612720253BC15260EF57E1870941FB1 /* SCCursorControl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SCCursorControl.swift; sourceTree = "<group>"; };
 		0F89D3AC3AAA6D1B6C3CDBC5E2D14655 /* SourceCodeEditor-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SourceCodeEditor-prefix.pch"; sourceTree = "<group>"; };
 		1161D8978182425E749466CFB0B21194 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14DFA36AFE4049B391E6D2EF73033924 /* SourceCodeEditor-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SourceCodeEditor-umbrella.h"; sourceTree = "<group>"; };
-		247B3F088C0F4142E2D723991F836F32 /* SourceCodeConsumer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SourceCodeConsumer.swift; sourceTree = "<group>"; };
 		2BCC458FDD5F692BBB2BFC64BB5701FC /* Pods-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-umbrella.h"; sourceTree = "<group>"; };
+		3C38638E7739198D3D2AEFE1F99276A1 /* SourceCodeEditorViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SourceCodeEditorViewController.swift; sourceTree = "<group>"; };
 		3E4E89230EF59BC255123B67864ACF77 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		60A032AEBF53EC4C010BB930DE0FB49D /* SourceCodeEditorViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SourceCodeEditorViewController.swift; sourceTree = "<group>"; };
+		6F55D75943B508083A349A818ECC1F98 /* SCTableViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SCTableViewCell.swift; sourceTree = "<group>"; };
 		79A9DEDC89FE8336BF5FEDAAF75BF7FC /* Pods.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Pods.modulemap; sourceTree = "<group>"; };
-		7C2F6C5E84F01B56E569EEEE5846BB63 /* UIFont+SourceCode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIFont+SourceCode.swift"; sourceTree = "<group>"; };
+		7BCB40649F0509DE9345EA471A8E8AC7 /* SourceCodeConsumer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SourceCodeConsumer.swift; sourceTree = "<group>"; };
 		87B213035BAC5F75386F62D3C75D2342 /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-acknowledgements.plist"; sourceTree = "<group>"; };
+		882D9A911952C747E3B768B7E0EFD2CD /* SCControlComponent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SCControlComponent.swift; sourceTree = "<group>"; };
 		894E5DA93A9F359521A89826BE6DA777 /* Pods-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-dummy.m"; sourceTree = "<group>"; };
 		90B84A742D08E0BAFF1E397A03E28B59 /* SourceCodeEditor.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SourceCodeEditor.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		929AC422E0843261AD145E30E23E7C8E /* SourceCodeEditor.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SourceCodeEditor.xcconfig; sourceTree = "<group>"; };
 		977577C045EDA9D9D1F46E2598D19FC7 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.debug.xcconfig; sourceTree = "<group>"; };
 		AC36F62D619EC1AFA89159BBEF18DFF1 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B25C525B5D636CEEBF332AF56F463038 /* SCTableViewComponent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SCTableViewComponent.swift; sourceTree = "<group>"; };
 		B8541B6A469FB9DD4F07CC872B36FA49 /* SourceCodeEditor.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SourceCodeEditor.modulemap; sourceTree = "<group>"; };
 		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		CBC0F7C552B739C909B650A0F42F7F38 /* Pods-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-resources.sh"; sourceTree = "<group>"; };
+		CC0CEA044A6DB3FBC0B367C375E91297 /* SourceCodeModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SourceCodeModel.swift; sourceTree = "<group>"; };
 		D0405803033A2A777B8E4DFA0C1800ED /* Pods-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-acknowledgements.markdown"; sourceTree = "<group>"; };
 		D251758CFDB529952F0498C02F93A40D /* SourceCodeEditor-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SourceCodeEditor-dummy.m"; sourceTree = "<group>"; };
 		DA312349A49333542E6F4B36B329960E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.release.xcconfig; sourceTree = "<group>"; };
+		DCE24B8D144BBC0A2FBC872B73C51002 /* SourceCodeLabel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SourceCodeLabel.swift; sourceTree = "<group>"; };
 		E7F21354943D9F42A70697D5A5EF72E9 /* Pods-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-frameworks.sh"; sourceTree = "<group>"; };
 		E8446514FBAD26C0E18F24A5715AEF67 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F1B66BF2BC85EF7D55FBF198B4B26D8C /* UIFont+SourceCode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIFont+SourceCode.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,12 +120,20 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6E4EC76C663E1D956E4177A4380E8C5D /* Pod */ = {
+		2E97CF3C0D7407F9505518A01B56B54F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				E72F5DE13DCBCD4901841CD1CCE94F75 /* Classes */,
+				882D9A911952C747E3B768B7E0EFD2CD /* SCControlComponent.swift */,
+				0612720253BC15260EF57E1870941FB1 /* SCCursorControl.swift */,
+				6F55D75943B508083A349A818ECC1F98 /* SCTableViewCell.swift */,
+				B25C525B5D636CEEBF332AF56F463038 /* SCTableViewComponent.swift */,
+				7BCB40649F0509DE9345EA471A8E8AC7 /* SourceCodeConsumer.swift */,
+				3C38638E7739198D3D2AEFE1F99276A1 /* SourceCodeEditorViewController.swift */,
+				DCE24B8D144BBC0A2FBC872B73C51002 /* SourceCodeLabel.swift */,
+				CC0CEA044A6DB3FBC0B367C375E91297 /* SourceCodeModel.swift */,
+				F1B66BF2BC85EF7D55FBF198B4B26D8C /* UIFont+SourceCode.swift */,
 			);
-			path = Pod;
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		75D98FF52E597A11900E131B6C4E1ADA /* Pods */ = {
@@ -137,7 +157,7 @@
 		79A7763B0C715357D87C21FBD12256C5 /* SourceCodeEditor */ = {
 			isa = PBXGroup;
 			children = (
-				6E4EC76C663E1D956E4177A4380E8C5D /* Pod */,
+				E3CAC26763E243247E73D9331CEE405C /* Pod */,
 				FFE72D5BC0407AE38CBDF7870D830FE7 /* Support Files */,
 			);
 			name = SourceCodeEditor;
@@ -179,14 +199,12 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		E72F5DE13DCBCD4901841CD1CCE94F75 /* Classes */ = {
+		E3CAC26763E243247E73D9331CEE405C /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				247B3F088C0F4142E2D723991F836F32 /* SourceCodeConsumer.swift */,
-				60A032AEBF53EC4C010BB930DE0FB49D /* SourceCodeEditorViewController.swift */,
-				7C2F6C5E84F01B56E569EEEE5846BB63 /* UIFont+SourceCode.swift */,
+				2E97CF3C0D7407F9505518A01B56B54F /* Classes */,
 			);
-			path = Classes;
+			path = Pod;
 			sourceTree = "<group>";
 		};
 		FFE72D5BC0407AE38CBDF7870D830FE7 /* Support Files */ = {
@@ -229,7 +247,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B2E0149FE927B5FE2556C3A45A7BF926 /* Build configuration list for PBXNativeTarget "SourceCodeEditor" */;
 			buildPhases = (
-				2940008C9FA19CD9025C4326D74AE8B6 /* Sources */,
+				0CAC0EB25D085D283C34406AB7772DDD /* Sources */,
 				6CC89D06DFB667A1A5D9CB603E7319B4 /* Frameworks */,
 				044F13CB12BE781FEAD3498714FCFCB5 /* Resources */,
 				EFC4A5C2D3F4F4D14373C37E5F53459F /* Headers */,
@@ -326,14 +344,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		2940008C9FA19CD9025C4326D74AE8B6 /* Sources */ = {
+		0CAC0EB25D085D283C34406AB7772DDD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2CD409E137F26BB18B1BA4FE4287BEE /* SourceCodeConsumer.swift in Sources */,
-				E8112240371F722FAE4ABCD61FDA3434 /* SourceCodeEditor-dummy.m in Sources */,
-				D61750AB6440A366FE5BB0E109A84AFD /* SourceCodeEditorViewController.swift in Sources */,
-				884D79578E67E412D32D41A2357A196C /* UIFont+SourceCode.swift in Sources */,
+				548FDE3F08DBD317D2C0EF62A1827B25 /* SCControlComponent.swift in Sources */,
+				B74A5C560960158DA7153D5FF3B1F919 /* SCCursorControl.swift in Sources */,
+				F554AF6AEC1F77749B499C237BDCE45A /* SCTableViewCell.swift in Sources */,
+				CC763DA6284991324C13B6C730F9EC4E /* SCTableViewComponent.swift in Sources */,
+				63E1A913722B6B5F86CAB7B7051B0573 /* SourceCodeConsumer.swift in Sources */,
+				0C415952E5D7417E69952FE715E89A6E /* SourceCodeEditor-dummy.m in Sources */,
+				7FDDF322603B9A3F663801E95D62DA4C /* SourceCodeEditorViewController.swift in Sources */,
+				4E43A21344A519750DA07489ADF01CF3 /* SourceCodeLabel.swift in Sources */,
+				087B06415AA7CCCF75113BB77DEEBD2A /* SourceCodeModel.swift in Sources */,
+				267D206E858907195B25711920801514 /* UIFont+SourceCode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
