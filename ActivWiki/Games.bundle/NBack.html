@@ -77,6 +77,9 @@
             // custom logic (WKWebView on iOS, WebView on android)
             var metaController = {
                 didComplete:function(opts, message){
+                    if(isDebug){
+                        return;
+                    }
                     setSavedOptions(opts);
                     alert(message)
                 },
@@ -208,54 +211,101 @@
                return typeof el.ontouchstart === "function";
             }
             
+            function mousemoveCanvas(event){
+                updateButtons(event,gameState.match,ButtonStateOver)
+                updateButtons(event,gameState.nonmatch,ButtonStateOver)
+            }
+            
             function mouseoverCanvas(){
-                gameState.buttonState = ButtonStateOver;
+                updateButtons(event,gameState.match,ButtonStateOver)
+                updateButtons(event,gameState.nonmatch,ButtonStateOver)
             }
             
             function mousedownCanvas(){
-                gameState.buttonState = ButtonStateDown;
+                updateButtons(event,gameState.match,ButtonStateDown)
+                updateButtons(event,gameState.nonmatch,ButtonStateDown)
             }
             
             function mouseupCanvas(){
-                gameState.buttonState = ButtonStateOver;
+                updateButtons(event,gameState.match,ButtonStateOver)
+                updateButtons(event,gameState.nonmatch,ButtonStateOver)
             }
             
             function mouseoutCanvas(){
-                gameState.buttonState = ButtonStateNone;
+                gameState.match.state = ButtonStateNone;
+                gameState.nonmatch.state = ButtonStateNone;
             }
             
             function touchstartCanvas(){
-                gameState.buttonState = ButtonStateDown;
+                updateButtons(event,gameState.match,ButtonStateDown)
+                updateButtons(event,gameState.nonmatch,ButtonStateDown)
             }
             
             function touchcancelCanvas(){
-                gameState.buttonState = ButtonStateNone;
+                gameState.match.state = ButtonStateNone;
+                gameState.nonmatch.state = ButtonStateNone;
             }
             
             function touchendCanvas(){
-                gameState.buttonState = ButtonStateNone;
+                gameState.match.state = ButtonStateNone;
+                gameState.nonmatch.state = ButtonStateNone;
             }
             
             function touchleaveCanvas(){
-                gameState.buttonState = ButtonStateNone;
+                gameState.match.state = ButtonStateNone;
+                gameState.nonmatch.state = ButtonStateNone;
+            }
+            
+            function updateButtons(event,button,buttonState){
+                if(hasValidButtonEvent(event,button,gameState.isRunning,canvas)){
+                    button.state = buttonState;
+                }else{
+                    button.state = ButtonStateNone;
+                }
             }
             
             function didClickCanvas(event){
-                if( hasValidButtonEvent(event,gameState,canvas) ){
+                if( hasValidButtonEvent(event,gameState.match,gameState.isRunning,canvas) ){
                     gameState.lastMatch = hashForCurrentIndexes(gameState)
                     if(!userGaveCorrectInput(gameState)){
                         gameOver();
+                        return;
+                    }
+                }
+                if( hasValidButtonEvent(event,gameState.nonmatch,gameState.isRunning,canvas) ){
+                    gameState.lastNonMatch = hashForCurrentIndexes(gameState)
+                    if(!userGaveCorrectInput(gameState)){
+                        gameOver();
+                        return;
                     }
                 }
             }
             
-            function hasValidButtonEvent(event,state,canvas){
-                var isInGeometry = gameState.buttonRect["x"] < event.offsetX &&
-                        gameState.buttonRect["y"] < event.offsetY &&
-                        gameState.buttonRect["x"] + gameState.buttonRect["width"] > event.offsetX &&
-                        gameState.buttonRect["y"] + gameState.buttonRect["height"] > event.offsetY;
-
-                return  gameState.isRunning && 
+            function didTapButton(button){
+                if( gameState.match == button && gameState.isRunning ){
+                    gameState.lastMatch = hashForCurrentIndexes(gameState)
+                    if(!userGaveCorrectInput(gameState)){
+                        gameOver();
+                        return;
+                    }
+                }
+                if( gameState.nonmatch == button && gameState.isRunning ){
+                    gameState.lastNonMatch = hashForCurrentIndexes(gameState)
+                    if(!userGaveCorrectInput(gameState)){
+                        gameOver();
+                        return;
+                    }
+                }
+            }
+            
+            
+            function hasValidButtonEvent(event,button,isRunning,canvas){
+                var isInGeometry = button.rect["x"] < event.offsetX &&
+                        button.rect["y"] < event.offsetY &&
+                        button.rect["x"] + button.rect["width"] > event.offsetX &&
+                        button.rect["y"] + button.rect["height"] > event.offsetY;
+                        
+                return  isRunning &&
                         event.target == canvas &&
                         isInGeometry;
             }
@@ -263,6 +313,10 @@
 
             
             function startListeningForEvents(){
+            
+                new ClickListener(gameState.match);
+                new ClickListener(gameState.nonmatch);
+            
                 canvas.addEventListener("click",didClickCanvas);
                 if(isTouchDevice()){
                     canvas.addEventListener("touchstart", touchstartCanvas);
@@ -270,6 +324,7 @@
                     canvas.addEventListener("touchcancel", touchcancelCanvas);
                     canvas.addEventListener("touchleave", touchleaveCanvas);
                 }else{
+                    canvas.addEventListener("mousemove",mousemoveCanvas);
                     canvas.addEventListener("mouseover",mouseoverCanvas);
                     canvas.addEventListener("mousedown",mousedownCanvas);
                     canvas.addEventListener("mouseup",mouseupCanvas);
@@ -285,12 +340,81 @@
                     canvas.removeEventListener("touchcancel", touchcancelCanvas);
                     canvas.removeEventListener("touchleave", touchleaveCanvas);
                 }else{
+                    canvas.removeEventListener("mousemove",mousemoveCanvas);
                     canvas.removeEventListener("mouseover",mouseoverCanvas);
                     canvas.removeEventListener("mousedown",mousedownCanvas);
                     canvas.removeEventListener("mouseup",mouseupCanvas);
                     canvas.removeEventListener("mouseout",mouseoutCanvas);
                 }
             }
+            
+            
+            
+            
+            function ClickListener(button) {
+                this.button = button
+                window.addEventListener(this.keydownName, this, false);
+            }
+            
+            ClickListener.prototype = {
+                
+                keydownName:'keydown',
+                keyupName:'keyup',
+                
+                handleEvent: function(e) {
+                    switch(e.type) {
+                        case this.keydownName: this.onKeyStart(e); break;
+                        case this.keyupName: this.onKeyEnd(e); break;
+                    }
+                },
+                
+                onKeyStart: function(e) {
+                    var isUnmodified = !e.metaKey && !e.ctrlKey  && !e.altKey;
+                    if( isUnmodified ){
+                        e.preventDefault();
+                        var key = this.stringFromKeyCode(e.keyCode ? e.keyCode : e.which)
+                        if(key == this.button.letter){
+                            this.button.state = ButtonStateDown;
+                            window.addEventListener(this.keyupName, this, false);
+                        }
+                    }
+                    
+                },
+                
+                onKeyEnd: function(e) {
+                    var isUnmodified = !e.metaKey && !e.ctrlKey  && !e.altKey;
+                    if( isUnmodified ){
+                        e.preventDefault();
+                    }
+                    var key = this.stringFromKeyCode(e.keyCode ? e.keyCode : e.which)
+                    if(key == this.element.letter){
+                        window.removeEventListener(this.keyupName, this, false);
+                        this.button.state = ButtonStateNone;
+                        if( isUnmodified ){
+                            didTapKey(this.element.letter);
+                        }
+                    }
+                },
+                
+                stringFromKeyCode: function(keyCode) {
+                    if ( 65 <= keyCode && keyCode <= 90 ) {
+                        return String.fromCharCode(keyCode).toLowerCase();
+                    } else if( keyCode == 8 || keyCode == 46 ) {
+                        return "del";
+                    } else if( keyCode == 32 ){
+                        return "space";
+                    } else {
+                        return "NOT FOUND"
+                    }
+                }
+                
+            };
+            
+            
+            
+            
+            
+            
             
             /************************************************/
             /* START/STOP                                   */
@@ -320,6 +444,8 @@
                 
                 
                 if(gameState != null){
+                    
+                    stopListeningForEvents();
                     
                     if(options == null){
                         options = {}
@@ -355,8 +481,6 @@
                     options["n"] = n
                     
                     gameState = null;
-                    
-                    stopListeningForEvents();
                     
                     metaController.didComplete(options, message)
                     
@@ -431,14 +555,65 @@
                     "ticksToStartSpeed":TicksPerItem*itemCount + 21000,
                     "ticksToFullSpeed":TicksPerItem*itemCount + 60000,
                     "itemsToNextLevel":50,
-                    "buttonState":0,
                     "highscore":highscore,
-                    "buttonRect":{
-                        "x":boardWidth*0.25,
-                        "y":boardHeight*0.8,
-                        "width":boardWidth*0.5,
-                        "height":boardHeight*0.2,
+                    "match":{
+                        "letter":"z",
+                        "title":"=",
+                        "state":0,
+                        "rect":{
+                            "x":0,
+                            "y":0,
+                            "width":boardWidth*0.2,
+                            "height":boardHeight*0.2,
+                        },
+                        "colors":{
+                            0:{
+                                "fill":"rgba(196,255,215,1.0)",
+                                "stroke":'rgba(1,125,2,1.0)',
+                                "text":'rgba(31,88,54,1.0)'
+                            },
+                            1:{
+                                "fill":"rgba(255,255,255,1.0)",
+                                "stroke":'rgba(1,125,2,1.0)',
+                                "text":'rgba(31,88,54,1.0)'
+                            },
+                            2:{
+                                "fill":"rgba(56,173,93,1.0)",
+                                "stroke":'rgba(1,125,2,1.0)',
+                                "text":'rgba(31,88,54,1.0)'
+                            },
+                        }
+                    },
+                    "nonmatch":{
+                        "letter":"x",
+                        "title":"\u2260",
+                        "state":0,
+                        "rect":{
+                            "x":0,
+                            "y":0,
+                            "width":boardWidth*0.2,
+                            "height":boardHeight*0.2,
+                        },
+                        "colors":{
+                            0:{
+                                "fill":"rgba(255,196,196,1.0)",
+                                "stroke":'rgba(139,0,0,1.0)',
+                                "text":'rgba(125,1,1,1.0)'
+                            },
+                            1:{
+                                "fill":"rgba(255,255,255,1.0)",
+                                "stroke":'rgba(139,0,0,1.0)',
+                                "text":'rgba(125,1,1,1.0)'
+                            },
+                            2:{
+                                "fill":"rgba(170,56,56,1.0)",
+                                "stroke":'rgba(139,0,0,1.0)',
+                                "text":'rgba(125,1,1,1.0)'
+                            },
+                        }    
+                        
                     }
+                    
                 };
             }
         
@@ -510,10 +685,16 @@
                 
                 //add new elements, get rid of old elements
                 
-                state.buttonRect = {
+                state.match.rect = {
                                     "x":boardWidth*0.25,
                                     "y":boardHeight*0.8,
-                                    "width":boardWidth*0.5,
+                                    "width":boardWidth*0.2,
+                                    "height":boardHeight*0.2,
+                                };
+                state.nonmatch.rect = {
+                                    "x":boardWidth*0.50,
+                                    "y":boardHeight*0.8,
+                                    "width":boardWidth*0.2,
                                     "height":boardHeight*0.2,
                                 };
                 
@@ -525,7 +706,13 @@
                 
                 var hash = hashForCurrentIndexes( state )
                 
-                return (state.lastMatch == hash && matches ) || (state.lastMatch != hash && !matches )
+                //user must provide feedback on either a match or a non match
+                if(matches){
+                    return state.lastMatch == hash;
+                }else{
+                    return state.lastNonMatch == hash;
+                }
+                
             }
         
             function getNextSymbol(state, randFunc){
@@ -614,7 +801,12 @@
                     drawMemoryElement(ctx, item , x , y, width, height);
                 }
                 
-                drawFrame(ctx, xOffset*0.90, xPositions[state.firstIndex] + xOffset/2.0, xPositions[state.secondIndex] + xOffset/2.0);
+                drawFrame(ctx, 
+                    state.match.rect, 
+                    state.nonmatch.rect, 
+                    xOffset*0.90, 
+                    xPositions[state.firstIndex] + xOffset/2.0, 
+                    xPositions[state.secondIndex] + xOffset/2.0);
                 
                 var visibleMargin = Math.floor(boardHeight*0.05);
                 var coverWidth = 0;
@@ -628,19 +820,18 @@
                 }
                 drawCover(ctx, 0, y + visibleMargin, coverWidth,height - visibleMargin*2);
                 
-                drawMatchButton(ctx,"Matches",
-                    state.buttonState,
-                    state.buttonRect["x"],
-                    state.buttonRect["y"],
-                    state.buttonRect["width"],
-                    state.buttonRect["height"]);
+                
+                
+                drawMatchButton(ctx, state.match);
+
+                drawMatchButton(ctx, state.nonmatch);
                 
             }
 
             function drawCover(ctx, x,y,width, height ){
-                ctx.fillStyle = 'rgb(128,128,128)';
-                ctx.strokeStyle = 'rgba(0,0,0,0.0)';
-                ctx.lineWidth =0.0;
+                ctx.fillStyle = 'rgb(32,139,171)';
+                ctx.strokeStyle = 'rgba(1,77,155,1.0)';
+                ctx.lineWidth =4.0;
                 
                 ctx.beginPath();
                 ctx.moveTo(x,y);
@@ -651,48 +842,53 @@
                 ctx.closePath();
                 
                 ctx.fill()
+                ctx.stroke()
                 
 
             }
             
-            function drawFrame(ctx, width, firstX, secondX ){
+            function drawFrame(ctx, button1, button2, width, firstX, secondX ){
                 ctx.strokeStyle = 'rgba(0,0,0,1.0)';
                 
-                ctx.beginPath();
                 ctx.lineWidth = 2;
                 
-                ctx.moveTo(boardWidth/2.0,boardHeight*0.8);
-                ctx.lineTo(boardWidth/2.0,boardHeight*0.7);
-                ctx.lineTo(secondX,boardHeight*0.7);
-                ctx.lineTo(secondX,boardHeight*0.6);
-                
-                ctx.moveTo(boardWidth/2.0,boardHeight*0.8);
-                ctx.lineTo(boardWidth/2.0,boardHeight*0.7);
-                ctx.lineTo(firstX,boardHeight*0.7);
-                ctx.lineTo(firstX,boardHeight*0.6);
-                
-                ctx.moveTo(secondX,boardHeight*0.7);
-                ctx.lineTo(secondX,boardHeight*0.6);
-                
-                ctx.moveTo(firstX-width/2.0,boardHeight*0.6);
+                //first (left) element
+                ctx.moveTo(firstX-width/2.0,boardHeight*0.55);
+                ctx.lineTo(firstX-width/2.0,boardHeight*0.6);
                 ctx.lineTo(firstX+width/2.0,boardHeight*0.6);
-                
-                ctx.moveTo(secondX-width/2.0,boardHeight*0.6);
-                ctx.lineTo(secondX+width/2.0,boardHeight*0.6);
-                
-                ctx.moveTo(secondX-width/2.0,boardHeight*0.6);
-                ctx.lineTo(secondX-width/2.0,boardHeight*0.55);
-                
-                ctx.moveTo(secondX+width/2.0,boardHeight*0.6);
-                ctx.lineTo(secondX+width/2.0,boardHeight*0.55);
-                
-                ctx.moveTo(firstX-width/2.0,boardHeight*0.6);
-                ctx.lineTo(firstX-width/2.0,boardHeight*0.55);
-                
-                ctx.moveTo(firstX+width/2.0,boardHeight*0.6);
                 ctx.lineTo(firstX+width/2.0,boardHeight*0.55);
                 
-                ctx.closePath();
+                //second (right) element
+                ctx.moveTo(secondX+width/2.0,boardHeight*0.55);
+                ctx.lineTo(secondX+width/2.0,boardHeight*0.6);
+                ctx.lineTo(secondX-width/2.0,boardHeight*0.6);
+                ctx.lineTo(secondX-width/2.0,boardHeight*0.55);
+                
+                //connection beneath elements
+                ctx.moveTo(secondX,boardHeight*0.6);
+                ctx.lineTo(secondX,boardHeight*0.65);
+                ctx.lineTo(firstX,boardHeight*0.65);
+                ctx.lineTo(firstX,boardHeight*0.6);
+                
+                var elementMidX = (firstX+secondX)/2;
+                //smaller inidivdual joiner
+                ctx.moveTo(elementMidX,boardHeight*0.65);
+                ctx.lineTo(elementMidX,boardHeight*0.70);
+                
+                var button1X = button1.x+button1.width/2.0;
+                var button2X = button2.x+button2.width/2.0;
+                
+                var leftX = Math.min(button1X,button2X,elementMidX);
+                var rightX = Math.max(button1X,button2X,elementMidX);
+                
+                ctx.moveTo(leftX,boardHeight*0.70);
+                ctx.lineTo(rightX,boardHeight*0.70);
+
+                ctx.moveTo(button1X,boardHeight*0.70);
+                ctx.lineTo(button1X,button1.y);
+
+                ctx.moveTo(button2X,boardHeight*0.70);
+                ctx.lineTo(button2X,button2.y);
                 
                 ctx.stroke()
                 
@@ -719,11 +915,11 @@
                 m_canvas.height = height;
                 var m_context = m_canvas.getContext('2d');
                 
-                m_context.fillStyle = 'rgba(0,0,0,0.4)';
-                m_context.strokeStyle = 'rgba(0,0,0,1.0)';
+                m_context.fillStyle = 'rgba(255,255,255,1)';
+                m_context.strokeStyle = 'rgba(207,2,2,1.0)';
             
                 m_context.beginPath();
-                m_context.lineWidth = Math.floor(0.05*width);
+                m_context.lineWidth = Math.floor(0.10*width);
                 m_context.moveTo(0,0);
                 m_context.lineTo(0,height);
                 m_context.lineTo(width,height);
@@ -737,52 +933,42 @@
             
                 var fontHeight = 40;
             
+                m_context.fillStyle = 'rgba(0,0,0,1)';
                 m_context.font = 'italic 40pt Calibri, sans-serif';
                 m_context.fillText(symbol, (width-fontHeight)/2.0, (height-fontHeight)/2.0+fontHeight);
                 return m_canvas;
             }
 
-            function drawMatchButton(ctx, title, buttonState, x,y,width,height){
+            function drawMatchButton(ctx, button){
                 
-                var key = title+"-"+buttonState+"-"+width+"-"+height;
+                var key = button.title+"-"+button.state+"-"+button.rect.width+"-"+button.rect.height;
                 
                 var image = ctx['prerenderedBuffers'][key];
                 
                 if( image == null ){
-                    image = prerenderMatchButton(title, buttonState,width,height);
+                    image = prerenderMatchButton(button);
                     ctx['prerenderedBuffers'][key] = image;
                 }
                 
-                ctx.drawImage(image, x, y);
+                ctx.drawImage(image, button.rect.x, button.rect.y);
                 
             }
             
-            function prerenderMatchButton(title, buttonState,width,height){
+            function prerenderMatchButton(button){
                 var m_canvas = document.createElement('canvas');
-                m_canvas.width = width;
-                m_canvas.height = height;
+                m_canvas.width = button.rect.width;
+                m_canvas.height = button.rect.height;
                 
                 var m_context = m_canvas.getContext('2d');
-                
-                switch(buttonState){
-                    case 0:
-                        m_context.fillStyle = 'rgba(255,255,255,1.0)';
-                        break;
-                    case 1:
-                        m_context.fillStyle = 'rgba(255,0,255,1.0)';
-                        break;
-                    case 2:
-                        m_context.fillStyle = 'rgba(255,255,0,1.0)';
-                        break;
-                }
-                m_context.strokeStyle = 'rgba(0,0,0,1.0)';
-                
+                var colors = button["colors"][button.state];
+                m_context.fillStyle = colors.fill;
+                m_context.strokeStyle = colors.stroke;
                 m_context.beginPath();
-                m_context.lineWidth = Math.floor(0.02*width);
+                m_context.lineWidth = Math.floor(0.05*button.rect.width);
                 m_context.moveTo(0,0);
-                m_context.lineTo(0,height);
-                m_context.lineTo(width,height);
-                m_context.lineTo(width,0);
+                m_context.lineTo(0,button.rect.height);
+                m_context.lineTo(button.rect.width,button.rect.height);
+                m_context.lineTo(button.rect.width,0);
                 m_context.lineTo(0,0);
                 m_context.closePath();
                 
@@ -792,9 +978,9 @@
                 
                 var fontHeight = 40;
                 
-                m_context.fillStyle = 'rgba(128,128,128,1.0)';
-                m_context.font = 'italic 40pt Calibri, sans-serif';
-                m_context.fillText(title, 10.0, (height-fontHeight)/2.0+fontHeight);
+                m_context.fillStyle = colors.text;
+                m_context.font = 'italic 40pt sans-serif';
+                m_context.fillText(button.title, (button.rect.width-fontHeight)/2.0, (button.rect.height-fontHeight)/2.0+fontHeight);
                 
                 return m_canvas;
             }
