@@ -12,15 +12,12 @@
 		770D42C31BCF047300C2C3A6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 770D42C11BCF047300C2C3A6 /* Main.storyboard */; };
 		770D42C51BCF047300C2C3A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 770D42C41BCF047300C2C3A6 /* Assets.xcassets */; };
 		770D42C81BCF047300C2C3A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 770D42C61BCF047300C2C3A6 /* LaunchScreen.storyboard */; };
-		770D42D31BCF047300C2C3A6 /* ActivWikiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770D42D21BCF047300C2C3A6 /* ActivWikiTests.swift */; };
 		770D42DE1BCF047300C2C3A6 /* ActivWikiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770D42DD1BCF047300C2C3A6 /* ActivWikiUITests.swift */; };
 		770D42EC1BCF094700C2C3A6 /* Games.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 770D42EB1BCF094700C2C3A6 /* Games.bundle */; };
 		77DF26271BD113CB0013696A /* WebViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF26261BD113CB0013696A /* WebViewComponent.swift */; };
 		77DF262B1BD595970013696A /* GamesBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF262A1BD595970013696A /* GamesBundle.swift */; };
 		77DF262D1BD5996C0013696A /* GamesBundleUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF262C1BD5996C0013696A /* GamesBundleUnitTests.swift */; };
 		77DF26351BD6EA550013696A /* metacontroller.js in Resources */ = {isa = PBXBuildFile; fileRef = 77DF26341BD6EA550013696A /* metacontroller.js */; };
-		77E86F251BD8F3D400A1FA89 /* ActivityTestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E86F241BD8F3D400A1FA89 /* ActivityTestingViewController.swift */; };
-		7C30783A137809FE195C49D3 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 750F1EB845F0D6DFBDCC270E /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,19 +38,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1EA66DB4A1B0753626CD9693 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		750F1EB845F0D6DFBDCC270E /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		770D42BA1BCF047300C2C3A6 /* ActivWiki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActivWiki.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		770D42BA1BCF047300C2C3A6 /* OpenBrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenBrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		770D42BD1BCF047300C2C3A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		770D42BF1BCF047300C2C3A6 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		770D42C21BCF047300C2C3A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		770D42C41BCF047300C2C3A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		770D42C71BCF047300C2C3A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		770D42C91BCF047300C2C3A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		770D42CE1BCF047300C2C3A6 /* ActivWikiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ActivWikiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		770D42D21BCF047300C2C3A6 /* ActivWikiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivWikiTests.swift; sourceTree = "<group>"; };
+		770D42CE1BCF047300C2C3A6 /* OpenBrain.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenBrain.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		770D42D41BCF047300C2C3A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		770D42D91BCF047300C2C3A6 /* ActivWikiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ActivWikiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		770D42D91BCF047300C2C3A6 /* OpenBrain.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenBrain.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		770D42DD1BCF047300C2C3A6 /* ActivWikiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivWikiUITests.swift; sourceTree = "<group>"; };
 		770D42DF1BCF047300C2C3A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		770D42EB1BCF094700C2C3A6 /* Games.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Games.bundle; sourceTree = "<group>"; };
@@ -61,8 +56,6 @@
 		77DF262A1BD595970013696A /* GamesBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesBundle.swift; sourceTree = "<group>"; };
 		77DF262C1BD5996C0013696A /* GamesBundleUnitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesBundleUnitTests.swift; sourceTree = "<group>"; };
 		77DF26341BD6EA550013696A /* metacontroller.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = metacontroller.js; sourceTree = "<group>"; };
-		77E86F241BD8F3D400A1FA89 /* ActivityTestingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTestingViewController.swift; sourceTree = "<group>"; };
-		9519DCBE1B89510AA2D2A03F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,7 +63,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C30783A137809FE195C49D3 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,23 +91,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		552D5994190518989C0FAD34 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				1EA66DB4A1B0753626CD9693 /* Pods.debug.xcconfig */,
-				9519DCBE1B89510AA2D2A03F /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		770D42B11BCF047300C2C3A6 = {
 			isa = PBXGroup;
 			children = (
-				770D42BC1BCF047300C2C3A6 /* ActivWiki */,
-				770D42D11BCF047300C2C3A6 /* ActivWikiTests */,
-				770D42DC1BCF047300C2C3A6 /* ActivWikiUITests */,
+				770D42BC1BCF047300C2C3A6 /* OpenBrain */,
+				770D42D11BCF047300C2C3A6 /* OpenBrainTests */,
+				770D42DC1BCF047300C2C3A6 /* OpenBrainUITests */,
 				770D42BB1BCF047300C2C3A6 /* Products */,
-				552D5994190518989C0FAD34 /* Pods */,
 				4EF2F4FFCEEEC1CDDDED53D4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -123,19 +105,18 @@
 		770D42BB1BCF047300C2C3A6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				770D42BA1BCF047300C2C3A6 /* ActivWiki.app */,
-				770D42CE1BCF047300C2C3A6 /* ActivWikiTests.xctest */,
-				770D42D91BCF047300C2C3A6 /* ActivWikiUITests.xctest */,
+				770D42BA1BCF047300C2C3A6 /* OpenBrain.app */,
+				770D42CE1BCF047300C2C3A6 /* OpenBrain.xctest */,
+				770D42D91BCF047300C2C3A6 /* OpenBrain.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		770D42BC1BCF047300C2C3A6 /* ActivWiki */ = {
+		770D42BC1BCF047300C2C3A6 /* OpenBrain */ = {
 			isa = PBXGroup;
 			children = (
 				770D42BD1BCF047300C2C3A6 /* AppDelegate.swift */,
 				770D42BF1BCF047300C2C3A6 /* ActivityViewController.swift */,
-				77E86F241BD8F3D400A1FA89 /* ActivityTestingViewController.swift */,
 				77DF26261BD113CB0013696A /* WebViewComponent.swift */,
 				77DF262A1BD595970013696A /* GamesBundle.swift */,
 				770D42C11BCF047300C2C3A6 /* Main.storyboard */,
@@ -145,54 +126,50 @@
 				77DF26341BD6EA550013696A /* metacontroller.js */,
 				770D42EB1BCF094700C2C3A6 /* Games.bundle */,
 			);
-			path = ActivWiki;
+			path = OpenBrain;
 			sourceTree = "<group>";
 		};
-		770D42D11BCF047300C2C3A6 /* ActivWikiTests */ = {
+		770D42D11BCF047300C2C3A6 /* OpenBrainTests */ = {
 			isa = PBXGroup;
 			children = (
-				770D42D21BCF047300C2C3A6 /* ActivWikiTests.swift */,
 				77DF262C1BD5996C0013696A /* GamesBundleUnitTests.swift */,
 				770D42D41BCF047300C2C3A6 /* Info.plist */,
 			);
-			path = ActivWikiTests;
+			path = OpenBrainTests;
 			sourceTree = "<group>";
 		};
-		770D42DC1BCF047300C2C3A6 /* ActivWikiUITests */ = {
+		770D42DC1BCF047300C2C3A6 /* OpenBrainUITests */ = {
 			isa = PBXGroup;
 			children = (
 				770D42DD1BCF047300C2C3A6 /* ActivWikiUITests.swift */,
 				770D42DF1BCF047300C2C3A6 /* Info.plist */,
 			);
-			path = ActivWikiUITests;
+			path = OpenBrainUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		770D42B91BCF047300C2C3A6 /* ActivWiki */ = {
+		770D42B91BCF047300C2C3A6 /* OpenBrain */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 770D42E21BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "ActivWiki" */;
+			buildConfigurationList = 770D42E21BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "OpenBrain" */;
 			buildPhases = (
-				D8E7C5A85DCFABB29CE9ABF6 /* Check Pods Manifest.lock */,
 				770D42B61BCF047300C2C3A6 /* Sources */,
 				770D42B71BCF047300C2C3A6 /* Frameworks */,
 				770D42B81BCF047300C2C3A6 /* Resources */,
-				86473A92FE5A62B04160F3C3 /* Embed Pods Frameworks */,
-				B13FE16BF8439B0744923C09 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = ActivWiki;
+			name = OpenBrain;
 			productName = ActivWiki;
-			productReference = 770D42BA1BCF047300C2C3A6 /* ActivWiki.app */;
+			productReference = 770D42BA1BCF047300C2C3A6 /* OpenBrain.app */;
 			productType = "com.apple.product-type.application";
 		};
-		770D42CD1BCF047300C2C3A6 /* ActivWikiTests */ = {
+		770D42CD1BCF047300C2C3A6 /* OpenBrainTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 770D42E51BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "ActivWikiTests" */;
+			buildConfigurationList = 770D42E51BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "OpenBrainTests" */;
 			buildPhases = (
 				770D42CA1BCF047300C2C3A6 /* Sources */,
 				770D42CB1BCF047300C2C3A6 /* Frameworks */,
@@ -203,14 +180,14 @@
 			dependencies = (
 				770D42D01BCF047300C2C3A6 /* PBXTargetDependency */,
 			);
-			name = ActivWikiTests;
+			name = OpenBrainTests;
 			productName = ActivWikiTests;
-			productReference = 770D42CE1BCF047300C2C3A6 /* ActivWikiTests.xctest */;
+			productReference = 770D42CE1BCF047300C2C3A6 /* OpenBrain.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		770D42D81BCF047300C2C3A6 /* ActivWikiUITests */ = {
+		770D42D81BCF047300C2C3A6 /* OpenBrainUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 770D42E81BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "ActivWikiUITests" */;
+			buildConfigurationList = 770D42E81BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "OpenBrainUITests" */;
 			buildPhases = (
 				770D42D51BCF047300C2C3A6 /* Sources */,
 				770D42D61BCF047300C2C3A6 /* Frameworks */,
@@ -221,9 +198,9 @@
 			dependencies = (
 				770D42DB1BCF047300C2C3A6 /* PBXTargetDependency */,
 			);
-			name = ActivWikiUITests;
+			name = OpenBrainUITests;
 			productName = ActivWikiUITests;
-			productReference = 770D42D91BCF047300C2C3A6 /* ActivWikiUITests.xctest */;
+			productReference = 770D42D91BCF047300C2C3A6 /* OpenBrain.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -250,7 +227,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 770D42B51BCF047300C2C3A6 /* Build configuration list for PBXProject "ActivWiki" */;
+			buildConfigurationList = 770D42B51BCF047300C2C3A6 /* Build configuration list for PBXProject "OpenBrain" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -263,9 +240,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				770D42B91BCF047300C2C3A6 /* ActivWiki */,
-				770D42CD1BCF047300C2C3A6 /* ActivWikiTests */,
-				770D42D81BCF047300C2C3A6 /* ActivWikiUITests */,
+				770D42B91BCF047300C2C3A6 /* OpenBrain */,
+				770D42CD1BCF047300C2C3A6 /* OpenBrainTests */,
+				770D42D81BCF047300C2C3A6 /* OpenBrainUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -299,60 +276,11 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		86473A92FE5A62B04160F3C3 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B13FE16BF8439B0744923C09 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D8E7C5A85DCFABB29CE9ABF6 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		770D42B61BCF047300C2C3A6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77E86F251BD8F3D400A1FA89 /* ActivityTestingViewController.swift in Sources */,
 				77DF26271BD113CB0013696A /* WebViewComponent.swift in Sources */,
 				770D42C01BCF047300C2C3A6 /* ActivityViewController.swift in Sources */,
 				770D42BE1BCF047300C2C3A6 /* AppDelegate.swift in Sources */,
@@ -364,7 +292,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				770D42D31BCF047300C2C3A6 /* ActivWikiTests.swift in Sources */,
 				77DF262D1BD5996C0013696A /* GamesBundleUnitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,12 +309,12 @@
 /* Begin PBXTargetDependency section */
 		770D42D01BCF047300C2C3A6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 770D42B91BCF047300C2C3A6 /* ActivWiki */;
+			target = 770D42B91BCF047300C2C3A6 /* OpenBrain */;
 			targetProxy = 770D42CF1BCF047300C2C3A6 /* PBXContainerItemProxy */;
 		};
 		770D42DB1BCF047300C2C3A6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 770D42B91BCF047300C2C3A6 /* ActivWiki */;
+			target = 770D42B91BCF047300C2C3A6 /* OpenBrain */;
 			targetProxy = 770D42DA1BCF047300C2C3A6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -497,30 +424,28 @@
 		};
 		770D42E31BCF047300C2C3A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1EA66DB4A1B0753626CD9693 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = ActivWiki/Info.plist;
+				INFOPLIST_FILE = OpenBrain/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.ActivWiki;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.OpenBrain;
+				PRODUCT_NAME = OpenBrain;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		770D42E41BCF047300C2C3A6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9519DCBE1B89510AA2D2A03F /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = ActivWiki/Info.plist;
+				INFOPLIST_FILE = OpenBrain/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.ActivWiki;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.OpenBrain;
+				PRODUCT_NAME = OpenBrain;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
@@ -529,11 +454,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = ActivWikiTests/Info.plist;
+				INFOPLIST_FILE = OpenBrainTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.ActivWikiTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ActivWiki.app/ActivWiki";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.OpenBrainTests;
+				PRODUCT_NAME = OpenBrain;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenBrain.app/OpenBrain";
 			};
 			name = Debug;
 		};
@@ -541,11 +466,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = ActivWikiTests/Info.plist;
+				INFOPLIST_FILE = OpenBrainTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.ActivWikiTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ActivWiki.app/ActivWiki";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.OpenBrainTests;
+				PRODUCT_NAME = OpenBrain;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenBrain.app/OpenBrain";
 			};
 			name = Release;
 		};
@@ -554,12 +479,12 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = ActivWikiUITests/Info.plist;
+				INFOPLIST_FILE = OpenBrainUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.ActivWikiUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.OpenBrainUITests;
+				PRODUCT_NAME = OpenBrain;
 				PROVISIONING_PROFILE = "";
-				TEST_TARGET_NAME = ActivWiki;
+				TEST_TARGET_NAME = OpenBrain;
 				USES_XCTRUNNER = YES;
 			};
 			name = Debug;
@@ -569,12 +494,12 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = ActivWikiUITests/Info.plist;
+				INFOPLIST_FILE = OpenBrainUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.ActivWikiUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.OpenBrainUITests;
+				PRODUCT_NAME = OpenBrain;
 				PROVISIONING_PROFILE = "";
-				TEST_TARGET_NAME = ActivWiki;
+				TEST_TARGET_NAME = OpenBrain;
 				USES_XCTRUNNER = YES;
 			};
 			name = Release;
@@ -582,7 +507,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		770D42B51BCF047300C2C3A6 /* Build configuration list for PBXProject "ActivWiki" */ = {
+		770D42B51BCF047300C2C3A6 /* Build configuration list for PBXProject "OpenBrain" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				770D42E01BCF047300C2C3A6 /* Debug */,
@@ -591,7 +516,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		770D42E21BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "ActivWiki" */ = {
+		770D42E21BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "OpenBrain" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				770D42E31BCF047300C2C3A6 /* Debug */,
@@ -600,7 +525,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		770D42E51BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "ActivWikiTests" */ = {
+		770D42E51BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "OpenBrainTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				770D42E61BCF047300C2C3A6 /* Debug */,
@@ -609,7 +534,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		770D42E81BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "ActivWikiUITests" */ = {
+		770D42E81BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "OpenBrainUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				770D42E91BCF047300C2C3A6 /* Debug */,

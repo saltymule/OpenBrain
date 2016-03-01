@@ -1,6 +1,6 @@
 //
 //  WebViewComponent.swift
-//  ActivWiki
+//  OpenBrain
 //
 //  Created by Daniel Mueller on 10/16/15.
 //  Copyright © 2015 Daniel Mueller. All rights reserved.

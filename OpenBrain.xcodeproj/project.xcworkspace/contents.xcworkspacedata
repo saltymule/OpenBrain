@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:ActivWiki.xcodeproj">
+      location = "self:/Users/saltymule/Projects/ActivWiki/OpenBrain.xcodeproj">
    </FileRef>
 </Workspace>

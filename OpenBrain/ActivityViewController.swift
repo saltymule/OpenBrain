@@ -1,13 +1,12 @@
 //
 //  ActivityViewController.swift
-//  ActivWiki
+//  OpenBrain
 //
 //  Created by Daniel Mueller on 10/14/15.
 //  Copyright © 2015 Daniel Mueller. All rights reserved.
 //
 
 import UIKit
-import SourceCodeEditor
 
 func CGRectOffsetTop(rect:CGRect, offset:CGFloat) -> CGRect {
     var result = rect
@@ -64,38 +63,7 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
         
     }
     
-    func editActivity(){
-        self.performSegueWithIdentifier("Edit", sender: nil)
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        guard   let navController:UINavigationController = segue.destinationViewController as? UINavigationController,
-                let editorController:SourceCodeEditorViewController = navController.viewControllers.first as? SourceCodeEditorViewController else{
-                return;
-        }
-        
-        editorController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "didTapSourceCodeCancelButton:")
-        
-        editorController.sourceCode = self.webViewComponent.htmlString
-
-    }
-    
     func didTapSourceCodeCancelButton(sender:AnyObject?){
-        self.dismissViewControllerAnimated(true, completion: nil)
-        self.loadNextActivity()
-    }
-    
-    func saveSourceCode(){
-        guard   let navController:UINavigationController = self.presentedViewController as? UINavigationController,
-                let editorController:SourceCodeEditorViewController = navController.viewControllers.first as? SourceCodeEditorViewController,
-                let item = bundleItem,
-                let htmlString = editorController.sourceCode else{
-                return;
-        }
-        
-        self.gamesBundle.setHTMLString(htmlString, item: item)
-        
         self.dismissViewControllerAnimated(true, completion: nil)
         self.loadNextActivity()
     }
@@ -115,12 +83,6 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
         let menuMessage = message ?? "Game Ended"
         
         let controller = UIAlertController(title: "Menu", message: menuMessage, preferredStyle: .ActionSheet)
-//        
-//        if !isFirst {
-//            controller.addAction(UIAlertAction(title: "Edit", style: .Default, handler: { (action) -> Void in
-//                self.editActivity()
-//            }))
-//        }
         
         let startTitle = isFirst ? "Start" : "Next"
         

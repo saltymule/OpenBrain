@@ -1,6 +1,6 @@
 //
 //  GamesBundle.swift
-//  ActivWiki
+//  OpenBrain
 //
 //  Created by Daniel Mueller on 10/19/15.
 //  Copyright © 2015 Daniel Mueller. All rights reserved.
