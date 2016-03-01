@@ -1,6 +1,0 @@
-framework module SourceCodeEditor {
-  umbrella header "SourceCodeEditor-umbrella.h"
-
-  export *
-  module * { export * }
-}

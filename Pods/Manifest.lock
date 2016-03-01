@@ -1,14 +1,1 @@
-PODS:
-  - SourceCodeEditor (0.1.0)
-
-DEPENDENCIES:
-  - SourceCodeEditor (from `../SourceCodeEditor`)
-
-EXTERNAL SOURCES:
-  SourceCodeEditor:
-    :path: ../SourceCodeEditor
-
-SPEC CHECKSUMS:
-  SourceCodeEditor: 22088e8e21c62c62f34d1e88c782b7dcf8be3236
-
 COCOAPODS: 0.39.0
