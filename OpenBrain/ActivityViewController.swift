@@ -50,19 +50,26 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
     
     func loadNextActivity(){
         
-        bundleItem = self.gamesBundle.nextItem()
+        if let item = self.gamesBundle.nextItem() {
+            self.loadActivity(item)
+        }
         
-        guard   let item = bundleItem,
-                let string = self.gamesBundle.getHTMLString(item) else  {
+    }
+
+    func loadActivity(item:[String:AnyObject]){
+        
+        guard let string = self.gamesBundle.getHTMLString(item) else  {
             return
         }
+        
+        bundleItem = item
         
         let options  = self.loadOptions(item) ?? [:]
         
         self.webViewComponent.start(string, options:options)
         
     }
-    
+
     func didTapSourceCodeCancelButton(sender:AnyObject?){
         self.dismissViewControllerAnimated(true, completion: nil)
         self.loadNextActivity()
@@ -90,6 +97,25 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
             self.loadNextActivity()
         }))
         
+        controller.addAction(UIAlertAction(title: "Select", style: .Default, handler: { (action) -> Void in
+            self.selectActivity()
+        }))
+        
+        self.presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    func selectActivity(){
+        
+        let controller = UIAlertController(title: "Select", message: nil, preferredStyle: .ActionSheet)
+        
+        for item in self.gamesBundle.manifest {
+            if let name = item["name"] as? String{
+                controller.addAction(UIAlertAction(title: name, style: .Default, handler: { (action) -> Void in
+                    self.loadActivity(item)
+                }))
+            }
+        }
+                
         self.presentViewController(controller, animated: true, completion: nil)
     }
     
