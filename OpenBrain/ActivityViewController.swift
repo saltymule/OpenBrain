@@ -21,6 +21,12 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
     
     lazy var gamesBundle:GamesBundle = GamesBundle.gamesBundle()!
     
+    var application:UIApplication {
+        get{
+            return UIApplication.sharedApplication()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,6 +64,9 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
 
     func loadActivity(item:[String:AnyObject]){
         
+        //when we are running an activity, don't turn off the screen automatically
+        self.application.idleTimerDisabled = true
+        
         guard let string = self.gamesBundle.getHTMLString(item) else  {
             return
         }
@@ -84,6 +93,8 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
         
         self.presentMenu(message, isFirst: false)
         
+        //when we show the menu, the screen can turn off automatically
+        self.application.idleTimerDisabled = false
     }
     
     func presentMenu(message:String?, isFirst:Bool){
