@@ -103,9 +103,9 @@ public class GamesBundle: NSBundle {
         guard let url = baseURL else{
             return nil
         }
-        guard let name = item["name"] as? String else{
+        guard let filename = item["filename"] as? String else{
             return nil
         }
-        return url.URLByAppendingPathComponent(name)
+        return url.URLByAppendingPathComponent(filename)
     }
 }
