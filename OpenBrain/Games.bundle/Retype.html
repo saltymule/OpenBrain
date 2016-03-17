@@ -301,7 +301,7 @@
                 }
                 
                 if(shouldReorderWords(options.level)){
-                    state.order = shuffle(state.order)
+                    state.order = state.order.reverse()
                 }
                 
                 state.reversed = [];
@@ -725,6 +725,7 @@
             }
         
             function didClickSkipButton(event){
+                options.correctCount = 0;
                 metaController.didComplete(options,"no problem!")
             }
         
