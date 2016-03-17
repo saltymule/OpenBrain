@@ -157,97 +157,21 @@
     </head>
     <body>
         <script>
-            /************************************************/
-            /* START                                        */
-            /************************************************/
-            
-            function start(opts){
-                
-                options = opts;
-                
-                state = getState(options);
-                
-                setupPhase1Elements(state);
-                
-            }
-            
-            function getState(options){
-                var state = {};
-                // FIGURE OUT LEVELING
-                
-                //level 1 any word length
-                //level 2 any word length reordering
-                //level 3 short word reverse 1
-                //level 4 short word reverse 2
-                //level 5 short word reverse 2 reordering
-                //level 6 long word reverse 2 reordering
-                
-                //level 7 + up 3 words????
-                
-                //var reorderWordsLevels = [2,5,6];
-                
-                if(options == null || options["text"] == null ){
-                    var words = shuffle(Words)
-                    var text = words[0] + " " + words[1];
-                    
-                    options = {"text":text}
-                }
-                
-                options["level"] = 2;
-                
-                state.text = options["text"];
-                
-                var words = state.text.split(" ");
-                
-                state.wordCount = words.length;
-                
-                state.order = []
-                
-                for(var i = 0; i < state.wordCount; i++){
-                    state.order.push(i)
-                }
-                
-                var shouldReorderWords = options.level != null && options.level > 0;
-                
-                if(shouldReorderWords){
-                    state.order = shuffle(state.order)
-                }
-                
-                state.reversed = [];
-                
-                var shouldReverseWords = options.level != null && options.level > 1;
-                
-                if(shouldReverseWords){
-                    for(var i = 0; i < state.wordCount; i++){
-                        if(Math.random() > 0.5){
-                            state.reversed.push(i);
-                        }
-                    }
-                }
-                
-                var outputWords = [];
-                for(var i = 0; i < state.wordCount; i++){
-                    var word = words[state.order[i]]
-                    if(state.reversed.indexOf(i) >= 0){
-                        word = reverse(word);
-                    }
-                    outputWords.push(word);
-                }
-                
-                state.outputText = outputWords.join(" ");
-                
-                state.inputText = "";
-                
-                return state
-            
-            }
-            
+        
+        
             /************************************************/
             /* CONSTANTS                                    */
             /************************************************/
             
+            var MAX_LEVEL = 6;
+            
             var Part1Duration = 10;
             var Part2Duration = 50;
+            
+            var NoneWordType = 0;
+            var ShortWordType = 1;
+            var LongWordType = 2;
+            var AllWordType = 3;
             
             var KeyPositions = {
                 q :{top:1,left:1},
@@ -290,7 +214,7 @@
             /* VARIABLES                                    */
             /************************************************/
             
-            var options = null;
+            var options = {};
             
             //view variables
             var div1 = null;
@@ -298,7 +222,146 @@
             var wordSpans = [];
             
             //current gamestate
-            var state = {};
+            var state = {"level":1,"correctCount":0};
+            
+            /************************************************/
+            /* START                                        */
+            /************************************************/
+            
+            function start(opts){
+                
+                if(opts != null){
+                    options = opts;
+                }
+                
+                if(getDebugFromQueryString(window.location.search)){
+                    options["level"] = getLevelFromQueryString( window.location.search );
+                }
+                
+                state = getState(options);
+                
+                setupPhase1Elements(state);
+                
+            }
+            
+            //level 1 any word length
+            //level 2 any word length reordering
+            //level 3 short word reverse 1
+            //level 4 short word reverse 2
+            //level 5 short word reverse 2 reordering
+            //level 6 long word reverse 2 reordering
+            
+            //level 7 + up 3 words????
+            
+                
+            function shouldReorderWords(level){
+                var reorderWordsLevels = [2,5,6];
+                return reorderWordsLevels.indexOf(level) > -1;
+            }
+
+            function shouldReverseWord(i, level){
+                if(i == 0){
+                    var reverseFirstWordLevels = [3,4,5,6];
+                    return reverseFirstWordLevels.indexOf(level) > -1;
+                }
+                if(i == 1){
+                    var reverseSecondWordLevels = [4,5,6];
+                    return reverseSecondWordLevels.indexOf(level) > -1;
+                }
+                return true;
+            }
+            
+            function wordType(level){
+                if( level < 3 ){
+                    return AllWordType;
+                }
+                if( level < 6 ){
+                    return ShortWordType;
+                }
+                if( level > 5 ){
+                    return LongWordType;
+                }
+                return AllWordType;
+            }
+            
+            function getState(options){
+                var state = {};
+                
+                var words = shuffle(filter(wordType(options.level),Words))
+                state.text = words[0] + " " + words[1];
+                
+                var words = state.text.split(" ");
+                
+                state.wordCount = words.length;
+                
+                state.order = []
+                
+                for(var i = 0; i < state.wordCount; i++){
+                    state.order.push(i)
+                }
+                
+                if(shouldReorderWords(options.level)){
+                    state.order = shuffle(state.order)
+                }
+                
+                state.reversed = [];
+                
+                for(var i = 0; i < state.wordCount; i++){
+                    if(shouldReverseWord(i,options.level)){
+                        state.reversed.push(i);
+                    }
+                }
+                
+                var outputWords = [];
+                for(var i = 0; i < state.wordCount; i++){
+                    var word = words[state.order[i]]
+                    if(state.reversed.indexOf(i) >= 0){
+                        word = reverse(word);
+                    }
+                    outputWords.push(word);
+                }
+                
+                state.outputText = outputWords.join(" ");
+                
+                state.inputText = "";
+                
+                return state
+            
+            }
+            
+            /************************************************/
+            /* DEBUG                                    */
+            /************************************************/
+            
+            function getLevelFromQueryString(queryString){
+                var level = parseInt(getValueFromQueryString("level",queryString));
+                return level > 0 ? level : 1;
+            }
+            
+            function getDebugFromQueryString(queryString){
+                return getValueFromQueryString("debug", queryString) == "true";
+            }
+            
+            function getValueFromQueryString(key,queryString){
+                
+                if(queryString[0] == "?"){
+                    queryString = queryString.substring(1)
+                }
+                
+                var params = queryString.split("&");
+                
+                var value = null;
+                
+                for ( var index = 0; index < params.length; index++){
+                    var pieces = params[index].split("=")
+                    if(pieces[0] == key && pieces[1] != null && pieces[1].length > 0){
+                        value = pieces[1]
+                    }
+                }
+                
+                return value;
+                
+            }
             
             /************************************************/
             /* META CONTROLLER                              */
@@ -555,6 +618,24 @@
                 return result
             }
             
+            function filter(type, words){
+                if(type == AllWordType){
+                    return words;
+                }
+                if(type == NoneWordType){
+                    return [];
+                }
+                var result = [];
+                for(var i = 0; i < words.length; i++){
+                    if(type == ShortWordType && words[i].length <= 5){
+                        result.push(words[i])
+                    }else if(type == LongWordType && words[i].length >= 6){
+                        result.push(words[i])
+                    }
+                }
+                return result
+            }
+            
             function reverse(word) {
                 return word.split('').reverse().join('');
             }
@@ -595,6 +676,26 @@
                  }
             }
             
+            function incrementOptions(options){
+                var result = {};
+                result.level = options.level;
+                result.correctCount = options.correctCount;
+                if(result.correctCount == null){
+                    result.correctCount = 0;
+                }
+                if(result.level == null){
+                    result.level = 1;
+                }
+                result.correctCount++;
+                if(result.correctCount == 3){
+                    result.correctCount = 0;
+                    if(result.level < MAX_LEVEL){
+                        result.level++;
+                    }
+                }
+                return result
+            }
+            
             function updateView(state){
                 for(var i = 0; i < state.wordCount; i++){
                     var wordSpan = wordSpans[i];
@@ -611,7 +712,8 @@
             function checkCompletion(state){
                 var difference = compareStrings(state.inputText,state.outputText)
                 if(difference == ""){
-                    metaController.didComplete({"advance_text":"true"},"congrats!")
+                    options = incrementOptions(options);
+                    metaController.didComplete(options,"congrats!")
                 }
             }
             
@@ -623,7 +725,7 @@
             }
         
             function didClickSkipButton(event){
-                metaController.didComplete({"advance_text":"false"},"no problem!")
+                metaController.didComplete(options,"no problem!")
             }
         
             function setKeyState(element,state){
