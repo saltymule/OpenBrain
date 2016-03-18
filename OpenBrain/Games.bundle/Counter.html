@@ -7,13 +7,16 @@
                 left:0;
                 top:0;
             }
-            
+
             .output div div.item{
-                background-color:#000088;
+                background-color:rgb(118,131,221);
                 display:block;
+                border-color:rgb(38,49,124);
+                border-style:solid;
+
                 position:absolute;
             }
-            
+
             .score{
                 position:absolute;
                 left:5;
@@ -31,34 +34,34 @@
     </head>
     <body>
         <script>
-            
+
             /************************************************/
             /* CONSTANTS                                    */
             /************************************************/
-            
+
             var GAME_STATE_NONE = 0;
             var GAME_STATE_RUNNING = 1;
             var GAME_STATE_PAUSED = 2;
             var GAME_STATE_COMPLETE = 3;
-            
+
             /************************************************/
             /* VARIABLES                                    */
             /************************************************/
-            
+
             var options = null;
             var canvas = null;
             var prerenderedBuffers = {};
             var boardWidth = window.innerWidth;
             var boardHeight = window.innerHeight;
-            
+
             var gameState = null;
-            
+
             var isDebug = getDebugFromQueryString(window.location.search);
-            
+
             /************************************************/
             /* META CONTROLLER                              */
             /************************************************/
-            
+
             // this is available to be easily swapped out by the container with
             // custom logic (WKWebView on iOS, WebView on android)
             var metaController = {
@@ -71,115 +74,116 @@
                     start(opts)
                 }
             };
-        
+
             function didLoadHandler(){
                 metaController.didLoad()
             }
-            
+
             /************************************************/
             /* Query String                                 */
             /************************************************/
-            
+
             function getNFromQueryString(queryString){
                 var n = new Number(getValueFromQueryString("n",queryString));
                 return n > 0 ? n : 1;
             }
-            
+
             function getDebugFromQueryString(queryString){
                 return getValueFromQueryString("debug", queryString) == "true";
             }
-            
+
             function getValueFromQueryString(key,queryString){
-                
+
                 if(queryString[0] == "?"){
                     queryString = queryString.substring(1)
                 }
-                
+
                 var params = queryString.split("&");
-                
+
                 var value = null;
-                
+
                 for ( var index = 0; index < params.length; index++){
                     var pieces = params[index].split("=")
                     if(pieces[0] == key && pieces[1] != null && pieces[1].length > 0){
                         value = pieces[1]
                     }
                 }
-                
+
                 return value;
-                
+
             }
-            
+
             /************************************************/
             /* DOM SETUP                                    */
             /************************************************/
-            
+
             function setupCanvas(isDebug){
-                
+
                 if(isDebug){
                     boardHeight = Math.floor(window.innerHeight*0.9);
                 }
-                
+
                 canvas = document.createElement('div');
                 canvas.className = "output";
-                
+
                 canvas.style.width = boardWidth+"px";
                 canvas.style.height = boardHeight+"px";
-                
+
                 document.body.appendChild(canvas);
-                
+
                 new ClickListener(canvas,'space',didTap);
-                
+
             }
-            
+
             /************************************************/
             /* START/STOP                                   */
             /************************************************/
-            
+
             function start(opts){
                 options = opts;
                 gameState = getNewGameState(options);
                 startRendering()
             }
-            
+
             function startRendering(){
-                
+
                 gameState.state = GAME_STATE_RUNNING;
-                
+
                 gameState.lastTimestamp = (new Date()).getTime();
-                
+
                 window.requestAnimationFrame(render);
             }
-            
+
             function pauseRendering(){
                 gameState.state = GAME_STATE_PAUSED;
             }
-            
+
             function stop(){
                 gameState.state = GAME_STATE_COMPLETE;
             }
-            
+
             function reset(){
                 options = {}
                 gameState = getNewGameState(options);
             }
-            
+
             /************************************************/
             /* GAME STATE                                   */
             /************************************************/
-            
+
             function getNewGameState(options){
-                
+
                 return {
                     "state":GAME_STATE_NONE,
                     "lastTimestamp":(new Date()).getTime(),
                     "ticks":0,
                     "clocks":[
                         {
-                            "states":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                            "states":[0,0,0,0,0,0,0,0,0,0,0,0],
+                            "squareIndex":[0,1,2,3,7,11,15,14,13,12,8,4],
                             "currentPosition":0,
                             "tickInterval":1000,
-                            "count":16,
+                            "count":12,
                             "positionOffset":0,
                             "lastSkipPosition":-1,
                             "lastTapPosition":-1,
@@ -187,96 +191,96 @@
                     ],
                 };
             }
-            
+
             function incrementTicks(state){
-                
+
                 var timestamp = (new Date()).getTime();
-                
+
                 var t = timestamp - state.lastTimestamp; //in milleseconds
-                
+
                 var speed = 1.0;
-                
+
                 state.ticks = state.ticks + t*speed;
-                
+
                 state.lastTimestamp = (new Date()).getTime();
-                
+
                 return state;
             }
-            
+
             function shouldIncrementOffset(state){
                 return Math.random() > 0.9;
             }
-            
+
             function incrementClocks(state, randFunc){
-                
+
                 for( var i = 0; i < state.clocks.length; i++ ){
-                    
+
                     var clock = state.clocks[i];
-                    
+
                     var nextPosition = Math.floor(state.ticks/clock.tickInterval) + clock.positionOffset ;
-                    
+
                     if ( clock.currentPosition != nextPosition ) {
-                        
+
                         if ( 0 <= clock.lastSkipPosition ) {
                             gameState.state = GAME_STATE_COMPLETE
                         }
-                        
+
                         clock.states[nextPosition%clock.count] = 0;
-                        
+
                         if(randFunc(state)){
                             clock.positionOffset++;
                             nextPosition++;
                             clock.lastSkipPosition = nextPosition;
                             clock.states[nextPosition%clock.count] = 0;
                         }
-                        
+
                         clock.currentPosition = nextPosition;
-                        
+
                     }
-                    
-                    
+
+
                 }
                 return state;
-                
+
             }
-            
+
             function updateStateWithTap(state){
-                
+
                 var didFindTappableClock = false;
-                
+
                 for( var i = 0; i < state.clocks.length; i++ ){
-                    
+
                     var clock = state.clocks[i];
-                    
+
                     if ( clock.currentPosition == clock.lastSkipPosition ) {
-                        
+
                         clock.lastSkipPosition = -1;
-                        
+
                         didFindTappableClock = true;
-                        
+
                         clock.states[clock.currentPosition%clock.count] = 1;
                     }
-                    
+
                 }
-                
+
                 if(!didFindTappableClock){
                     gameState.state = GAME_STATE_COMPLETE
                 }
-                
+
                 return state;
-                
+
             }
-            
+
             function updateState(state){
                 state = incrementTicks(state)
                 state = incrementClocks(state,shouldIncrementOffset)
                 return state
             }
-            
+
             function clear(){
                 canvas.innerText = "";
             }
-            
+
             function savedOptions(){
                 var key = "options";
                 var options = null;
@@ -286,22 +290,22 @@
                 }
                 return options
             }
-        
+
             function setSavedOptions(options){
                 var key = "options";
                 localStorage.setItem(key, JSON.stringify( options ) )
             }
-            
+
             /************************************************/
             /* EVENT LISTENING                              */
             /************************************************/
-            
+
             function didTap(listener){
                 if(gameState){
                     gameState = updateStateWithTap(gameState);
                 }
             }
-            
+
             function ClickListener(el, letter, completion) {
                 this.completion = completion;
                 this.element = el;
@@ -309,17 +313,17 @@
                 this.element.addEventListener(this.startName, this, false);
                 window.addEventListener(this.keydownName, this, false);
             }
-            
+
             ClickListener.prototype = {
-                
+
                 keydownName:'keydown',
                 keyupName:'keyup',
                 startName:(('ontouchstart' in document.documentElement)?'touchstart':'mousedown'),
                 leaveName:(('ontouchstart' in document.documentElement)?'touchleave':'mouseout'),
                 endName:(('ontouchstart' in document.documentElement)?'touchend':'mouseup'),
-                
+
                 isTracking:false,
-                
+
                 handleEvent: function(e) {
                     switch(e.type) {
                         case this.keydownName: this.onKeyStart(e); break;
@@ -329,21 +333,21 @@
                         case this.endName: this.onEnd(e); break;
                     }
                 },
-                
+
                 onStart: function(e) {
-                    
+
                     e.preventDefault();
                     this.moved = false;
-                    
+
                     this.theTarget = document.elementFromPoint(e.target.clientX, e.target.clientY);
                     if(this.theTarget.nodeType == 3) {
                         this.theTarget = theTarget.parentNode;
                     }
-                    
+
                     this.element.addEventListener(this.leaveName, this, false);
                     this.element.addEventListener(this.endName, this, false);
                 },
-                
+
                 onKeyStart: function(e) {
                     var isUnmodified = !e.metaKey && !e.ctrlKey  && !e.altKey;
                     if( isUnmodified ){
@@ -354,9 +358,9 @@
                             window.addEventListener(this.keyupName, this, false);
                         }
                     }
-                    
+
                 },
-                
+
                 onKeyEnd: function(e) {
                     var isUnmodified = !e.metaKey && !e.ctrlKey  && !e.altKey;
                     if( isUnmodified ){
@@ -370,22 +374,22 @@
                         }
                     }
                 },
-                
+
                 onLeave: function(e) {
                     this.element.removeEventListener(this.leaveName, this, false);
                     this.element.removeEventListener(this.endName, this, false);
                     this.theTarget = undefined;
                 },
-                
+
                 onEnd: function(e) {
                     this.element.removeEventListener(this.leaveName, this, false);
                     this.element.removeEventListener(this.endName, this, false);
-                    
+
                     this.completion(this);
-                    
+
                     this.theTarget = undefined;
                 },
-                
+
                 stringFromKeyCode: function(keyCode) {
                     if ( 65 <= keyCode && keyCode <= 90 ) {
                         return String.fromCharCode(keyCode).toLowerCase();
@@ -397,46 +401,46 @@
                         return "NOT FOUND"
                     }
                 }
-                
+
             };
 
-            
+
             /************************************************/
             /* RENDERING                                    */
             /************************************************/
-            
+
             function render(){
-                
-                
-                
+
+
+
                 if( gameState && gameState.state == GAME_STATE_RUNNING) {
                     //we might call game over here
                     gameState = updateState(gameState);
                 }
-                
+
                 if( gameState && gameState.state == GAME_STATE_RUNNING) {
-                        
+
                     drawState(gameState);
-                    
+
                     window.requestAnimationFrame(render);
-                    
+
                 }else{
-                
+
                     clear();
                     if( gameState && gameState.state == GAME_STATE_COMPLETE) {
                         metaController.didComplete({},"All Done");
                     }
-                    
+
                 }
-                
+
             }
-            
+
             /************************************************/
             /* DRAWING                                      */
             /************************************************/
-            
+
             function drawState(state){
-                
+
                 if(canvas.childNodes.length != state.clocks.length){
                     while(canvas.childNodes.length < state.clocks.length){
                         canvas.appendChild(document.createElement('div'))
@@ -445,57 +449,73 @@
                         canvas.removeChild(canvas.childNodes[canvas.childNodes.length - 1])
                     }
                 }
-                
+
                 var clockColumns = state.clocks.length;
                 var clockRows = 1;
-                
+
                 var clockWidth = (100*(1/clockColumns))+"%";
                 var clockHeight = (100*(1/clockRows))+"%";
-                
+
                 for( var i = 0; i < state.clocks.length; i++ ){
-                    
+
                     var clock = state.clocks[i];
-                    
+
                     var clockDiv = canvas.childNodes[i];
-                    
+
                     clockDiv.style.width = clockWidth;
                     clockDiv.style.height = clockHeight;
-                    
+
                     var itemColumns = clockSideCount(clock.count);
                     var itemRows = clockSideCount(clock.count);
-                    
-                    var itemWidth = 100*(1/itemColumns);
-                    var itemHeight = 100*(1/itemRows);
-                    
+
+                    var columnWidth = 100*(1/itemColumns);
+                    var rowHeight = 100*(1/itemRows);
+
+                    var itemWidth = columnWidth*0.90;
+                    var itemHeight = rowHeight*0.90;
+
+                    var borderRadius = boardWidth*Math.min(itemWidth,itemHeight)*0.25/100;
+                    var borderWidth = boardWidth*Math.min(itemWidth,itemHeight)*0.05/100;
+
                     var itemIndex = clock.currentPosition%clock.count;
-                    
+                    var itemXOffset = columnWidth*0.05;
+                    var itemYOffset = rowHeight*0.05;
+
                     while(clockDiv.childNodes.length < clock.count){
                         clockDiv.appendChild(document.createElement('div'));
                     }
                     while(clockDiv.childNodes.length > clock.count){
                         clockDiv.removeChild(clockDiv.childNodes[clockDiv.childNodes.length - 1])
                     }
-                    for( var j = 0; j < clock.count; j++ ){
-                        var itemDiv = clockDiv.childNodes[j];
+                    for( var p = 0; p < clock.count; p++ ){
+                        var itemDiv = clockDiv.childNodes[p];
                         itemDiv.className = "item";
-                        
-                        itemDiv.style.left = ((j%itemColumns)*itemWidth)+"%";
-                        itemDiv.style.top = (Math.floor(j/itemColumns)*itemHeight)+"%";
+
+                        var j = clock.squareIndex[p];
+
+                        itemDiv.style.left = (itemXOffset + (j%itemColumns)*columnWidth)+"%";
+                        itemDiv.style.top = (itemYOffset + Math.floor(j/itemColumns)*rowHeight)+"%";
                         itemDiv.style.width = itemWidth+"%";
                         itemDiv.style.height = itemHeight+"%";
-                        if(j == itemIndex){
+
+                        itemDiv.style.borderWidth = borderWidth+"px";
+                        itemDiv.style.borderRadius = borderRadius+"px";
+                        itemDiv.style.margin = (-1*borderWidth)+"px";
+
+
+                        if(p == itemIndex){
                             itemDiv.style.backgroundColor = "#FF0000";
-                        }else if(clock.states[j] == 1){
+                        }else if(clock.states[p] == 1){
                             itemDiv.style.backgroundColor = "#00FF00";
                         }else{
                             itemDiv.style.backgroundColor = null;
                         }
                     }
-                    
+
                 }
-                
+
             }
-            
+
             function clockSideCount(clockCount){
                 if(clockCount < 17){
                     return 4;
@@ -507,14 +527,13 @@
                     return 7;
                 }
             }
-            
-            
-            
+
+
+
             setupCanvas(isDebug);
-            
+
             window.addEventListener("load", didLoadHandler,false)
-            
+
         </script>
     </body>
 </html>
-

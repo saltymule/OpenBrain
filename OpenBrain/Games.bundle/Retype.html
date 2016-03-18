@@ -4,7 +4,7 @@
         <style>
             div.arrow{
                 top: 25px;
-                height: 30px;            
+                height: 30px;
                 margin-left:-5px;
             }
             div.arrow div.head{
@@ -16,7 +16,7 @@
                 position:absolute;
                 display:inline-block;
             }
-            
+
             div.arrow div.body{
                 color:#FFF;
                 width:100%;
@@ -28,33 +28,33 @@
                 font-family: Helvetica;
                 font-size: 18px;
             }
-        
+
             div.leftarrow div.head{
                 border-right:20px solid #FF0000;
                 left:-14px;
                 margin-right:100%;
             }
-            
+
             div.leftarrow div.body{
                 background-color:#FF0000;
                 right:0px;
             }
-            
+
             div.rightarrow div.head{
                 border-left:20px solid #11AA11;
                 right:-10px;
                 margin-left:100%;
             }
-            
+
             div.rightarrow div.body{
                 background-color:#11AA11;
                 left:0px;
             }
-        
+
             div.mainText span{
-            
+
             }
-            
+
             div span.instructionText {
                 top:2%;
                 height:18%;
@@ -66,7 +66,7 @@
                 font-size:10pt;
                 color:#AAAAAA;
             }
-        
+
             div div.mainDiv {
                 top:25%;
                 width:60%;
@@ -75,7 +75,7 @@
                 display: block;
                 position:absolute;
             }
-            
+
             div div.mainText, .space {
                 display:inline-block;
                 width:initial;
@@ -150,29 +150,29 @@
             .space{
                 width:30px;
             }
-            
+
         </style>
         </style>
         <title>Retype</title>
     </head>
     <body>
         <script>
-        
-        
+
+
             /************************************************/
             /* CONSTANTS                                    */
             /************************************************/
-            
+
             var MAX_LEVEL = 6;
-            
+
             var Part1Duration = 10;
             var Part2Duration = 50;
-            
+
             var NoneWordType = 0;
             var ShortWordType = 1;
             var LongWordType = 2;
             var AllWordType = 3;
-            
+
             var KeyPositions = {
                 q :{top:1,left:1},
                 w :{top:1,left:11},
@@ -203,57 +203,57 @@
                 space :{top:67,left:76},
                 del :{top:67,left:88}
             };
-            
+
             var KeyHeight = 32;
             var KeyWidth = 9;
             var SpaceKeyWidth = 11;
-            
+
             // var Words = []; defined further down
-            
+
             /************************************************/
             /* VARIABLES                                    */
             /************************************************/
-            
+
             var options = {};
-            
+
             //view variables
             var div1 = null;
             var div2 = null;
             var wordSpans = [];
-            
+
             //current gamestate
             var state = {"level":1,"correctCount":0};
-            
+
             /************************************************/
             /* START                                        */
             /************************************************/
-            
+
             function start(opts){
-                
+
                 if(opts != null){
                     options = opts;
                 }
-                
+
                 if(getDebugFromQueryString(window.location.search)){
                     options["level"] = getLevelFromQueryString( window.location.search );
                 }
-                
+
                 state = getState(options);
-                
+
                 setupPhase1Elements(state);
-                
+
             }
-            
+
             //level 1 any word length
             //level 2 any word length reordering
             //level 3 short word reverse 1
             //level 4 short word reverse 2
             //level 5 short word reverse 2 reordering
             //level 6 long word reverse 2 reordering
-            
+
             //level 7 + up 3 words????
-            
-                
+
+
             function shouldReorderWords(level){
                 var reorderWordsLevels = [2,5,6];
                 return reorderWordsLevels.indexOf(level) > -1;
@@ -270,7 +270,7 @@
                 }
                 return true;
             }
-            
+
             function wordType(level){
                 if( level < 3 ){
                     return AllWordType;
@@ -283,35 +283,35 @@
                 }
                 return AllWordType;
             }
-            
+
             function getState(options){
                 var state = {};
-                
+
                 var words = shuffle(filter(wordType(options.level),Words))
                 state.text = words[0] + " " + words[1];
-                
+
                 var words = state.text.split(" ");
-                
+
                 state.wordCount = words.length;
-                
+
                 state.order = []
-                
+
                 for(var i = 0; i < state.wordCount; i++){
                     state.order.push(i)
                 }
-                
+
                 if(shouldReorderWords(options.level)){
                     state.order = state.order.reverse()
                 }
-                
+
                 state.reversed = [];
-                
+
                 for(var i = 0; i < state.wordCount; i++){
                     if(shouldReverseWord(i,options.level)){
                         state.reversed.push(i);
                     }
                 }
-                
+
                 var outputWords = [];
                 for(var i = 0; i < state.wordCount; i++){
                     var word = words[state.order[i]]
@@ -320,53 +320,53 @@
                     }
                     outputWords.push(word);
                 }
-                
+
                 state.outputText = outputWords.join(" ");
-                
+
                 state.inputText = "";
-                
+
                 return state
-            
+
             }
-            
+
             /************************************************/
             /* DEBUG                                    */
             /************************************************/
-            
+
             function getLevelFromQueryString(queryString){
                 var level = parseInt(getValueFromQueryString("level",queryString));
                 return level > 0 ? level : 1;
             }
-            
+
             function getDebugFromQueryString(queryString){
                 return getValueFromQueryString("debug", queryString) == "true";
             }
-            
+
             function getValueFromQueryString(key,queryString){
-                
+
                 if(queryString[0] == "?"){
                     queryString = queryString.substring(1)
                 }
-                
+
                 var params = queryString.split("&");
-                
+
                 var value = null;
-                
+
                 for ( var index = 0; index < params.length; index++){
                     var pieces = params[index].split("=")
                     if(pieces[0] == key && pieces[1] != null && pieces[1].length > 0){
                         value = pieces[1]
                     }
                 }
-                
+
                 return value;
-                
+
             }
-            
+
             /************************************************/
             /* META CONTROLLER                              */
             /************************************************/
-            
+
             // this is available to be easily swapped out by the container with
             // custom logic (WKWebView on iOS, WebView on android)
             var metaController = {
@@ -379,11 +379,11 @@
                     start(opts)
                 }
             };
-            
+
             function didLoadHandler(){
                 metaController.didLoad()
             }
-            
+
             function savedOptions(){
                 var key = "options";
                 var options = null;
@@ -393,52 +393,52 @@
                 }
                 return options
             }
-        
+
             function setSavedOptions(options){
                 var key = "options";
                 localStorage.setItem(key, JSON.stringify( options ) )
             }
-            
+
             /************************************************/
             /* SETUP                                        */
             /************************************************/
-            
+
             function setupPhase1Elements(state){
                 div1 = createDiv1(state)
                 document.body.appendChild(div1);
-                
+
             }
-            
+
             function setupPhase2Elements(){
                 div2 = createDiv2(state)
                 document.body.appendChild(div2);
             }
-            
-        
+
+
             function createDiv1(state){
-            
+
                 var words = state.text.split(" ");
-            
+
                 var result = document.createElement("div")
-                
+
                 var mainDiv = document.createElement("div")
-                
+
                 mainDiv.className = "mainDiv"
-                
+
                 for( var i = 0; i < state.wordCount; i++ ){
-                    
+
                     var wordDiv = document.createElement('div');
                     wordDiv.className = "mainText";
                     var wordSpan = document.createElement('span');
                     wordSpan.className = "inputText";
                     wordSpan.innerText = words[i];
                     wordDiv.appendChild(wordSpan);
-                    
+
                     var arrowDiv = createArrow(i + 1, "right");
                     wordDiv.appendChild(arrowDiv)
-                    
+
                     mainDiv.appendChild(wordDiv);
-                    
+
                     if(i < words.length - 1 ){
                         var spaceSpan = document.createElement('span');
                         spaceSpan.innerText = " ";
@@ -447,88 +447,88 @@
                     }
                 }
                 result.appendChild(mainDiv);
-                
+
                 var instructionSpan = createInstructionText("memorize the words below:");
                 result.appendChild(instructionSpan);
-                
+
                 var readyButton = document.createElement('span');
                 readyButton.innerText = "I'm Ready >";
                 readyButton.className = "readyButton";
                 readyButton.addEventListener("click",didClickReadyButton);
                 result.appendChild(readyButton);
-                
+
                 return result;
 
             }
-            
-        
+
+
             function createDiv2(state){
                 var result = document.createElement("div")
-                
+
                 var mainDiv = document.createElement("div")
-                
+
                 mainDiv.className = "mainDiv"
-                
+
                 var outputWords = state.outputText.split(" ")
                 var inputWords = state.inputText.split(" ")
-                
+
                 for( var i = 0; i < state.wordCount; i++ ){
-                    
+
                     var displayWord = getDisplayWord(state,i);
-                    
+
                     var wordDiv = document.createElement('div');
                     wordDiv.className = "mainText";
                     var wordSpan = document.createElement('span');
                     wordSpan.className = "inputText";
                     wordSpan.innerText = displayWord;
                     wordDiv.appendChild(wordSpan);
-                    
+
                     wordSpans.push(wordSpan);
-                    
+
                     var direction = state.reversed.indexOf(i) >= 0 ? "left" : "right";
-                    
+
                     var arrowDiv = createArrow(state.order[i] + 1, direction);
                     wordDiv.appendChild(arrowDiv)
-                    
+
                     mainDiv.appendChild(wordDiv);
-                    
+
                     if(i < state.wordCount - 1 ){
                         var spaceSpan = document.createElement('span');
                         spaceSpan.innerText = " ";
                         spaceSpan.className = "space";
                         mainDiv.appendChild(spaceSpan);
                     }
-                    
+
                 }
                 result.appendChild(mainDiv);
-                
+
                 var instructionSpan = createInstructionText("type the memorized words below:");
                 result.appendChild(instructionSpan);
-                
+
                 var skipButton = document.createElement('span');
                 skipButton.innerText = "Skip >";
                 skipButton.className = "readyButton";
                 skipButton.addEventListener("click",didClickSkipButton);
                 result.appendChild(skipButton);
-                
+
                 var keyboardEl = document.createElement('div');
                 keyboardEl.className = "keyboard";
-                
+
                 prepareKeyboard(keyboardEl)
-                
+
                 result.appendChild(keyboardEl);
-                
+
                 return result;
-                
+
             }
-            
+
             function createInstructionText(instructions){
                 var instructionSpan = document.createElement('span');
                 instructionSpan.innerText = instructions;
                 instructionSpan.className = "instructionText";
                 return instructionSpan;
             }
-            
+
             function createArrow(text, direction){
                 var arrowDiv = document.createElement('div');
                 arrowDiv.className = direction+"arrow arrow";
@@ -541,32 +541,32 @@
                 arrowDiv.appendChild(arrowHeadDiv);
                 return arrowDiv;
             }
-            
+
             function prepareKeyboard(keyboardEl){
                 //set our values
                 var alphabet = "abcdefghijklmnopqrstuvwxyz";
-                
+
                 for(var i = 0; i < alphabet.length; i++){
                     var letter = alphabet.charAt(i);
                     var key = createKey(letter, KeyWidth, KeyHeight);
-                    
+
                     keyboardEl.appendChild(key);
-                    
+
                 }
 
                 var letter = "space";
                 var key = createKey(letter, SpaceKeyWidth, KeyHeight);
-                
+
                 keyboardEl.appendChild(key);
-                
+
                 var letter = "del";
                 var key = createKey(letter, KeyWidth, KeyHeight);
-                
+
                 keyboardEl.appendChild(key);
             }
-            
-            
-            
+
+
+
             function createKey(letter, width, height){
                 var keyViewDiv = document.createElement("div");
                 keyViewDiv.letter = letter;
@@ -574,39 +574,39 @@
                 var letterDiv = document.createElement("div");
                 letterDiv.innerHTML = letter.toUpperCase();
                 keyViewDiv.appendChild(letterDiv);
-                
+
                 keyViewDiv.id = "key_"+letter;
-                
+
                 keyViewDiv.style.width = width+"%";
                 keyViewDiv.style.height = height+"%";
-                
+
                 keyViewDiv.style.top = KeyPositions[letter].top+"%";
                 keyViewDiv.style.left = KeyPositions[letter].left+"%";
-                
-                
+
+
                 new ClickListener(keyViewDiv);
-                
+
                 return keyViewDiv;
             }
-            
+
             /************************************************/
             /* RUN                                          */
             /************************************************/
-            
-            
+
+
             function getDisplayWord(state,index){
                 var outputWord = state.outputText.split(" ")[index];
                 var inputWord = state.inputText.split(" ")[index];
-                
+
                 if (inputWord == null){
                     inputWord = "";
                 }
-                
-                var wordLength =    outputWord.length > inputWord.length ? 
-                                    outputWord.length : 
+
+                var wordLength =    outputWord.length > inputWord.length ?
+                                    outputWord.length :
                                     inputWord.length;
-                                    
-                                    
+
+
                 var result = "";
                 for(var i = 0; i < wordLength; i++){
                     var inputLetter = inputWord[i];
@@ -617,7 +617,7 @@
                 }
                 return result
             }
-            
+
             function filter(type, words){
                 if(type == AllWordType){
                     return words;
@@ -635,30 +635,30 @@
                 }
                 return result
             }
-            
+
             function reverse(word) {
                 return word.split('').reverse().join('');
             }
-            
+
             function shuffle(array) {
                 var currentIndex = array.length, temporaryValue, randomIndex;
-                
+
                 // While there remain elements to shuffle...
                 while (0 !== currentIndex) {
-                    
+
                     // Pick a remaining element...
                     randomIndex = Math.floor(Math.random() * currentIndex);
                     currentIndex -= 1;
-                    
+
                     // And swap it with the current element.
                     temporaryValue = array[currentIndex];
                     array[currentIndex] = array[randomIndex];
                     array[randomIndex] = temporaryValue;
                 }
-                
+
                 return array;
             }
-            
+
             function updateState(keypress, state){
                  if(keypress == 'del'){
                     var canPressDelete = state.inputText.length > 0;
@@ -675,7 +675,7 @@
                     state.inputText = state.inputText + keypress
                  }
             }
-            
+
             function incrementOptions(options){
                 var result = {};
                 result.level = options.level;
@@ -695,20 +695,20 @@
                 }
                 return result
             }
-            
+
             function updateView(state){
                 for(var i = 0; i < state.wordCount; i++){
                     var wordSpan = wordSpans[i];
                     wordSpan.innerText = getDisplayWord(state,i);
                 }
             }
-            
+
              function didTapKey(key){
                  updateState(key, state)
                  updateView(state)
                  checkCompletion(state)
              }
-             
+
             function checkCompletion(state){
                 var difference = compareStrings(state.inputText,state.outputText)
                 if(difference == ""){
@@ -716,19 +716,19 @@
                     metaController.didComplete(options,"congrats!")
                 }
             }
-            
-        
+
+
             function didClickReadyButton(event){
                 setupPhase2Elements()
                 div1.style.display = "none"
                 div2.style.display = "block"
             }
-        
+
             function didClickSkipButton(event){
                 options.correctCount = 0;
                 metaController.didComplete(options,"no problem!")
             }
-        
+
             function setKeyState(element,state){
                 var backgroundColor = null;
                 var color = null;
@@ -741,7 +741,7 @@
                 element.style.backgroundColor = backgroundColor;
                 element.style.color = color;
             }
-            
+
             function compareStrings(a,b){
                 a = a.toLowerCase().replace(/\W/g,'')
                 b = b.toLowerCase().replace(/\W/g,'')
@@ -754,24 +754,24 @@
                 }
                 return result;
             }
-            
-            
+
+
             function ClickListener(el) {
                 this.element = typeof el == 'object' ? el : document.getElementById(el);
                 this.element.addEventListener(this.startName, this, false);
                 window.addEventListener(this.keydownName, this, false);
             }
-            
+
             ClickListener.prototype = {
-                
+
                 keydownName:'keydown',
                 keyupName:'keyup',
                 startName:(('ontouchstart' in document.documentElement)?'touchstart':'mousedown'),
                 leaveName:(('ontouchstart' in document.documentElement)?'touchleave':'mouseout'),
                 endName:(('ontouchstart' in document.documentElement)?'touchend':'mouseup'),
-                
+
                 isTracking:false,
-                
+
                 handleEvent: function(e) {
                     switch(e.type) {
                         case this.keydownName: this.onKeyStart(e); break;
@@ -781,22 +781,22 @@
                         case this.endName: this.onEnd(e); break;
                     }
                 },
-                
+
                 onStart: function(e) {
-                    
+
                     e.preventDefault();
                     this.moved = false;
-                    
+
                     this.theTarget = document.elementFromPoint(e.target.clientX, e.target.clientY);
                     if(this.theTarget.nodeType == 3) {
                         this.theTarget = theTarget.parentNode;
                     }
                     setKeyState(this.element,"active");
-                    
+
                     this.element.addEventListener(this.leaveName, this, false);
                     this.element.addEventListener(this.endName, this, false);
                 },
-                
+
                 onKeyStart: function(e) {
                     var isUnmodified = !e.metaKey && !e.ctrlKey  && !e.altKey;
                     if( isUnmodified ){
@@ -808,9 +808,9 @@
                             window.addEventListener(this.keyupName, this, false);
                         }
                     }
-                    
+
                 },
-                
+
                 onKeyEnd: function(e) {
                     var isUnmodified = !e.metaKey && !e.ctrlKey  && !e.altKey;
                     if( isUnmodified ){
@@ -825,27 +825,27 @@
                         }
                     }
                 },
-                
+
                 onLeave: function(e) {
                     this.element.removeEventListener(this.leaveName, this, false);
                     this.element.removeEventListener(this.endName, this, false);
                     setKeyState(this.element,"inactive");
                     this.theTarget = undefined;
                 },
-                
+
                 onEnd: function(e) {
                     this.element.removeEventListener(this.leaveName, this, false);
                     this.element.removeEventListener(this.endName, this, false);
-                    
+
                     if( !this.moved && this.theTarget ) {
                         setKeyState(this.element,"inactive");
                     }
-                    
+
                     didTapKey(this.element.letter);
-                    
+
                     this.theTarget = undefined;
                 },
-                
+
                 stringFromKeyCode: function(keyCode) {
                     if ( 65 <= keyCode && keyCode <= 90 ) {
                         return String.fromCharCode(keyCode).toLowerCase();
@@ -857,18 +857,16 @@
                         return "NOT FOUND"
                     }
                 }
-                
+
             };
-            
-        
+
+
             window.addEventListener("load", didLoadHandler,false)
-            
+
             var Words = [
                 'people','history','way','art','world','information','map','two','family','government','health','system','computer','meat','year','thanks','music','person','reading','method','data','food','understanding','theory','law','bird','literature','problem','software','control','knowledge','power','ability','economics','love','internet','television','science','library','nature','fact','product','idea','temperature','investment','area','society','activity','story','industry','media','thing','oven','community','definition','safety','quality','development','language','management','player','variety','video','week','security','country','exam','movie','organization','equipment','physics','analysis','policy','series','thought','basis','boyfriend','direction','strategy','technology','army','camera','freedom','paper','environment','child','instance','month','truth','marketing','university','writing','article','department','difference','goal','news','audience','fishing','growth','income','marriage','user','combination','failure','meaning','medicine','philosophy','teacher','communication','night','chemistry','disease','disk','energy','nation','road','role','soup','advertising','location','success','addition','apartment','education','math','moment','painting','politics','attention','decision','event','property','shopping','student','wood','competition','distribution','entertainment','office','population','president','unit','category','cigarette','context','introduction','opportunity','performance','driver','flight','length','magazine','newspaper','relationship','teaching','cell','dealer','finding','lake','member','message','phone','scene','appearance','association','concept','customer','death','discussion','housing','inflation','insurance','mood','woman','advice','blood','effort','expression','importance','opinion','payment','reality','responsibility','situation','skill','statement','wealth','application','city','county','depth','estate','foundation','grandmother','heart','perspective','photo','recipe','studio','topic','collection','depression','imagination','passion','percentage','resource','setting','ad','agency','college','connection','criticism','debt','description','memory','patience','secretary','solution','administration','aspect','attitude','director','personality','psychology','recommendation','response','selection','storage','version','alcohol','argument','complaint','contract','emphasis','highway','loss','membership','possession','preparation','steak','union','agreement','cancer','currency','employment','engineering','entry','interaction','mixture','preference','region','republic','tradition','virus','actor','classroom','delivery','device','difficulty','drama','election','engine','football','guidance','hotel','owner','priority','protection','suggestion','tension','variation','anxiety','atmosphere','awareness','bath','bread','candidate','climate','comparison','confusion','construction','elevator','emotion','employee','employer','guest','height','leadership','mall','manager','operation','recording','sample','transportation','charity','cousin','disaster','editor','efficiency','excitement','extent','feedback','guitar','homework','leader','mom','outcome','permission','presentation','promotion','reflection','refrigerator','resolution','revenue','session','singer','tennis','basket','bonus','cabinet','childhood','church','clothes','coffee','dinner','drawing','hair','hearing','initiative','judgment','lab','measurement','mode','mud','orange','poetry','police','possibility','procedure','queen','ratio','relation','restaurant','satisfaction','sector','signature','significance','song','tooth','town','vehicle','volume','wife','accident','airport','appointment','arrival','assumption','baseball','chapter','committee','conversation','database','enthusiasm','error','explanation','farmer','gate','girl','hall','historian','hospital','injury','instruction','maintenance','manufacturer','meal','perception','pie','poem','presence','proposal','reception','replacement','revolution','river','son','speech','tea','village','warning','winner','worker','writer','assistance','breath','buyer','chest','chocolate','conclusion','contribution','cookie','courage','dad','desk','drawer','establishment','examination','garbage','grocery','honey','impression','improvement','independence','insect','inspection','inspector','king','ladder','menu','penalty','piano','potato','profession','professor','quantity','reaction','requirement','salad','sister','supermarket','tongue','weakness','wedding','affair','ambition','analyst','apple','assignment','assistant','bathroom','bedroom','beer','birthday','celebration','championship','cheek','client','consequence','departure','diamond','dirt','ear','fortune','friendship','funeral','gene','girlfriend','hat','indication','intention','lady','midnight','negotiation','obligation','passenger','pizza','platform','poet','pollution','recognition','reputation','shirt','sir','speaker','stranger','surgery','sympathy','tale','throat','trainer','uncle','youth','time','work','film','water','money','example','while','business','study','game','life','form','air','day','place','number','part','field','fish','back','process','heat','hand','experience','job','book','end','point','type','home','economy','value','body','market','guide','interest','state','radio','course','company','price','size','card','list','mind','trade','line','care','group','risk','word','fat','force','key','light','training','name','school','top','amount','level','order','practice','research','sense','service','piece','web','boss','sport','fun','house','page','term','test','answer','sound','focus','matter','kind','soil','board','oil','picture','access','garden','range','rate','reason','future','site','demand','exercise','image','case','cause','coast','action','age','bad','boat','record','result','section','building','mouse','cash','class','nothing','period','plan','store','tax','side','subject','space','rule','stock','weather','chance','figure','man','model','source','beginning','earth','program','chicken','design','feature','head','material','purpose','question','rock','salt','act','birth','car','dog','object','scale','sun','note','profit','rent','speed','style','war','bank','craft','half','inside','outside','standard','bus','exchange','eye','fire','position','pressure','stress','advantage','benefit','box','frame','issue','step','cycle','face','item','metal','paint','review','room','screen','structure','view','account','ball','discipline','medium','share','balance','bit','black','bottom','choice','gift','impact','machine','shape','tool','wind','address','average','career','culture','morning','pot','sign','table','task','condition','contact','credit','egg','hope','ice','network','north','square','attempt','date','effect','link','post','star','voice','capital','challenge','friend','self','shot','brush','couple','debate','exit','front','function','lack','living','plant','plastic','spot','summer','taste','theme','track','wing','brain','button','click','desire','foot','gas','influence','notice','rain','wall','base','damage','distance','feeling','pair','saving','staff','sugar','target','text','animal','author','budget','discount','file','ground','lesson','minute','officer','phase','reference','register','sky','stage','stick','title','trouble','bowl','bridge','campaign','character','club','edge','evidence','fan','letter','lock','maximum','novel','option','pack','park','plenty','quarter','skin','sort','weight','baby','background','carry','dish','factor','fruit','glass','joint','master','muscle','red','strength','traffic','trip','vegetable','appeal','chart','gear','ideal','kitchen','land','log','mother','net','party','principle','relative','sale','season','signal','spirit','street','tree','wave','belt','bench','commission','copy','drop','minimum','path','progress','project','sea','south','status','stuff','ticket','tour','angle','blue','breakfast','confidence','daughter','degree','doctor','dot','dream','duty','essay','father','fee','finance','hour','juice','limit','luck','milk','mouth','peace','pipe','seat','stable','storm','substance','team','trick','afternoon','bat','beach','blank','catch','chain','consideration','cream','crew','detail','gold','interview','kid','mark','match','mission','pain','pleasure','score','screw','sex','shop','shower','suit','tone','window','agent','band','block','bone','calendar','cap','coat','contest','corner','court','cup','district','door','east','finger','garage','guarantee','hole','hook','implement','layer','lecture','lie','manner','meeting','nose','parking','partner','profile','respect','rice','routine','schedule','swimming','telephone','tip','winter','airline','bag','battle','bed','bill','bother','cake','code','curve','designer','dimension','dress','ease','emergency','evening','extension','farm','fight','gap','grade','holiday','horror','horse','host','husband','loan','mistake','mountain','nail','noise','occasion','package','patient','pause','phrase','proof','race','relief','sand','sentence','shoulder','smoke','stomach','string','tourist','towel','vacation','west','wheel','wine','arm','aside','associate','bet','blow','border','branch','breast','brother','buddy','bunch','chip','coach','cross','document','draft','dust','expert','floor','god','golf','habit','iron','judge','knife','landscape','league','mail','mess','native','opening','parent','pattern','pin','pool','pound','request','salary','shame','shelter','shoe','silver','tackle','tank','trust','assist','bake','bar','bell','bike','blame','boy','brick','chair','closet','clue','collar','comment','conference','devil','diet','fear','fuel','glove','jacket','lunch','monitor','mortgage','nurse','pace','panic','peak','plane','reward','row','sandwich','shock','spite','spray','surprise','till','transition','weekend','welcome','yard','alarm','bend','bicycle','bite','blind','bottle','cable','candle','clerk','cloud','concert','counter','flower','grandfather','harm','knee','lawyer','leather','load','mirror','neck','pension','plate','purple','ruin','ship','skirt','slice','snow','specialist','stroke','switch','trash','tune','zone','anger','award','bid','bitter','boot','bug','camp','candy','carpet','cat','champion','channel','clock','comfort','cow','crack','engineer','entrance','fault','grass','guy','hell','highlight','incident','island','joke','jury','leg','lip','mate','motor','nerve','passage','pen','pride','priest','prize','promise','resident','resort','ring','roof','rope','sail','scheme','script','sock','station','toe','tower','truck','witness','a','you','it','can','will','if','one','many','most','other','use','make','good','look','help','go','great','being','few','might','still','public','read','keep','start','give','human','local','general','she','specific','long','play','feel','high','tonight','put','common','set','change','simple','past','big','possible','particular','today','major','personal','current','national','cut','natural','physical','show','try','check','second','call','move','pay','let','increase','single','individual','turn','ask','buy','guard','hold','main','offer','potential','professional','international','travel','cook','alternative','following','special','working','whole','dance','excuse','cold','commercial','low','purchase','deal','primary','worth','fall','necessary','positive','produce','search','present','spend','talk','creative','tell','cost','drive','green','support','glad','remove','return','run','complex','due','effective','middle','regular','reserve','independent','leave','original','reach','rest','serve','watch','beautiful','charge','active','break','negative','safe','stay','visit','visual','affect','cover','report','rise','walk','white','beyond','junior','pick','unique','anything','classic','final','lift','mix','private','stop','teach','western','concern','familiar','fly','official','broad','comfortable','gain','maybe','rich','save','stand','young','fail','heavy','hello','lead','listen','valuable','worry','handle','leading','meet','release','sell','finish','normal','press','ride','secret','spread','spring','tough','wait','brown','deep','display','flow','hit','objective','shoot','touch','cancel','chemical','cry','dump','extreme','push','conflict','eat','fill','formal','jump','kick','opposite','pass','pitch','remote','total','treat','vast','abuse','beat','burn','deposit','print','raise','sleep','somewhere','advance','anywhere','consist','dark','double','draw','equal','fix','hire','internal','join','kill','sensitive','tap','win','attack','claim','constant','drag','drink','guess','minor','pull','raw','soft','solid','wear','weird','wonder','annual','count','dead','doubt','feed','forever','impress','nobody','repeat','round','sing','slide','strip','whereas','wish','combine','command','dig','divide','equivalent','hang','hunt','initial','march','mention','smell','spiritual','survey','tie','adult','brief','crazy','escape','gather','hate','prior','repair','rough','sad','scratch','sick','strike','employ','external','hurt','illegal','laugh','lay','mobile','nasty','ordinary','respond','royal','senior','split','strain','struggle','swim','train','upper','wash','yellow','convert','crash','dependent','fold','funny','grab','hide','miss','permit','quote','recover','resolve','roll','sink','slip','spare','suspect','sweet','swing','twist','upstairs','usual','abroad','brave','calm','concentrate','estimate','grand','male','mine','prompt','quiet','refuse','regret','reveal','rush','shake','shift','shine','steal','suck','surround','anybody','bear','brilliant','dare','dear','delay','drunk','female','hurry','inevitable','invite','kiss','neat','pop','punch','quit','reply','representative','resist','rip','rub','silly','smile','spell','stretch','stupid','tear','temporary','tomorrow','wake','wrap','yesterday'
             ];
-            
+
         </script>
     </body>
 </html>
-
-
