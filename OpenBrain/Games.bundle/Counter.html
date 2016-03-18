@@ -176,7 +176,10 @@
                 return {
                     "state":GAME_STATE_NONE,
                     "lastTimestamp":(new Date()).getTime(),
+                    "internalTicks":0,
                     "ticks":0,
+                    "ticksToStartSpeed":0,
+                    "ticksToFullSpeed":60000,
                     "clocks":[
                         {
                             "states":[0,0,0,0,0,0,0,0,0,0,0,0],
@@ -194,17 +197,31 @@
 
             function incrementTicks(state){
 
-                var timestamp = (new Date()).getTime();
 
-                var t = timestamp - state.lastTimestamp; //in milleseconds
+              var timestamp = (new Date()).getTime();
 
-                var speed = 1.0;
+              var t = timestamp - state.lastTimestamp; //in milleseconds
 
-                state.ticks = state.ticks + t*speed;
+              var speed = 0.8; //average speed
+              var startingSpeed = 0.8;
+              var fullSpeed = 1.4;
 
-                state.lastTimestamp = (new Date()).getTime();
+              if(state.internalTicks > state.ticksToStartSpeed){
+                  if(state.internalTicks > state.ticksToFullSpeed){
+                      speed = fullSpeed;
+                  }else{
+                      speed = ( fullSpeed - startingSpeed ) * (state.internalTicks - state.ticksToStartSpeed) / (state.ticksToFullSpeed - state.ticksToStartSpeed)  + startingSpeed;
+                  }
+              }
 
-                return state;
+              state.internalTicks = state.internalTicks + t*speed;
+
+              state.ticks = state.internalTicks;
+
+              state.lastTimestamp = (new Date()).getTime();
+
+              return state
+
             }
 
             function shouldIncrementOffset(state){
