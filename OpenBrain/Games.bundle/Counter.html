@@ -218,10 +218,23 @@
                 gameState = getNewGameState(options);
             }
 
+            function hasCompleteAllClocks(state){
+              var result = true;
+              for( var i = 0; i < state.clocks.length; i++ ){
+
+                var clock = state.clocks[i];
+                if(!clock.isComplete){
+                  result = false;
+                }
+              }
+              return result;
+            }
+
             function didComplete(state, controller){
               var instructionsSeen = state.needsInstructions ? "0" : "1";
               var level = state.level;
-              if(state.ticks > 60000){
+
+              if(hasCompleteAllClocks(state)){
                 level = state.level + 1
               }
               var options = {
@@ -264,8 +277,11 @@
 
                 var clocks = [];
 
+                var offset = clockTotal*1500;
+
                 while(clockTotal > 0){
-                  clocks.push(getNewClockState(level))
+                  offset -= 1500;
+                  clocks.push(getNewClockState(level, offset))
                   clockTotal--;
                 }
 
@@ -276,14 +292,12 @@
                     "lastTimestamp":(new Date()).getTime(),
                     "internalTicks":0,
                     "ticks":0,
-                    "ticksToStartSpeed":0,
-                    "ticksToFullSpeed":60000,
                     "needsInstructions":needsInstructions,
                     "clocks":clocks,
                 };
             }
 
-            function getNewClockState(level){
+            function getNewClockState(level,offset){
 
               var count = countsByLevel[level];
               var tickIndexes = tickIndexesByLevel[level];
@@ -300,11 +314,13 @@
                   "tickIndexes":tickIndexes,
                   "currentPosition":0,
                   "tickInterval":1000,
+                  "tickOffset":offset,
                   "count":count,
                   "sideCount":sideCount,
                   "positionOffset":0,
                   "lastSkipPosition":-1,
                   "lastTapPosition":-1,
+                  "isComplete":false,
               }
             }
 
@@ -320,21 +336,9 @@
 
               var t = timestamp - state.lastTimestamp; //in milleseconds
 
-              var speed = 0.8; //average speed
-              var startingSpeed = 0.8;
-              var fullSpeed = 1.4;
+              var speed = 1.0; //average speed
 
-              if(state.internalTicks > state.ticksToStartSpeed){
-                  if(state.internalTicks > state.ticksToFullSpeed){
-                      speed = fullSpeed;
-                  }else{
-                      speed = ( fullSpeed - startingSpeed ) * (state.internalTicks - state.ticksToStartSpeed) / (state.ticksToFullSpeed - state.ticksToStartSpeed)  + startingSpeed;
-                  }
-              }
-
-              state.internalTicks = state.internalTicks + t*speed;
-
-              state.ticks = state.internalTicks;
+              state.ticks = state.ticks + t*speed;
 
               state.lastTimestamp = (new Date()).getTime();
 
@@ -352,12 +356,12 @@
 
                     var clock = state.clocks[i];
 
-                    var nextPosition = Math.floor(state.ticks/clock.tickInterval) + clock.positionOffset ;
+                    var nextPosition = Math.floor((state.ticks - clock.tickOffset)/clock.tickInterval) + clock.positionOffset ;
 
-                    if ( clock.currentPosition != nextPosition ) {
+                    if (!clock.isComplete && clock.currentPosition != nextPosition && nextPosition > 0 ) {
 
                         if ( 0 <= clock.lastSkipPosition ) {
-                            clock.states[(clock.lastSkipPosition - 1) %clock.count] = 2;
+                            clock.states[(clock.lastSkipPosition - 1)] = 2;
                             state.state = GAME_STATE_COMPLETE
                         }
 
@@ -367,10 +371,14 @@
                             clock.positionOffset++;
                             nextPosition++;
                             clock.lastSkipPosition = nextPosition;
-                            clock.states[nextPosition%clock.count] = 0;
+                            clock.states[nextPosition] = 0;
                         }
 
                         clock.currentPosition = nextPosition;
+
+                        if(clock.currentPosition >= clock.count){
+                          clock.isComplete = true;
+                        }
 
                     }
 
@@ -397,13 +405,16 @@
                         if(state.correctCount > 2){
                           state.needsInstructions = false;
                         }
-                        clock.states[(clock.currentPosition - 1) %clock.count] = 1;
+                        clock.states[(clock.currentPosition - 1)] = 1;
                     }
 
                 }
 
                 if(!didFindTappableClock){
-                    clock.states[clock.currentPosition %clock.count] = 2;
+                    for( var i = 0; i < state.clocks.length; i++ ){
+                        var clock = state.clocks[i];
+                        clock.states[clock.currentPosition] = 2;
+                    }
                     gameState.state = GAME_STATE_COMPLETE
                 }
 
@@ -535,6 +546,11 @@
                     gameState = updateState(gameState);
                 }
 
+                if(hasCompleteAllClocks(gameState)){
+                  gameState.state = GAME_STATE_COMPLETE
+                }
+
+
                 if( gameState && gameState.state == GAME_STATE_RUNNING) {
 
                     drawState(gameState);
@@ -547,7 +563,7 @@
                     if( gameState && gameState.state == GAME_STATE_COMPLETE) {
                         //draw the final state of the game
                         drawState(gameState);
-                        setTimeout( function(){ didComplete(gameState, metaController) }, 3000);
+                        setTimeout( function(){ didComplete(gameState, metaController) }, 1000);
 
                     }
 
@@ -591,17 +607,11 @@
                     var itemColumns = clock.sideCount;
                     var itemRows = clock.sideCount;
 
-                    var columnWidth = 100*(1/itemColumns);
-                    var rowHeight = 100*(1/itemRows);
+                    var rowHeight = 100/clock.count;
 
-                    var itemWidth = columnWidth*0.90;
                     var itemHeight = rowHeight*0.90;
 
-                    var borderRadius = boardWidth*Math.min(itemWidth,itemHeight)*0.25/100;
-                    var borderWidth = boardWidth*Math.min(itemWidth,itemHeight)*0.05/100;
-
-                    var itemIndex = clock.currentPosition%clock.count;
-                    var itemXOffset = columnWidth*0.05;
+                    var itemIndex = clock.currentPosition;
                     var itemYOffset = rowHeight*0.05;
 
                     while(clockDiv.childNodes.length < clock.count){
@@ -614,17 +624,10 @@
                         var itemDiv = clockDiv.childNodes[p];
                         itemDiv.className = "item";
 
-                        var j = clock.tickIndexes[p];
-
-                        itemDiv.style.left = (itemXOffset + (j%itemColumns)*columnWidth)+"%";
-                        itemDiv.style.top = (itemYOffset + Math.floor(j/itemColumns)*rowHeight)+"%";
-                        itemDiv.style.width = itemWidth+"%";
+                        itemDiv.style.left = "0%";
+                        itemDiv.style.top = (itemYOffset + p*rowHeight)+"%";
+                        itemDiv.style.width = "100%";
                         itemDiv.style.height = itemHeight+"%";
-
-                        itemDiv.style.borderWidth = borderWidth+"px";
-                        itemDiv.style.borderRadius = borderRadius+"px";
-                        itemDiv.style.margin = (-1*borderWidth)+"px";
-
 
                         if(p == itemIndex && state.state != GAME_STATE_COMPLETE){
                             itemDiv.style.backgroundColor = "#FFD700";
@@ -635,6 +638,7 @@
                         }else{
                             itemDiv.style.backgroundColor = null;
                         }
+
                     }
 
                 }
