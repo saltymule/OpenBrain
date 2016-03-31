@@ -24,55 +24,55 @@
     </head>
     <body>
         <script>
-            
+
             /************************************************/
             /* START                                        */
             /************************************************/
-            
+
             function start(opts){
                 options = opts;
-                
+
                 if(options == null || options["n"] == null){
                     options = {"n":2}
                 }
-                
+
                 if(getDebugFromQueryString(window.location.search)){
                     options["n"] = getNFromQueryString( window.location.search );
                 }
-                
+
                 gameState = getNewGameState(options);
                 startRendering()
             }
-            
+
             /************************************************/
             /* CONSTANTS                                    */
             /************************************************/
-            
+
             var ButtonStateNone = 0;
             var ButtonStateOver = 1;
             var ButtonStateDown = 2;
-            
+
             var TicksPerItem = 1000;
-            
+
             /************************************************/
             /* VARIABLES                                    */
             /************************************************/
-            
+
             var options = null;
             var canvas = null;
             var scoreLabel = null;
             var prerenderedBuffers = {};
             var boardWidth = window.innerWidth;
             var boardHeight = window.innerHeight;
-            
+
             var gameState = null;
-            
+
             var isDebug = getDebugFromQueryString(window.location.search);
-            
+
             /************************************************/
             /* META CONTROLLER                              */
             /************************************************/
-            
+
             // this is available to be easily swapped out by the container with
             // custom logic (WKWebView on iOS, WebView on android)
             var metaController = {
@@ -88,85 +88,85 @@
                     start(opts)
                 }
             };
-        
+
             function didLoadHandler(){
                 metaController.didLoad()
             }
-        
+
             if(isDebug){
-                
+
                 //DEBUG customization goes here
-                
+
             }
-        
+
 
 
             /************************************************/
             /* Query String                                 */
             /************************************************/
-            
+
             function getNFromQueryString(queryString){
                 var n = new Number(getValueFromQueryString("n",queryString));
                 return n > 0 ? n : 1;
             }
-            
+
             function getDebugFromQueryString(queryString){
                 return getValueFromQueryString("debug", queryString) == "true";
             }
-            
+
             function getValueFromQueryString(key,queryString){
-                
+
                 if(queryString[0] == "?"){
                     queryString = queryString.substring(1)
                 }
-                
+
                 var params = queryString.split("&");
-                
+
                 var value = null;
-                
+
                 for ( var index = 0; index < params.length; index++){
                     var pieces = params[index].split("=")
                     if(pieces[0] == key && pieces[1] != null && pieces[1].length > 0){
                         value = pieces[1]
                     }
                 }
-                
+
                 return value;
-                
+
             }
-            
+
             /************************************************/
             /* DOM SETUP                                    */
             /************************************************/
-            
+
             function updateScoreLabel(state){
                 var score = state.indexOffset + state.firstIndex;
                 scoreLabel.innerText = "count: "+score + " highscore: "+state.highscore;
             }
-            
+
             function setupCanvas(isDebug){
-                
+
                 if(isDebug){
                     boardHeight = Math.floor(window.innerHeight*0.9);
                 }
-                
+
                 canvas = document.createElement('canvas');
                 canvas.className = "canvas";
-                
+
                 canvas.width = boardWidth;
                 canvas.height = boardHeight;
-                
+
                 document.body.appendChild(canvas);
-                
-                
+
+
                 scoreLabel = document.createElement('div');
                 scoreLabel.className = "score";
-                
+
                 scoreLabel.innerText = "count: - highscore: - ";
                 document.body.appendChild(scoreLabel);
-                
+
                 if(isDebug){
-                
+
                     var pElement = document.createElement('p');
                     pElement.className = "debug";
                     pElement.style.top = ""+boardHeight+"px"
@@ -175,87 +175,87 @@
                     startElement.onclick = reset;
                     startElement.innerText = "Reset";
                     pElement.appendChild(startElement);
-                
+
                     var spanElement0 = document.createElement('span');
                     spanElement0.innerText = " - ";
                     pElement.appendChild(spanElement0);
-                
+
                     var startElement = document.createElement('a');
                     startElement.href = "javascript:void(0)";
                     startElement.onclick = startRendering;
                     startElement.innerText = "Start";
                     pElement.appendChild(startElement);
-                
+
                     var spanElement = document.createElement('span');
                     spanElement.innerText = " - ";
                     pElement.appendChild(spanElement);
-                
+
                     var stopElement = document.createElement('a');
                     stopElement.href = "javascript:void(0)";
                     stopElement.onclick = pauseRendering;
                     stopElement.innerText = "Pause";
                     pElement.appendChild(stopElement);
-                
+
                     document.body.appendChild(pElement);
                 }
             }
-            
-            
+
+
             /************************************************/
             /* EVENT HANDLING                               */
             /************************************************/
-            
+
             function isTouchDevice() {
                var el = document.createElement('div');
                el.setAttribute('ontouchstart', 'return;'); // or try "ontouchstart"
                return typeof el.ontouchstart === "function";
             }
-            
+
             function mousemoveCanvas(event){
                 updateButtons(event,gameState.match,ButtonStateOver)
                 updateButtons(event,gameState.nonmatch,ButtonStateOver)
             }
-            
+
             function mouseoverCanvas(){
                 updateButtons(event,gameState.match,ButtonStateOver)
                 updateButtons(event,gameState.nonmatch,ButtonStateOver)
             }
-            
+
             function mousedownCanvas(){
                 updateButtons(event,gameState.match,ButtonStateDown)
                 updateButtons(event,gameState.nonmatch,ButtonStateDown)
             }
-            
+
             function mouseupCanvas(){
                 updateButtons(event,gameState.match,ButtonStateOver)
                 updateButtons(event,gameState.nonmatch,ButtonStateOver)
             }
-            
+
             function mouseoutCanvas(){
                 gameState.match.state = ButtonStateNone;
                 gameState.nonmatch.state = ButtonStateNone;
             }
-            
+
             function touchstartCanvas(){
                 updateButtons(event,gameState.match,ButtonStateDown)
                 updateButtons(event,gameState.nonmatch,ButtonStateDown)
             }
-            
+
             function touchcancelCanvas(){
                 gameState.match.state = ButtonStateNone;
                 gameState.nonmatch.state = ButtonStateNone;
             }
-            
+
             function touchendCanvas(){
                 gameState.match.state = ButtonStateNone;
                 gameState.nonmatch.state = ButtonStateNone;
             }
-            
+
             function touchleaveCanvas(){
                 gameState.match.state = ButtonStateNone;
                 gameState.nonmatch.state = ButtonStateNone;
             }
-            
+
             function updateButtons(event,button,buttonState){
                 if(hasValidButtonEvent(event,button,gameState.isRunning,canvas)){
                     button.state = buttonState;
@@ -263,7 +263,7 @@
                     button.state = ButtonStateNone;
                 }
             }
-            
+
             function didClickCanvas(event){
                 if( hasValidButtonEvent(event,gameState.match,gameState.isRunning,canvas) ){
                     gameState.lastMatch = hashForCurrentIndexes(gameState)
@@ -280,7 +280,7 @@
                     }
                 }
             }
-            
+
             function didTapButton(button){
                 if( gameState.match == button && gameState.isRunning ){
                     gameState.lastMatch = hashForCurrentIndexes(gameState)
@@ -297,26 +297,26 @@
                     }
                 }
             }
-            
-            
+
+
             function hasValidButtonEvent(event,button,isRunning,canvas){
                 var isInGeometry = button.rect["x"] < event.offsetX &&
                         button.rect["y"] < event.offsetY &&
                         button.rect["x"] + button.rect["width"] > event.offsetX &&
                         button.rect["y"] + button.rect["height"] > event.offsetY;
-                        
+
                 return  isRunning &&
                         event.target == canvas &&
                         isInGeometry;
             }
-            
 
-            
+
+
             function startListeningForEvents(){
-            
+
                 new ClickListener(gameState.match);
                 new ClickListener(gameState.nonmatch);
-            
+
                 canvas.addEventListener("click",didClickCanvas);
                 if(isTouchDevice()){
                     canvas.addEventListener("touchstart", touchstartCanvas);
@@ -331,7 +331,7 @@
                     canvas.addEventListener("mouseout",mouseoutCanvas);
                 }
             }
-            
+
             function stopListeningForEvents(){
                 canvas.removeEventListener("click",didClickCanvas);
                 if(isTouchDevice()){
@@ -347,27 +347,27 @@
                     canvas.removeEventListener("mouseout",mouseoutCanvas);
                 }
             }
-            
-            
-            
-            
+
+
+
+
             function ClickListener(button) {
                 this.button = button
                 window.addEventListener(this.keydownName, this, false);
             }
-            
+
             ClickListener.prototype = {
-                
+
                 keydownName:'keydown',
                 keyupName:'keyup',
-                
+
                 handleEvent: function(e) {
                     switch(e.type) {
                         case this.keydownName: this.onKeyStart(e); break;
                         case this.keyupName: this.onKeyEnd(e); break;
                     }
                 },
-                
+
                 onKeyStart: function(e) {
                     var isUnmodified = !e.metaKey && !e.ctrlKey  && !e.altKey;
                     if( isUnmodified ){
@@ -378,9 +378,9 @@
                             window.addEventListener(this.keyupName, this, false);
                         }
                     }
-                    
+
                 },
-                
+
                 onKeyEnd: function(e) {
                     var isUnmodified = !e.metaKey && !e.ctrlKey  && !e.altKey;
                     if( isUnmodified ){
@@ -395,7 +395,7 @@
                         }
                     }
                 },
-                
+
                 stringFromKeyCode: function(keyCode) {
                     if ( 65 <= keyCode && keyCode <= 90 ) {
                         return String.fromCharCode(keyCode).toLowerCase();
@@ -407,137 +407,137 @@
                         return "NOT FOUND"
                     }
                 }
-                
+
             };
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
             /************************************************/
             /* START/STOP                                   */
             /************************************************/
-            
+
             function startRendering(){
-                
+
                 gameState.isRunning = true;
-                
+
                 gameState.lastTimestamp = (new Date()).getTime();
-                
+
                 startListeningForEvents();
-                
+
                 window.requestAnimationFrame(render);
             }
-            
+
             function pauseRendering(){
                 gameState.isRunning = false;
             }
-            
+
             function reset(){
                 options = {"n":2}
                 gameState = getNewGameState(options);
             }
-            
+
             function gameOver(){
-                
-                
+
+
                 if(gameState != null){
-                    
+
                     stopListeningForEvents();
-                    
+
                     if(options == null){
                         options = {}
                     }
-                    
+
                     var n = gameState.secondIndex - gameState.firstIndex;
-                    
+
                     var highscore = highscoreForN(n, options)
-                    
+
                     var score = gameState.indexOffset + gameState.firstIndex;
-                    
+
                     if(score > highscore){
                         setHighscoreForN(n, options, score)
                     }
-                    
+
                     var message = "";
-                    
+
                     if (gameState.indexOffset >= gameState.itemsToNextLevel){
-                        
+
                         n++
-                        
+
                         message = "next level n = "+n
-                        
+
                     }else{
-                        
+
                         var pointsLeft = gameState.itemsToNextLevel - gameState.indexOffset
-                        
+
                         message = ""+pointsLeft+" points to the next level"
-                        
+
                     }
-                    
-                    
+
+
                     options["n"] = n
-                    
+
                     gameState = null;
-                    
+
                     metaController.didComplete(options, message)
-                    
+
                 }else{
                     location.href = location.href
                 }
-                
-                
-                
+
+
+
             }
-            
+
 
             /************************************************/
             /* RENDERING                                    */
             /************************************************/
-            
+
             function render(){
-                
+
                 if( gameState && gameState.isRunning ) {
                     //we might call game over here
                     updateState(gameState);
                 }
-                
+
                 if( gameState && gameState.isRunning ) {
-                        
+
                     drawState(gameState);
-                    
+
                     updateScoreLabel(gameState);
-                    
+
                     window.requestAnimationFrame(render);
-                    
+
                 }else{
-                
+
                     clear();
-                    
+
                 }
-                
+
             }
-            
+
             /************************************************/
             /* GAME STATE                                   */
             /************************************************/
-            
+
             function getNewGameState(options){
-                
+
                 var n = options["n"];
-                
+
                 var itemCount = 3 + n;
-                
+
                 var highscore = highscoreForN(n, options);
-                
+
                 var items = [];
-                
+
                 for(var i = 0; i < itemCount; i++){
                     items.push(getRandomSymbol());
                 }
-                
+
                 return {
                     "isRunning":false,
                     "ticks":0,
@@ -610,24 +610,24 @@
                                 "stroke":'rgba(139,0,0,1.0)',
                                 "text":'rgba(125,1,1,1.0)'
                             },
-                        }    
-                        
+                        }
+
                     }
-                    
+
                 };
             }
-        
+
             //returns
             function incrementTicks(state){
-                
+
                 var timestamp = (new Date()).getTime();
-                
+
                 var t = timestamp - state.lastTimestamp; //in milleseconds
-                
+
                 var speed = 0.6; //average speed
                 var startingSpeed = 0.6;
                 var fullSpeed = 1.6;
-                
+
                 if(state.internalTicks > state.ticksToStartSpeed){
                     if(state.internalTicks > state.ticksToFullSpeed){
                         speed = fullSpeed;
@@ -635,29 +635,29 @@
                         speed = ( fullSpeed - startingSpeed ) * (state.internalTicks - state.ticksToStartSpeed) / (state.ticksToFullSpeed - state.ticksToStartSpeed)  + startingSpeed;
                     }
                 }
-                
+
                 state.internalTicks = state.internalTicks + t*speed;
-                
+
                 state.lastTimestamp = (new Date()).getTime();
-                
+
                 var partialTicks = state.internalTicks%TicksPerItem;
                 var ticks = state.internalTicks - partialTicks
-                
+
                 var stillRatio = 0.6
                 if(partialTicks > stillRatio*TicksPerItem){
                     ticks = ticks + (partialTicks - stillRatio*TicksPerItem)/(1 - stillRatio)
                 }
-                
+
                 state.ticks = ticks ;
-                
+
             }
-            
+
             function updateState(state){
-                
+
                 incrementTicks(state);
-                
+
                 var itemIndex = state.ticks/TicksPerItem;
-                
+
                 //we highlight the 0 index at the very start
                 //following that, we highlight the 1 index, and the initial secondIndex + 1
                 //This allows the 0 index to travel offscreen
@@ -670,7 +670,7 @@
                     state.firstIndex++;
                     state.secondIndex++;
                 }
-                
+
                 if( itemIndex - state.indexOffset > state.maxItemCount )
                 {
                     if(!userGaveCorrectInput(state)){
@@ -680,11 +680,11 @@
                     state.items.shift();
                     state.items.push(getNextSymbol(state, getRandomSymbol));
                     state.indexOffset= state.indexOffset+1;
-                    
+
                 }
-                
+
                 //add new elements, get rid of old elements
-                
+
                 state.match.rect = {
                                     "x":boardWidth*0.25,
                                     "y":boardHeight*0.8,
@@ -697,28 +697,28 @@
                                     "width":boardWidth*0.2,
                                     "height":boardHeight*0.2,
                                 };
-                
+
             }
-            
+
             function userGaveCorrectInput(state){
-                //if we have a match, then the user should have indicated 
+                //if we have a match, then the user should have indicated
                 var matches = state.items[state.firstIndex] == state.items[state.secondIndex];
-                
+
                 var hash = hashForCurrentIndexes( state )
-                
+
                 //user must provide feedback on either a match or a non match
                 if(matches){
                     return state.lastMatch == hash;
                 }else{
                     return state.lastNonMatch == hash;
                 }
-                
+
             }
-        
+
             function getNextSymbol(state, randFunc){
-                
+
                 var n = state["secondIndex"] - state["firstIndex"]
-                
+
                 if(Math.random() < 0.1){//one tenth of the time, enforce a match
                     console.log("enforcing match on "+ state.items[state.items.length - n])
                     return state.items[state.items.length - n]
@@ -727,18 +727,18 @@
                 }
 
             }
-        
+
             function getRandomSymbol(){
                 var symbols = ["A","B","C","D"];
                 var index = Math.floor(Math.random()*symbols.length)
                 return symbols[index]
             }
-            
+
             function clear(){
                 var ctx = canvas.getContext('2d');
                 ctx.clearRect(0,0,boardWidth,boardHeight); // clear canvas
             }
-            
+
             function highscoreForN(n, options){
                 var key = "highscore-"+n;
                 var val = options[key] ;
@@ -748,12 +748,12 @@
                     return val
                 }
             }
-            
+
             function setHighscoreForN(n, options, score){
                 var key = "highscore-"+n;
                 options[key] = score;
             }
-            
+
             function savedOptions(){
                 var key = "options";
                 var options = null;
@@ -763,51 +763,51 @@
                 }
                 return options
             }
-        
+
             function setSavedOptions(options){
                 var key = "options";
                 localStorage.setItem(key, JSON.stringify( options ) )
             }
-            
+
             function hashForCurrentIndexes(state){
                 return (gameState.firstIndex + gameState.indexOffset) + " - " + (gameState.secondIndex + gameState.indexOffset)
             }
-            
+
             /************************************************/
             /* DRAWING                                      */
             /************************************************/
-            
+
             function drawState(state){
-            
+
                 var ctx = canvas.getContext('2d');
-                
+
                 ctx['prerenderedBuffers'] = prerenderedBuffers;
-                
+
                 ctx.clearRect(0,0,boardWidth,boardHeight); // clear canvas
-                
+
                 var y = Math.floor(boardHeight /4);
                 var height = Math.floor(boardHeight /4);
                 var xOffset = boardWidth /(state.maxItemCount - 1)
                 var width = Math.floor(xOffset*(1 - 1/(state.maxItemCount-1)));
-                
+
                 var xPositions = [];
-                
+
                 for(var i = 0; i < state.items.length; i++){
                     var item = state.items[i];
                     var xPosition = boardWidth - state.ticks*state.pixelsPerTick + (i+state.indexOffset) * xOffset;
                     xPositions.push(xPosition);
-                    
+
                     var x = xPosition+ (xOffset - width)/2.0
                     drawMemoryElement(ctx, item , x , y, width, height);
                 }
-                
-                drawFrame(ctx, 
-                    state.match.rect, 
-                    state.nonmatch.rect, 
-                    xOffset*0.90, 
-                    xPositions[state.firstIndex] + xOffset/2.0, 
+
+                drawFrame(ctx,
+                    state.match.rect,
+                    state.nonmatch.rect,
+                    xOffset*0.90,
+                    xPositions[state.firstIndex] + xOffset/2.0,
                     xPositions[state.secondIndex] + xOffset/2.0);
-                
+
                 var visibleMargin = Math.floor(boardHeight*0.05);
                 var coverWidth = 0;
                 if(state.ticks > state.ticksToStartCover){
@@ -819,20 +819,20 @@
                     }
                 }
                 drawCover(ctx, 0, y + visibleMargin, coverWidth,height - visibleMargin*2);
-                
-                
-                
+
+
+
                 drawMatchButton(ctx, state.match);
 
                 drawMatchButton(ctx, state.nonmatch);
-                
+
             }
 
             function drawCover(ctx, x,y,width, height ){
                 ctx.fillStyle = 'rgb(32,139,171)';
                 ctx.strokeStyle = 'rgba(1,77,155,1.0)';
                 ctx.lineWidth =4.0;
-                
+
                 ctx.beginPath();
                 ctx.moveTo(x,y);
                 ctx.lineTo(x,y+height);
@@ -840,47 +840,47 @@
                 ctx.lineTo(x+width,y);
                 ctx.lineTo(x,y);
                 ctx.closePath();
-                
+
                 ctx.fill()
                 ctx.stroke()
-                
+
 
             }
-            
+
             function drawFrame(ctx, button1, button2, width, firstX, secondX ){
                 ctx.strokeStyle = 'rgba(0,0,0,1.0)';
-                
+
                 ctx.lineWidth = 2;
-                
+
                 //first (left) element
                 ctx.moveTo(firstX-width/2.0,boardHeight*0.55);
                 ctx.lineTo(firstX-width/2.0,boardHeight*0.6);
                 ctx.lineTo(firstX+width/2.0,boardHeight*0.6);
                 ctx.lineTo(firstX+width/2.0,boardHeight*0.55);
-                
+
                 //second (right) element
                 ctx.moveTo(secondX+width/2.0,boardHeight*0.55);
                 ctx.lineTo(secondX+width/2.0,boardHeight*0.6);
                 ctx.lineTo(secondX-width/2.0,boardHeight*0.6);
                 ctx.lineTo(secondX-width/2.0,boardHeight*0.55);
-                
+
                 //connection beneath elements
                 ctx.moveTo(secondX,boardHeight*0.6);
                 ctx.lineTo(secondX,boardHeight*0.65);
                 ctx.lineTo(firstX,boardHeight*0.65);
                 ctx.lineTo(firstX,boardHeight*0.6);
-                
+
                 var elementMidX = (firstX+secondX)/2;
                 //smaller inidivdual joiner
                 ctx.moveTo(elementMidX,boardHeight*0.65);
                 ctx.lineTo(elementMidX,boardHeight*0.70);
-                
+
                 var button1X = button1.x+button1.width/2.0;
                 var button2X = button2.x+button2.width/2.0;
-                
+
                 var leftX = Math.min(button1X,button2X,elementMidX);
                 var rightX = Math.max(button1X,button2X,elementMidX);
-                
+
                 ctx.moveTo(leftX,boardHeight*0.70);
                 ctx.lineTo(rightX,boardHeight*0.70);
 
@@ -889,35 +889,35 @@
 
                 ctx.moveTo(button2X,boardHeight*0.70);
                 ctx.lineTo(button2X,button2.y);
-                
+
                 ctx.stroke()
-                
+
             }
-            
+
             function drawMemoryElement(ctx, symbol, x,y,width,height){
-                
+
                 var key = symbol+"-"+width+"-"+height;
-                
+
                 var image = ctx['prerenderedBuffers'][key];
-                
+
                 if( image == null){
                     image = prerenderMemoryElement(symbol,width,height);
                     ctx['prerenderedBuffers'][key] = image;
                 }
-                
+
                 ctx.drawImage(image, x, y);
-                
+
             }
-            
+
             function prerenderMemoryElement(symbol,width,height){
                 var m_canvas = document.createElement('canvas');
                 m_canvas.width = width;
                 m_canvas.height = height;
                 var m_context = m_canvas.getContext('2d');
-                
+
                 m_context.fillStyle = 'rgba(255,255,255,1)';
                 m_context.strokeStyle = 'rgba(207,2,2,1.0)';
-            
+
                 m_context.beginPath();
                 m_context.lineWidth = Math.floor(0.10*width);
                 m_context.moveTo(0,0);
@@ -926,13 +926,13 @@
                 m_context.lineTo(width,0);
                 m_context.lineTo(0,0);
                 m_context.closePath();
-            
+
                 //stroke then fill
                 m_context.fill()
                 m_context.stroke()
-            
+
                 var fontHeight = 40;
-            
+
                 m_context.fillStyle = 'rgba(0,0,0,1)';
                 m_context.font = 'italic 40pt Calibri, sans-serif';
                 m_context.fillText(symbol, (width-fontHeight)/2.0, (height-fontHeight)/2.0+fontHeight);
@@ -940,25 +940,25 @@
             }
 
             function drawMatchButton(ctx, button){
-                
+
                 var key = button.title+"-"+button.state+"-"+button.rect.width+"-"+button.rect.height;
-                
+
                 var image = ctx['prerenderedBuffers'][key];
-                
+
                 if( image == null ){
                     image = prerenderMatchButton(button);
                     ctx['prerenderedBuffers'][key] = image;
                 }
-                
+
                 ctx.drawImage(image, button.rect.x, button.rect.y);
-                
+
             }
-            
+
             function prerenderMatchButton(button){
                 var m_canvas = document.createElement('canvas');
                 m_canvas.width = button.rect.width;
                 m_canvas.height = button.rect.height;
-                
+
                 var m_context = m_canvas.getContext('2d');
                 var colors = button["colors"][button.state];
                 m_context.fillStyle = colors.fill;
@@ -971,26 +971,24 @@
                 m_context.lineTo(button.rect.width,0);
                 m_context.lineTo(0,0);
                 m_context.closePath();
-                
+
                 //stroke then fill
                 m_context.fill()
                 m_context.stroke()
-                
+
                 var fontHeight = 40;
-                
+
                 m_context.fillStyle = colors.text;
                 m_context.font = 'italic 40pt sans-serif';
                 m_context.fillText(button.title, (button.rect.width-fontHeight)/2.0, (button.rect.height-fontHeight)/2.0+fontHeight);
-                
+
                 return m_canvas;
             }
-            
+
             setupCanvas(isDebug);
-            
+
             window.addEventListener("load", didLoadHandler,false)
-            
+
         </script>
     </body>
 </html>
-
-
