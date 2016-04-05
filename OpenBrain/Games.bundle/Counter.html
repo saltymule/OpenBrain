@@ -60,8 +60,7 @@
 
             var GAME_STATE_NONE = 0;
             var GAME_STATE_RUNNING = 1;
-            var GAME_STATE_PAUSED = 2;
-            var GAME_STATE_COMPLETE = 3;
+            var GAME_STATE_COMPLETE = 2;
 
             /************************************************/
             /* VARIABLES                                    */
@@ -96,7 +95,7 @@
             };
 
             function savedOptions(){
-                var key = "options";
+                var key = "counter-options";
                 var options = null;
                 try{
                     options = JSON.parse(localStorage.getItem(key))
@@ -203,10 +202,6 @@
                 gameState.lastTimestamp = (new Date()).getTime();
 
                 window.requestAnimationFrame(render);
-            }
-
-            function pauseRendering(){
-                gameState.state = GAME_STATE_PAUSED;
             }
 
             function stop(){

@@ -26,33 +26,46 @@
         <script>
 
             /************************************************/
-            /* START                                        */
-            /************************************************/
-
-            function start(opts){
-                options = opts;
-
-                if(options == null || options["n"] == null){
-                    options = {"n":2}
-                }
-
-                if(getDebugFromQueryString(window.location.search)){
-                    options["n"] = getNFromQueryString( window.location.search );
-                }
-
-                gameState = getNewGameState(options);
-                startRendering()
-            }
-
-            /************************************************/
             /* CONSTANTS                                    */
             /************************************************/
 
-            var ButtonStateNone = 0;
-            var ButtonStateOver = 1;
-            var ButtonStateDown = 2;
+            var GAME_STATE_NONE = 0;
+            var GAME_STATE_RUNNING = 1;
+            var GAME_STATE_COMPLETE = 2;
 
-            var TicksPerItem = 1000;
+            var BUTTON_STATE_NONE = 0;
+            var BUTTON_STATE_OVER = 1;
+            var BUTTON_STATE_DOWN = 2;
+
+            var TICKS_PER_ITEM = 1400;
+
+            var N_BY_LEVEL = [0,
+              1,1,1,
+              2,2,2,
+              3,3,3,
+              4,4,4,
+              5,5,5,
+              6,6,6,
+              7,7,7,
+              8,8,8]
+            var SPEED_BY_LEVEL = [0,
+              0.8,1.0,1.2,
+              0.8,1.0,1.2,
+              0.8,1.0,1.2,
+              0.8,1.0,1.2,
+              0.8,1.0,1.2,
+              0.8,1.0,1.2,
+              0.8,1.0,1.2,
+              0.8,1.0,1.2]
+            var TOTAL_BY_LEVEL = [0,
+              20,24,28,
+              20,24,28,
+              20,24,28,
+              20,24,28,
+              20,24,28,
+              20,24,28,
+              20,24,28,
+              20,24,28]
 
             /************************************************/
             /* VARIABLES                                    */
@@ -70,6 +83,25 @@
             var isDebug = getDebugFromQueryString(window.location.search);
 
             /************************************************/
+            /* START                                        */
+            /************************************************/
+
+            function start(opts){
+                options = opts;
+
+                if(options == null || options["level"] == null){
+                    options = {"level":1}
+                }
+
+                if(getDebugFromQueryString(window.location.search)){
+                    options["level"] = getLevelFromQueryString( window.location.search );
+                }
+
+                gameState = getNewGameState(options);
+                startRendering()
+            }
+
+            /************************************************/
             /* META CONTROLLER                              */
             /************************************************/
 
@@ -77,9 +109,6 @@
             // custom logic (WKWebView on iOS, WebView on android)
             var metaController = {
                 didComplete:function(opts, message){
-                    if(isDebug){
-                        return;
-                    }
                     setSavedOptions(opts);
                     alert(message)
                 },
@@ -105,9 +134,9 @@
             /* Query String                                 */
             /************************************************/
 
-            function getNFromQueryString(queryString){
-                var n = new Number(getValueFromQueryString("n",queryString));
-                return n > 0 ? n : 1;
+            function getLevelFromQueryString(queryString){
+                var level = new Number(getValueFromQueryString("level",queryString));
+                return level > 0 ? level : 1;
             }
 
             function getDebugFromQueryString(queryString){
@@ -165,39 +194,6 @@
                 scoreLabel.innerText = "count: - highscore: - ";
                 document.body.appendChild(scoreLabel);
 
-                if(isDebug){
-
-                    var pElement = document.createElement('p');
-                    pElement.className = "debug";
-                    pElement.style.top = ""+boardHeight+"px"
-                    var startElement = document.createElement('a');
-                    startElement.href = "javascript:void(0)";
-                    startElement.onclick = reset;
-                    startElement.innerText = "Reset";
-                    pElement.appendChild(startElement);
-
-                    var spanElement0 = document.createElement('span');
-                    spanElement0.innerText = " - ";
-                    pElement.appendChild(spanElement0);
-
-                    var startElement = document.createElement('a');
-                    startElement.href = "javascript:void(0)";
-                    startElement.onclick = startRendering;
-                    startElement.innerText = "Start";
-                    pElement.appendChild(startElement);
-
-                    var spanElement = document.createElement('span');
-                    spanElement.innerText = " - ";
-                    pElement.appendChild(spanElement);
-
-                    var stopElement = document.createElement('a');
-                    stopElement.href = "javascript:void(0)";
-                    stopElement.onclick = pauseRendering;
-                    stopElement.innerText = "Pause";
-                    pElement.appendChild(stopElement);
-
-                    document.body.appendChild(pElement);
-                }
             }
 
 
@@ -212,100 +208,75 @@
             }
 
             function mousemoveCanvas(event){
-                updateButtons(event,gameState.match,ButtonStateOver)
-                updateButtons(event,gameState.nonmatch,ButtonStateOver)
+                updateButtons(event,gameState.match,BUTTON_STATE_OVER)
             }
 
             function mouseoverCanvas(){
-                updateButtons(event,gameState.match,ButtonStateOver)
-                updateButtons(event,gameState.nonmatch,ButtonStateOver)
+                updateButtons(event,gameState.match,BUTTON_STATE_OVER)
             }
 
             function mousedownCanvas(){
-                updateButtons(event,gameState.match,ButtonStateDown)
-                updateButtons(event,gameState.nonmatch,ButtonStateDown)
+                updateButtons(event,gameState.match,BUTTON_STATE_DOWN)
             }
 
             function mouseupCanvas(){
-                updateButtons(event,gameState.match,ButtonStateOver)
-                updateButtons(event,gameState.nonmatch,ButtonStateOver)
+                updateButtons(event,gameState.match,BUTTON_STATE_OVER)
             }
 
             function mouseoutCanvas(){
-                gameState.match.state = ButtonStateNone;
-                gameState.nonmatch.state = ButtonStateNone;
+                gameState.match.state = BUTTON_STATE_NONE;
             }
 
             function touchstartCanvas(){
-                updateButtons(event,gameState.match,ButtonStateDown)
-                updateButtons(event,gameState.nonmatch,ButtonStateDown)
+                updateButtons(event,gameState.match,BUTTON_STATE_DOWN)
             }
 
             function touchcancelCanvas(){
-                gameState.match.state = ButtonStateNone;
-                gameState.nonmatch.state = ButtonStateNone;
+                gameState.match.state = BUTTON_STATE_NONE;
             }
 
             function touchendCanvas(){
-                gameState.match.state = ButtonStateNone;
-                gameState.nonmatch.state = ButtonStateNone;
+                gameState.match.state = BUTTON_STATE_NONE;
             }
 
             function touchleaveCanvas(){
-                gameState.match.state = ButtonStateNone;
-                gameState.nonmatch.state = ButtonStateNone;
+                gameState.match.state = BUTTON_STATE_NONE;
             }
 
             function updateButtons(event,button,buttonState){
-                if(hasValidButtonEvent(event,button,gameState.isRunning,canvas)){
+                if(hasValidButtonEvent(event,button,gameState.state,canvas)){
                     button.state = buttonState;
                 }else{
-                    button.state = ButtonStateNone;
+                    button.state = BUTTON_STATE_NONE;
                 }
             }
 
             function didClickCanvas(event){
-                if( hasValidButtonEvent(event,gameState.match,gameState.isRunning,canvas) ){
+                if( hasValidButtonEvent(event,gameState.match,gameState.state,canvas) ){
                     gameState.lastMatch = hashForCurrentIndexes(gameState)
                     if(!userGaveCorrectInput(gameState)){
-                        gameOver();
-                        return;
-                    }
-                }
-                if( hasValidButtonEvent(event,gameState.nonmatch,gameState.isRunning,canvas) ){
-                    gameState.lastNonMatch = hashForCurrentIndexes(gameState)
-                    if(!userGaveCorrectInput(gameState)){
-                        gameOver();
-                        return;
+                        gameState.state = GAME_STATE_COMPLETE;
                     }
                 }
             }
 
             function didTapButton(button){
-                if( gameState.match == button && gameState.isRunning ){
+                if( gameState.match == button && gameState.state == GAME_STATE_RUNNING ){
                     gameState.lastMatch = hashForCurrentIndexes(gameState)
                     if(!userGaveCorrectInput(gameState)){
-                        gameOver();
-                        return;
-                    }
-                }
-                if( gameState.nonmatch == button && gameState.isRunning ){
-                    gameState.lastNonMatch = hashForCurrentIndexes(gameState)
-                    if(!userGaveCorrectInput(gameState)){
-                        gameOver();
-                        return;
+                      gameState.state = GAME_STATE_COMPLETE;
                     }
                 }
             }
 
 
-            function hasValidButtonEvent(event,button,isRunning,canvas){
+            function hasValidButtonEvent(event,button,state,canvas){
                 var isInGeometry = button.rect["x"] < event.offsetX &&
                         button.rect["y"] < event.offsetY &&
                         button.rect["x"] + button.rect["width"] > event.offsetX &&
                         button.rect["y"] + button.rect["height"] > event.offsetY;
 
-                return  isRunning &&
+                return  state == GAME_STATE_RUNNING &&
                         event.target == canvas &&
                         isInGeometry;
             }
@@ -315,7 +286,6 @@
             function startListeningForEvents(){
 
                 new ClickListener(gameState.match);
-                new ClickListener(gameState.nonmatch);
 
                 canvas.addEventListener("click",didClickCanvas);
                 if(isTouchDevice()){
@@ -374,7 +344,7 @@
                         e.preventDefault();
                         var key = this.stringFromKeyCode(e.keyCode ? e.keyCode : e.which)
                         if(key == this.button.letter){
-                            this.button.state = ButtonStateDown;
+                            this.button.state = BUTTON_STATE_DOWN;
                             window.addEventListener(this.keyupName, this, false);
                         }
                     }
@@ -389,7 +359,7 @@
                     var key = this.stringFromKeyCode(e.keyCode ? e.keyCode : e.which)
                     if(key == this.element.letter){
                         window.removeEventListener(this.keyupName, this, false);
-                        this.button.state = ButtonStateNone;
+                        this.button.state = BUTTON_STATE_NONE;
                         if( isUnmodified ){
                             didTapKey(this.element.letter);
                         }
@@ -422,7 +392,7 @@
 
             function startRendering(){
 
-                gameState.isRunning = true;
+                gameState.state = GAME_STATE_RUNNING;
 
                 gameState.lastTimestamp = (new Date()).getTime();
 
@@ -431,12 +401,8 @@
                 window.requestAnimationFrame(render);
             }
 
-            function pauseRendering(){
-                gameState.isRunning = false;
-            }
-
             function reset(){
-                options = {"n":2}
+                options = {"level":1}
                 gameState = getNewGameState(options);
             }
 
@@ -451,34 +417,34 @@
                         options = {}
                     }
 
-                    var n = gameState.secondIndex - gameState.firstIndex;
+                    var level = gameState.level;
 
-                    var highscore = highscoreForN(n, options)
+                    var highscore = highscoreForLevel(level, options)
 
                     var score = gameState.indexOffset + gameState.firstIndex;
 
                     if(score > highscore){
-                        setHighscoreForN(n, options, score)
+                        setHighscoreForLevel(level, options, score)
                     }
 
                     var message = "";
 
-                    if (gameState.indexOffset >= gameState.itemsToNextLevel){
+                    if (score >= gameState.itemsToNextLevel){
 
-                        n++
+                        level++
 
-                        message = "next level n = "+n
+                        message = "next level = "+level
 
                     }else{
 
-                        var pointsLeft = gameState.itemsToNextLevel - gameState.indexOffset
+                        var pointsLeft = gameState.itemsToNextLevel - score
 
                         message = ""+pointsLeft+" points to the next level"
 
                     }
 
 
-                    options["n"] = n
+                    options["level"] = level;
 
                     gameState = null;
 
@@ -499,25 +465,26 @@
 
             function render(){
 
-                if( gameState && gameState.isRunning ) {
+                if( gameState && gameState.state == GAME_STATE_RUNNING ) {
                     //we might call game over here
-                    updateState(gameState);
+                    gameState = updateState(gameState);
+
                 }
 
-                if( gameState && gameState.isRunning ) {
+                if( gameState ) {
 
                     drawState(gameState);
 
                     updateScoreLabel(gameState);
-
-                    window.requestAnimationFrame(render);
-
-                }else{
-
-                    clear();
+                    if( gameState.state == GAME_STATE_RUNNING ){
+                      window.requestAnimationFrame(render);
+                    }
 
                 }
 
+                if(gameState.state == GAME_STATE_COMPLETE){
+                  gameOver();
+                }
             }
 
             /************************************************/
@@ -526,11 +493,17 @@
 
             function getNewGameState(options){
 
-                var n = options["n"];
+                var level = options["level"];
+
+                var n = N_BY_LEVEL[level];
+
+                var speed = SPEED_BY_LEVEL[level];
+
+                var total = TOTAL_BY_LEVEL[level];
 
                 var itemCount = 3 + n;
 
-                var highscore = highscoreForN(n, options);
+                var highscore = highscoreForLevel(level, options);
 
                 var items = [];
 
@@ -539,22 +512,23 @@
                 }
 
                 return {
-                    "isRunning":false,
-                    "ticks":0,
-                    "internalTicks":0,
+                    "speed":speed,
+                    "n":n,
+                    "state":GAME_STATE_NONE,
+                    "ticks":(n)*TICKS_PER_ITEM,
+                    "level":level,
+                    "internalTicks":(n)*TICKS_PER_ITEM,
                     "lastTimestamp":0,
                     "indexOffset":0,
                     "firstIndex":0,
                     "secondIndex":itemCount-3,
                     "items":items,
                     "maxItemCount":itemCount,
-                    "pixelsPerTick":boardWidth/(TicksPerItem*(itemCount - 1)),
+                    "pixelsPerTick":boardWidth/(TICKS_PER_ITEM*(itemCount - 1)),
                     "lastMatch":null,
-                    "ticksToStartCover":TicksPerItem*itemCount,
-                    "ticksToFullCover":TicksPerItem*itemCount + 16000,
-                    "ticksToStartSpeed":TicksPerItem*itemCount + 21000,
-                    "ticksToFullSpeed":TicksPerItem*itemCount + 60000,
-                    "itemsToNextLevel":50,
+                    "ticksToStartCover":TICKS_PER_ITEM*itemCount,
+                    "ticksToFullCover":TICKS_PER_ITEM*(itemCount + 4),
+                    "itemsToNextLevel":total,
                     "highscore":highscore,
                     "match":{
                         "letter":"z",
@@ -583,69 +557,33 @@
                                 "text":'rgba(31,88,54,1.0)'
                             },
                         }
-                    },
-                    "nonmatch":{
-                        "letter":"x",
-                        "title":"\u2260",
-                        "state":0,
-                        "rect":{
-                            "x":0,
-                            "y":0,
-                            "width":boardWidth*0.2,
-                            "height":boardHeight*0.2,
-                        },
-                        "colors":{
-                            0:{
-                                "fill":"rgba(255,196,196,1.0)",
-                                "stroke":'rgba(139,0,0,1.0)',
-                                "text":'rgba(125,1,1,1.0)'
-                            },
-                            1:{
-                                "fill":"rgba(255,255,255,1.0)",
-                                "stroke":'rgba(139,0,0,1.0)',
-                                "text":'rgba(125,1,1,1.0)'
-                            },
-                            2:{
-                                "fill":"rgba(170,56,56,1.0)",
-                                "stroke":'rgba(139,0,0,1.0)',
-                                "text":'rgba(125,1,1,1.0)'
-                            },
-                        }
-
                     }
-
                 };
             }
 
             //returns
             function incrementTicks(state){
 
+                if(state.state == GAME_STATE_COMPLETE){
+                  return
+                }
+
                 var timestamp = (new Date()).getTime();
 
                 var t = timestamp - state.lastTimestamp; //in milleseconds
 
-                var speed = 0.6; //average speed
-                var startingSpeed = 0.6;
-                var fullSpeed = 1.6;
-
-                if(state.internalTicks > state.ticksToStartSpeed){
-                    if(state.internalTicks > state.ticksToFullSpeed){
-                        speed = fullSpeed;
-                    }else{
-                        speed = ( fullSpeed - startingSpeed ) * (state.internalTicks - state.ticksToStartSpeed) / (state.ticksToFullSpeed - state.ticksToStartSpeed)  + startingSpeed;
-                    }
-                }
+                var speed = state["speed"]; //average speed
 
                 state.internalTicks = state.internalTicks + t*speed;
 
                 state.lastTimestamp = (new Date()).getTime();
 
-                var partialTicks = state.internalTicks%TicksPerItem;
+                var partialTicks = state.internalTicks%TICKS_PER_ITEM;
                 var ticks = state.internalTicks - partialTicks
 
                 var stillRatio = 0.6
-                if(partialTicks > stillRatio*TicksPerItem){
-                    ticks = ticks + (partialTicks - stillRatio*TicksPerItem)/(1 - stillRatio)
+                if(partialTicks > stillRatio*TICKS_PER_ITEM){
+                    ticks = ticks + (partialTicks - stillRatio*TICKS_PER_ITEM)/(1 - stillRatio)
                 }
 
                 state.ticks = ticks ;
@@ -656,7 +594,9 @@
 
                 incrementTicks(state);
 
-                var itemIndex = state.ticks/TicksPerItem;
+                var itemIndex = state.ticks/TICKS_PER_ITEM;
+
+
 
                 //we highlight the 0 index at the very start
                 //following that, we highlight the 1 index, and the initial secondIndex + 1
@@ -664,22 +604,33 @@
                 if( state.firstIndex == 0 &&  itemIndex - state.indexOffset > state.maxItemCount - 1 )
                 {
                     if(!userGaveCorrectInput(state)){
-                        gameOver();
-                        return;
+                        state.state = GAME_STATE_COMPLETE;
+                        return state;
                     }
                     state.firstIndex++;
                     state.secondIndex++;
                 }
 
-                if( itemIndex - state.indexOffset > state.maxItemCount )
+                  if( itemIndex - state.indexOffset > state.maxItemCount )
                 {
                     if(!userGaveCorrectInput(state)){
-                        gameOver();
-                        return;
+                        state.state = GAME_STATE_COMPLETE;
+                        return state;
                     }
+
+                    var score = state.indexOffset + state.firstIndex
+
+                    if(state.itemsToNextLevel <= score){
+                      state.state = GAME_STATE_COMPLETE;
+                      return state;
+                    }
+
+
                     state.items.shift();
-                    state.items.push(getNextSymbol(state, getRandomSymbol));
                     state.indexOffset= state.indexOffset+1;
+                    if(state.indexOffset + state.firstIndex < state.itemsToNextLevel){
+                      state.items.push(getNextSymbol(state, getRandomSymbol));
+                    }
 
                 }
 
@@ -691,12 +642,7 @@
                                     "width":boardWidth*0.2,
                                     "height":boardHeight*0.2,
                                 };
-                state.nonmatch.rect = {
-                                    "x":boardWidth*0.50,
-                                    "y":boardHeight*0.8,
-                                    "width":boardWidth*0.2,
-                                    "height":boardHeight*0.2,
-                                };
+                return state;
 
             }
 
@@ -710,7 +656,7 @@
                 if(matches){
                     return state.lastMatch == hash;
                 }else{
-                    return state.lastNonMatch == hash;
+                    return state.lastMatch != hash;
                 }
 
             }
@@ -719,7 +665,7 @@
 
                 var n = state["secondIndex"] - state["firstIndex"]
 
-                if(Math.random() < 0.1){//one tenth of the time, enforce a match
+                if(Math.random() < 0.2){//one tenth of the time, enforce a match
                     console.log("enforcing match on "+ state.items[state.items.length - n])
                     return state.items[state.items.length - n]
                 }else{
@@ -739,8 +685,8 @@
                 ctx.clearRect(0,0,boardWidth,boardHeight); // clear canvas
             }
 
-            function highscoreForN(n, options){
-                var key = "highscore-"+n;
+            function highscoreForLevel(level, options){
+                var key = "highscore-"+level;
                 var val = options[key] ;
                 if(isNaN(val)){
                     return 0
@@ -749,13 +695,13 @@
                 }
             }
 
-            function setHighscoreForN(n, options, score){
-                var key = "highscore-"+n;
+            function setHighscoreForLevel(level, options, score){
+                var key = "highscore-"+level;
                 options[key] = score;
             }
 
             function savedOptions(){
-                var key = "options";
+                var key = "nback-options";
                 var options = null;
                 try{
                     options = JSON.parse(localStorage.getItem(key))
@@ -803,28 +749,28 @@
 
                 drawFrame(ctx,
                     state.match.rect,
-                    state.nonmatch.rect,
                     xOffset*0.90,
                     xPositions[state.firstIndex] + xOffset/2.0,
                     xPositions[state.secondIndex] + xOffset/2.0);
 
-                var visibleMargin = Math.floor(boardHeight*0.05);
-                var coverWidth = 0;
-                if(state.ticks > state.ticksToStartCover){
-                    var fullCoverWidth = (state.secondIndex - state.firstIndex + 1)*xOffset;
-                    if(state.ticks > state.ticksToFullCover){
-                        coverWidth = fullCoverWidth;
-                    }else{
-                        coverWidth = fullCoverWidth*( ( state.ticks - state.ticksToStartCover ) / (state.ticksToFullCover - state.ticksToStartCover ) );
-                    }
+                if(state.state == GAME_STATE_RUNNING){
+
+                  var visibleMargin = Math.floor(boardHeight*0.05);
+                  var coverWidth = 0;
+                  if(state.ticks > state.ticksToStartCover){
+                      var fullCoverWidth = (state.secondIndex - state.firstIndex + 1)*xOffset;
+                      if(state.ticks > state.ticksToFullCover){
+                          coverWidth = fullCoverWidth;
+                      }else{
+                          coverWidth = fullCoverWidth*( ( state.ticks - state.ticksToStartCover ) / (state.ticksToFullCover - state.ticksToStartCover ) );
+                      }
+                  }
+                  if(coverWidth > 0){
+                    drawCover(ctx, 0, y + visibleMargin, coverWidth,height - visibleMargin*2);
+                  }
                 }
-                drawCover(ctx, 0, y + visibleMargin, coverWidth,height - visibleMargin*2);
-
-
 
                 drawMatchButton(ctx, state.match);
-
-                drawMatchButton(ctx, state.nonmatch);
 
             }
 
@@ -847,10 +793,12 @@
 
             }
 
-            function drawFrame(ctx, button1, button2, width, firstX, secondX ){
+            function drawFrame(ctx, button1, width, firstX, secondX ){
                 ctx.strokeStyle = 'rgba(0,0,0,1.0)';
 
                 ctx.lineWidth = 2;
+
+                ctx.beginPath();
 
                 //first (left) element
                 ctx.moveTo(firstX-width/2.0,boardHeight*0.55);
@@ -876,19 +824,15 @@
                 ctx.lineTo(elementMidX,boardHeight*0.70);
 
                 var button1X = button1.x+button1.width/2.0;
-                var button2X = button2.x+button2.width/2.0;
 
-                var leftX = Math.min(button1X,button2X,elementMidX);
-                var rightX = Math.max(button1X,button2X,elementMidX);
+                var leftX = Math.min(button1X,elementMidX);
+                var rightX = Math.max(button1X,elementMidX);
 
                 ctx.moveTo(leftX,boardHeight*0.70);
                 ctx.lineTo(rightX,boardHeight*0.70);
 
                 ctx.moveTo(button1X,boardHeight*0.70);
                 ctx.lineTo(button1X,button1.y);
-
-                ctx.moveTo(button2X,boardHeight*0.70);
-                ctx.lineTo(button2X,button2.y);
 
                 ctx.stroke()
 

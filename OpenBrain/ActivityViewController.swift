@@ -38,7 +38,7 @@ class ActivityViewController: UIViewController, WebViewComponentDelegate {
         
         self.view.addSubview( self.webViewComponent.webView )
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleUIApplicationWillResignActiveNotification:", name: UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ActivityViewController.handleUIApplicationWillResignActiveNotification(_:)), name: UIApplicationWillResignActiveNotification, object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
