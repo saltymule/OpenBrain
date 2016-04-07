@@ -91,7 +91,7 @@
                 options = opts;
 
                 if(options == null || options["level"] == null){
-                    options = {"level":1}
+                    options = {"level":1,"failCount":0}
                 }
 
                 if(getDebugFromQueryString(window.location.search)){
@@ -279,11 +279,6 @@
                 window.requestAnimationFrame(render);
             }
 
-            function reset(){
-                options = {"level":1}
-                gameState = getNewGameState(options);
-            }
-
             function didComplete(state, metaController, options){
 
                 var level = gameState.level;
@@ -359,6 +354,8 @@
 
                 var level = options["level"];
 
+                var failCount = options["failCount"];
+
                 var n = N_BY_LEVEL[level];
 
                 var speed = SPEED_BY_LEVEL[level];
@@ -383,6 +380,7 @@
                 return {
                     "speed":speed,
                     "n":n,
+                    "failCount":failCount,
                     "state":GAME_STATE_NONE,
                     "ticks":(n)*TICKS_PER_ITEM,
                     "level":level,

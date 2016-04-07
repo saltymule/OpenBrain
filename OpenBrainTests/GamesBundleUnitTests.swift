@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import OpenBrain
+@testable import OpenBrain
 
 class GamesBundleUnitTests: XCTestCase {
     

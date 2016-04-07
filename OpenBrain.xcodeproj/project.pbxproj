@@ -14,6 +14,7 @@
 		770D42C81BCF047300C2C3A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 770D42C61BCF047300C2C3A6 /* LaunchScreen.storyboard */; };
 		770D42DE1BCF047300C2C3A6 /* ActivWikiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770D42DD1BCF047300C2C3A6 /* ActivWikiUITests.swift */; };
 		770D42EC1BCF094700C2C3A6 /* Games.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 770D42EB1BCF094700C2C3A6 /* Games.bundle */; };
+		77C7F3CB1CB5E3D7008E6318 /* JSONUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C7F3CA1CB5E3D7008E6318 /* JSONUnitTests.swift */; };
 		77DF26271BD113CB0013696A /* WebViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF26261BD113CB0013696A /* WebViewComponent.swift */; };
 		77DF262B1BD595970013696A /* GamesBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF262A1BD595970013696A /* GamesBundle.swift */; };
 		77DF262D1BD5996C0013696A /* GamesBundleUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF262C1BD5996C0013696A /* GamesBundleUnitTests.swift */; };
@@ -46,13 +47,14 @@
 		770D42C41BCF047300C2C3A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		770D42C71BCF047300C2C3A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		770D42C91BCF047300C2C3A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		770D42CE1BCF047300C2C3A6 /* OpenBrain.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenBrain.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		770D42CE1BCF047300C2C3A6 /* OpenBrainTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenBrainTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		770D42D41BCF047300C2C3A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		770D42D91BCF047300C2C3A6 /* OpenBrain.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenBrain.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		770D42D91BCF047300C2C3A6 /* OpenBrainUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenBrainUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		770D42DD1BCF047300C2C3A6 /* ActivWikiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivWikiUITests.swift; sourceTree = "<group>"; };
 		770D42DF1BCF047300C2C3A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		770D42EB1BCF094700C2C3A6 /* Games.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Games.bundle; sourceTree = "<group>"; };
-		77DF26261BD113CB0013696A /* WebViewComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewComponent.swift; sourceTree = "<group>"; };
+		77C7F3CA1CB5E3D7008E6318 /* JSONUnitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONUnitTests.swift; sourceTree = "<group>"; };
+		77DF26261BD113CB0013696A /* WebViewComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = WebViewComponent.swift; sourceTree = "<group>"; tabWidth = 2; };
 		77DF262A1BD595970013696A /* GamesBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesBundle.swift; sourceTree = "<group>"; };
 		77DF262C1BD5996C0013696A /* GamesBundleUnitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesBundleUnitTests.swift; sourceTree = "<group>"; };
 		77DF26341BD6EA550013696A /* metacontroller.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = metacontroller.js; sourceTree = "<group>"; };
@@ -106,8 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				770D42BA1BCF047300C2C3A6 /* OpenBrain.app */,
-				770D42CE1BCF047300C2C3A6 /* OpenBrain.xctest */,
-				770D42D91BCF047300C2C3A6 /* OpenBrain.xctest */,
+				770D42CE1BCF047300C2C3A6 /* OpenBrainTests.xctest */,
+				770D42D91BCF047300C2C3A6 /* OpenBrainUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -133,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				77DF262C1BD5996C0013696A /* GamesBundleUnitTests.swift */,
+				77C7F3CA1CB5E3D7008E6318 /* JSONUnitTests.swift */,
 				770D42D41BCF047300C2C3A6 /* Info.plist */,
 			);
 			path = OpenBrainTests;
@@ -182,7 +185,7 @@
 			);
 			name = OpenBrainTests;
 			productName = ActivWikiTests;
-			productReference = 770D42CE1BCF047300C2C3A6 /* OpenBrain.xctest */;
+			productReference = 770D42CE1BCF047300C2C3A6 /* OpenBrainTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		770D42D81BCF047300C2C3A6 /* OpenBrainUITests */ = {
@@ -200,7 +203,7 @@
 			);
 			name = OpenBrainUITests;
 			productName = ActivWikiUITests;
-			productReference = 770D42D91BCF047300C2C3A6 /* OpenBrain.xctest */;
+			productReference = 770D42D91BCF047300C2C3A6 /* OpenBrainUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -293,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				77DF262D1BD5996C0013696A /* GamesBundleUnitTests.swift in Sources */,
+				77C7F3CB1CB5E3D7008E6318 /* JSONUnitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,7 +461,7 @@
 				INFOPLIST_FILE = OpenBrainTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.OpenBrainTests;
-				PRODUCT_NAME = OpenBrain;
+				PRODUCT_NAME = OpenBrainTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenBrain.app/OpenBrain";
 			};
 			name = Debug;
@@ -469,7 +473,7 @@
 				INFOPLIST_FILE = OpenBrainTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.OpenBrainTests;
-				PRODUCT_NAME = OpenBrain;
+				PRODUCT_NAME = OpenBrainTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenBrain.app/OpenBrain";
 			};
 			name = Release;
@@ -482,7 +486,7 @@
 				INFOPLIST_FILE = OpenBrainUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.OpenBrainUITests;
-				PRODUCT_NAME = OpenBrain;
+				PRODUCT_NAME = OpenBrainUITests;
 				PROVISIONING_PROFILE = "";
 				TEST_TARGET_NAME = OpenBrain;
 				USES_XCTRUNNER = YES;
@@ -497,7 +501,7 @@
 				INFOPLIST_FILE = OpenBrainUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.OpenBrainUITests;
-				PRODUCT_NAME = OpenBrain;
+				PRODUCT_NAME = OpenBrainUITests;
 				PROVISIONING_PROFILE = "";
 				TEST_TARGET_NAME = OpenBrain;
 				USES_XCTRUNNER = YES;

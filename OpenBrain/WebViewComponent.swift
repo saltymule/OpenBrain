@@ -84,6 +84,7 @@ class WebViewComponent: NSObject, WKScriptMessageHandler {
         case .None:
             break
         case .Load:
+            userContentController
             self.webView.evaluateJavaScript(self.getStartJavascript(), completionHandler: nil)
             break
         case .Complete:
@@ -97,25 +98,32 @@ class WebViewComponent: NSObject, WKScriptMessageHandler {
         }
     }
     
-    private func getStartJavascript() -> String{
-        
-        var result = "start(null)"
-        
-        do{
-            let data = try NSJSONSerialization.dataWithJSONObject(self.options, options: .PrettyPrinted)
-            guard let stringOptions = String(data: data , encoding: NSUTF8StringEncoding) else {
-                return result
-            }
-            result = "start("+stringOptions+")"
-        }catch _ { }
-        
-        return result
-        
-    }
-    
-    func clear(){
-        self.webView.loadRequest(NSURLRequest(URL: NSURL(string: "about:blank")!))
-    }
-    
+  private func getStartJavascript() -> String{
+    let param = JSONStringWithObject(self.options, defaultString: "null")
+    return "start(\(param))"
+  }
+  
+  func clear(){
+    self.webView.loadRequest(NSURLRequest(URL: NSURL(string: "about:blank")!))
+  }
+  
 }
 
+
+public func JSONStringWithObject(object:AnyObject, defaultString:String) -> String{
+  
+  if !( NSJSONSerialization.isValidJSONObject(object)) {
+    return defaultString
+  }
+  
+  do{
+    let data = try NSJSONSerialization.dataWithJSONObject(object, options: .PrettyPrinted)
+    guard let stringOptions = String(data: data , encoding: NSUTF8StringEncoding) else {
+      return defaultString
+    }
+    return stringOptions
+  }catch _ { }
+  
+  return defaultString
+  
+}
