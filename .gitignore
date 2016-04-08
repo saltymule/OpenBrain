@@ -3,3 +3,5 @@ xcshareddata/
 bin/
 derived/
 *.pyc
+Games.bundle/*
+
