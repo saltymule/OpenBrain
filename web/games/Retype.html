@@ -150,6 +150,12 @@
             .space{
                 width:30px;
             }
+            .correct .key{
+              background-color: #CFC;
+            }
+            .correct {
+              pointer-events: none;
+            }
 
         </style>
         </style>
@@ -214,15 +220,17 @@
             /* VARIABLES                                    */
             /************************************************/
 
-            var options = {};
+            var options = null;
 
             //view variables
             var div1 = null;
             var div2 = null;
-            var wordSpans = [];
+            var wordSpans = null;
 
             //current gamestate
-            var state = {"level":1,"correctCount":0};
+            var gameState = null;
+
+            var noautostart = getNoAutoStartFromQueryString(window.location.search);
 
             /************************************************/
             /* START                                        */
@@ -230,65 +238,95 @@
 
             function start(opts){
 
-                if(opts != null){
-                    options = opts;
+                options = opts;
+
+                if(options == null || options.level == null){
+                  //reset to defaults
+                  options = {"level":1,"correctCount":0};
                 }
 
                 if(getDebugFromQueryString(window.location.search)){
                     options["level"] = getLevelFromQueryString( window.location.search );
                 }
 
-                state = getState(options);
+                if(options.predefinedGameState){
 
-                setupPhase1Elements(state);
+                  gameState = options.predefinedGameState;
+
+                }else{
+                  gameState = getState(options);
+                }
+
+                clearElements();
+
+                setupPhase1Elements(gameState);
 
             }
 
-            //level 1 any word length
-            //level 2 any word length reordering
-            //level 3 short word reverse 1
-            //level 4 short word reverse 2
-            //level 5 short word reverse 2 reordering
-            //level 6 long word reverse 2 reordering
+            //level 1 - 2 words any word length
+            //level 2 - 2 words any word length reordering
+            //level 3 - 2 words short word reverse 1
+            //level 4 - 2 words short word reverse 2
+            //level 5 - 2 words short word reverse 2 reordering
+            //level 6 - 2 words long word reverse 2 reordering
+            //level 7 - 3 words short word reordering
+            //level 8 - 3 words short word reordering reverse 1
+            //level 9 - 3 words short word reordering reverse 2
+            //level 10 - 3 words short word reordering reverse 3
+            //level 11 - 3 words long word reordering reverse 3
 
-            //level 7 + up 3 words????
 
-
-            function shouldReorderWords(level){
-                var reorderWordsLevels = [2,5,6];
-                return reorderWordsLevels.indexOf(level) > -1;
+            function getShouldReorderWords(level){
+              return level == 2 || level > 4 ;
             }
 
-            function shouldReverseWord(i, level){
-                if(i == 0){
-                    var reverseFirstWordLevels = [3,4,5,6];
-                    return reverseFirstWordLevels.indexOf(level) > -1;
+            function getReversedWordsIndexes(level){
+                var reverseFirstWordLevels = [3,4,5,6];
+                var allIndexes = [];
+                var wordCount = getWordCount(level);
+                for(var i = 0; i < wordCount; i++ ){
+                  allIndexes.push(i);
                 }
-                if(i == 1){
-                    var reverseSecondWordLevels = [4,5,6];
-                    return reverseSecondWordLevels.indexOf(level) > -1;
-                }
-                return true;
+                allIndexes = shuffle(allIndexes);
+                var reverseWordCounts = [0,0,0,1,2,2,2,0,1,2,3]
+
+                return allIndexes.slice(0,reverseWordCounts[level]);
             }
 
-            function wordType(level){
-                if( level < 3 ){
-                    return AllWordType;
-                }
-                if( level < 6 ){
-                    return ShortWordType;
-                }
-                if( level > 5 ){
-                    return LongWordType;
-                }
-                return AllWordType;
+            function getWordType(level){
+              var wordTypesByLevel = [
+                NoneWordType,
+                AllWordType,
+                AllWordType,
+                ShortWordType,
+                ShortWordType,
+                ShortWordType,
+                LongWordType,
+                ShortWordType,
+                ShortWordType,
+                ShortWordType,
+                ShortWordType,
+                LongWordType
+              ]
+              return wordTypesByLevel[level];
+            }
+
+            function getWordCount(level){
+              // 2,2,2,2,2,2,3,3,3...
+              return level > 6 ? 3 : 2 ;
             }
 
             function getState(options){
                 var state = {};
 
-                var words = shuffle(filter(wordType(options.level),Words))
-                state.text = words[0] + " " + words[1];
+                if(options.text != null){
+                  state.text = options.text;
+                }else{
+                  var wordCount = getWordCount(options.level);
+                  var words = shuffle(filter(getWordType(options.level),Words))
+                  var gameWords = words.slice(0,wordCount)
+                  state.text = gameWords.join(" ");
+                }
 
                 var words = state.text.split(" ");
 
@@ -300,17 +338,15 @@
                     state.order.push(i)
                 }
 
-                if(shouldReorderWords(options.level)){
-                    state.order = state.order.reverse()
-                }
-
-                state.reversed = [];
-
-                for(var i = 0; i < state.wordCount; i++){
-                    if(shouldReverseWord(i,options.level)){
-                        state.reversed.push(i);
+                if(getShouldReorderWords(options.level)){
+                    if(state.wordCount == 2){
+                      state.order = state.order.reverse()
+                    }else{
+                      state.order = shuffle(state.order);
                     }
                 }
+
+                state.reversed = getReversedWordsIndexes(options.level);
 
                 var outputWords = [];
                 for(var i = 0; i < state.wordCount; i++){
@@ -329,9 +365,26 @@
 
             }
 
+            function tutorialCount(){
+              return 2;
+            }
+
+            function tutorialGameState(index){
+              if(index == 0){
+                return getState({level:0,text:"bot"});
+              }else{
+                return getState({level:3,text:"stop"});
+              }
+            }
+
+
             /************************************************/
             /* DEBUG                                    */
             /************************************************/
+
+            function getNoAutoStartFromQueryString(queryString){
+                return getValueFromQueryString("noautostart", queryString) == "true";
+            }
 
             function getLevelFromQueryString(queryString){
                 var level = parseInt(getValueFromQueryString("level",queryString));
@@ -381,7 +434,9 @@
             };
 
             function didLoadHandler(){
+              if(!noautostart){
                 metaController.didLoad()
+              }
             }
 
             function savedOptions(){
@@ -403,15 +458,21 @@
             /* SETUP                                        */
             /************************************************/
 
-            function setupPhase1Elements(state){
-                div1 = createDiv1(state)
-                document.body.appendChild(div1);
+            function clearElements(){
+              while(document.body.children[0] != null){
+                document.body.removeChild(document.body.children[0]);
+              }
+            }
 
+            function setupPhase1Elements(state){
+              div1 = createDiv1(state)
+              document.body.appendChild(div1);
+              document.body.className = "";
             }
 
             function setupPhase2Elements(){
-                div2 = createDiv2(state)
-                document.body.appendChild(div2);
+              div2 = createDiv2(gameState)
+              document.body.appendChild(div2);
             }
 
 
@@ -463,6 +524,8 @@
 
 
             function createDiv2(state){
+                wordSpans = [];
+
                 var result = document.createElement("div")
 
                 var mainDiv = document.createElement("div")
@@ -582,7 +645,6 @@
 
                 keyViewDiv.style.top = KeyPositions[letter].top+"%";
                 keyViewDiv.style.left = KeyPositions[letter].left+"%";
-
 
                 new ClickListener(keyViewDiv);
 
@@ -704,16 +766,23 @@
             }
 
              function didTapKey(key){
-                 updateState(key, state)
-                 updateView(state)
-                 checkCompletion(state)
+                 updateState(key, gameState)
+                 updateView(gameState)
+                 checkCompletion(gameState)
              }
 
             function checkCompletion(state){
                 var difference = compareStrings(state.inputText,state.outputText)
                 if(difference == ""){
-                    options = incrementOptions(options);
-                    metaController.didComplete(options,"congrats!")
+                  document.body.className = "correct";
+                    var newOptions = incrementOptions(options);
+
+                    var message = "(nice work)"
+                    if(newOptions.level != options.level){
+                      message = message + " level up : "+newOptions.level;
+                    }
+
+                    metaController.didComplete(newOptions,message)
                 }
             }
 

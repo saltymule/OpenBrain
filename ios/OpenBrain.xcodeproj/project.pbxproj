@@ -293,7 +293,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir -p $PROJECT_DIR/OpenBrain/Games.bundle/\ncp $PROJECT_DIR/OpenBrainWeb/games/* $PROJECT_DIR/OpenBrain/Games.bundle/";
+			shellScript = "mkdir -p $PROJECT_DIR/OpenBrain/Games.bundle/\ncp $PROJECT_DIR/../web/games/* $PROJECT_DIR/OpenBrain/Games.bundle/";
 		};
 /* End PBXShellScriptBuildPhase section */
 
