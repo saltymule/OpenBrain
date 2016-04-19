@@ -205,23 +205,23 @@
             function didComplete(state, controller){
               var level = state.level;
               var failCount = state.failCount;
-              var message = "no problem!"
+              var message = "(no problem)"
               if ( hasCompleteAllClocks(state) ) {
                 level = level++;
-                message = "level up : "+level
+                message = "(nice work) level up : "+level
               } else {
                 failCount = failCount += 1;
                 if(failCount == 2){
                   failCount = 0;
                   level = Math.max(level - 1, 1);
-                  message = "level down : "+level
+                  message = "(no problem) level down : "+level
                 }
               }
               var options = {
                 "level":level,
                 "failCount":failCount,
               }
-              controller.didComplete(options,"All Done");
+              controller.didComplete(options,message);
             }
 
             /************************************************/
@@ -253,13 +253,15 @@
 
                 var clocks = [];
 
-                var offset = clockTotal*1500;
+                var offsetIncrement = 1000 + 1000/clockTotal;
+
+                var offset = clockTotal*offsetIncrement;
 
                 while(clockTotal > 0){
                   var skipCount = 1 + Math.floor(
                     Math.random()*countsByLevel[level]*0.2
                   );
-                  offset -= 1500;
+                  offset -= offsetIncrement;
                   clocks.push(getNewClockState(level, offset, skipCount))
                   clockTotal--;
                 }
