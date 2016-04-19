@@ -1,571 +1,1290 @@
-// !$*UTF8*$!
-{
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 46;
-	objects = {
-
-/* Begin PBXBuildFile section */
-		770D42BE1BCF047300C2C3A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770D42BD1BCF047300C2C3A6 /* AppDelegate.swift */; };
-		770D42C01BCF047300C2C3A6 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770D42BF1BCF047300C2C3A6 /* ActivityViewController.swift */; };
-		770D42C31BCF047300C2C3A6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 770D42C11BCF047300C2C3A6 /* Main.storyboard */; };
-		770D42C51BCF047300C2C3A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 770D42C41BCF047300C2C3A6 /* Assets.xcassets */; };
-		770D42C81BCF047300C2C3A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 770D42C61BCF047300C2C3A6 /* LaunchScreen.storyboard */; };
-		770D42DE1BCF047300C2C3A6 /* ActivWikiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770D42DD1BCF047300C2C3A6 /* ActivWikiUITests.swift */; };
-		770D42EC1BCF094700C2C3A6 /* Games.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 770D42EB1BCF094700C2C3A6 /* Games.bundle */; };
-		77C7F3CB1CB5E3D7008E6318 /* JSONUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C7F3CA1CB5E3D7008E6318 /* JSONUnitTests.swift */; };
-		77DF26271BD113CB0013696A /* WebViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF26261BD113CB0013696A /* WebViewComponent.swift */; };
-		77DF262B1BD595970013696A /* GamesBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF262A1BD595970013696A /* GamesBundle.swift */; };
-		77DF262D1BD5996C0013696A /* GamesBundleUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DF262C1BD5996C0013696A /* GamesBundleUnitTests.swift */; };
-		77DF26351BD6EA550013696A /* metacontroller.js in Resources */ = {isa = PBXBuildFile; fileRef = 77DF26341BD6EA550013696A /* metacontroller.js */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		770D42CF1BCF047300C2C3A6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 770D42B21BCF047300C2C3A6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 770D42B91BCF047300C2C3A6;
-			remoteInfo = ActivWiki;
-		};
-		770D42DA1BCF047300C2C3A6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 770D42B21BCF047300C2C3A6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 770D42B91BCF047300C2C3A6;
-			remoteInfo = ActivWiki;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXFileReference section */
-		750F1EB845F0D6DFBDCC270E /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		770D42BA1BCF047300C2C3A6 /* OpenBrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenBrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		770D42BD1BCF047300C2C3A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		770D42BF1BCF047300C2C3A6 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
-		770D42C21BCF047300C2C3A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		770D42C41BCF047300C2C3A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		770D42C71BCF047300C2C3A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		770D42C91BCF047300C2C3A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		770D42CE1BCF047300C2C3A6 /* OpenBrainTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenBrainTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		770D42D41BCF047300C2C3A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		770D42D91BCF047300C2C3A6 /* OpenBrainUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenBrainUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		770D42DD1BCF047300C2C3A6 /* ActivWikiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivWikiUITests.swift; sourceTree = "<group>"; };
-		770D42DF1BCF047300C2C3A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		770D42EB1BCF094700C2C3A6 /* Games.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Games.bundle; sourceTree = "<group>"; };
-		77C7F3CA1CB5E3D7008E6318 /* JSONUnitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONUnitTests.swift; sourceTree = "<group>"; };
-		77DF26261BD113CB0013696A /* WebViewComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = WebViewComponent.swift; sourceTree = "<group>"; tabWidth = 2; };
-		77DF262A1BD595970013696A /* GamesBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesBundle.swift; sourceTree = "<group>"; };
-		77DF262C1BD5996C0013696A /* GamesBundleUnitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesBundleUnitTests.swift; sourceTree = "<group>"; };
-		77DF26341BD6EA550013696A /* metacontroller.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = metacontroller.js; sourceTree = "<group>"; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		770D42B71BCF047300C2C3A6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		770D42CB1BCF047300C2C3A6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		770D42D61BCF047300C2C3A6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		4EF2F4FFCEEEC1CDDDED53D4 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				750F1EB845F0D6DFBDCC270E /* Pods.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		770D42B11BCF047300C2C3A6 = {
-			isa = PBXGroup;
-			children = (
-				770D42BC1BCF047300C2C3A6 /* OpenBrain */,
-				770D42D11BCF047300C2C3A6 /* OpenBrainTests */,
-				770D42DC1BCF047300C2C3A6 /* OpenBrainUITests */,
-				770D42BB1BCF047300C2C3A6 /* Products */,
-				4EF2F4FFCEEEC1CDDDED53D4 /* Frameworks */,
-			);
-			sourceTree = "<group>";
-		};
-		770D42BB1BCF047300C2C3A6 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				770D42BA1BCF047300C2C3A6 /* OpenBrain.app */,
-				770D42CE1BCF047300C2C3A6 /* OpenBrainTests.xctest */,
-				770D42D91BCF047300C2C3A6 /* OpenBrainUITests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		770D42BC1BCF047300C2C3A6 /* OpenBrain */ = {
-			isa = PBXGroup;
-			children = (
-				770D42BD1BCF047300C2C3A6 /* AppDelegate.swift */,
-				770D42BF1BCF047300C2C3A6 /* ActivityViewController.swift */,
-				77DF26261BD113CB0013696A /* WebViewComponent.swift */,
-				77DF262A1BD595970013696A /* GamesBundle.swift */,
-				770D42C11BCF047300C2C3A6 /* Main.storyboard */,
-				770D42C41BCF047300C2C3A6 /* Assets.xcassets */,
-				770D42C61BCF047300C2C3A6 /* LaunchScreen.storyboard */,
-				770D42C91BCF047300C2C3A6 /* Info.plist */,
-				77DF26341BD6EA550013696A /* metacontroller.js */,
-				770D42EB1BCF094700C2C3A6 /* Games.bundle */,
-			);
-			path = OpenBrain;
-			sourceTree = "<group>";
-		};
-		770D42D11BCF047300C2C3A6 /* OpenBrainTests */ = {
-			isa = PBXGroup;
-			children = (
-				77DF262C1BD5996C0013696A /* GamesBundleUnitTests.swift */,
-				77C7F3CA1CB5E3D7008E6318 /* JSONUnitTests.swift */,
-				770D42D41BCF047300C2C3A6 /* Info.plist */,
-			);
-			path = OpenBrainTests;
-			sourceTree = "<group>";
-		};
-		770D42DC1BCF047300C2C3A6 /* OpenBrainUITests */ = {
-			isa = PBXGroup;
-			children = (
-				770D42DD1BCF047300C2C3A6 /* ActivWikiUITests.swift */,
-				770D42DF1BCF047300C2C3A6 /* Info.plist */,
-			);
-			path = OpenBrainUITests;
-			sourceTree = "<group>";
-		};
-/* End PBXGroup section */
-
-/* Begin PBXNativeTarget section */
-		770D42B91BCF047300C2C3A6 /* OpenBrain */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 770D42E21BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "OpenBrain" */;
-			buildPhases = (
-				775186201CB858F300BF06A5 /* Copy Games */,
-				770D42B61BCF047300C2C3A6 /* Sources */,
-				770D42B71BCF047300C2C3A6 /* Frameworks */,
-				770D42B81BCF047300C2C3A6 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = OpenBrain;
-			productName = ActivWiki;
-			productReference = 770D42BA1BCF047300C2C3A6 /* OpenBrain.app */;
-			productType = "com.apple.product-type.application";
-		};
-		770D42CD1BCF047300C2C3A6 /* OpenBrainTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 770D42E51BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "OpenBrainTests" */;
-			buildPhases = (
-				770D42CA1BCF047300C2C3A6 /* Sources */,
-				770D42CB1BCF047300C2C3A6 /* Frameworks */,
-				770D42CC1BCF047300C2C3A6 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				770D42D01BCF047300C2C3A6 /* PBXTargetDependency */,
-			);
-			name = OpenBrainTests;
-			productName = ActivWikiTests;
-			productReference = 770D42CE1BCF047300C2C3A6 /* OpenBrainTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		770D42D81BCF047300C2C3A6 /* OpenBrainUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 770D42E81BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "OpenBrainUITests" */;
-			buildPhases = (
-				770D42D51BCF047300C2C3A6 /* Sources */,
-				770D42D61BCF047300C2C3A6 /* Frameworks */,
-				770D42D71BCF047300C2C3A6 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				770D42DB1BCF047300C2C3A6 /* PBXTargetDependency */,
-			);
-			name = OpenBrainUITests;
-			productName = ActivWikiUITests;
-			productReference = 770D42D91BCF047300C2C3A6 /* OpenBrainUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
-/* End PBXNativeTarget section */
-
-/* Begin PBXProject section */
-		770D42B21BCF047300C2C3A6 /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				LastUpgradeCheck = 0700;
-				ORGANIZATIONNAME = "Daniel Mueller";
-				TargetAttributes = {
-					770D42B91BCF047300C2C3A6 = {
-						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = NF8KPUS6K2;
-					};
-					770D42CD1BCF047300C2C3A6 = {
-						CreatedOnToolsVersion = 7.0;
-						TestTargetID = 770D42B91BCF047300C2C3A6;
-					};
-					770D42D81BCF047300C2C3A6 = {
-						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = NF8KPUS6K2;
-						TestTargetID = 770D42B91BCF047300C2C3A6;
-					};
-				};
-			};
-			buildConfigurationList = 770D42B51BCF047300C2C3A6 /* Build configuration list for PBXProject "OpenBrain" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-				Base,
-			);
-			mainGroup = 770D42B11BCF047300C2C3A6;
-			productRefGroup = 770D42BB1BCF047300C2C3A6 /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				770D42B91BCF047300C2C3A6 /* OpenBrain */,
-				770D42CD1BCF047300C2C3A6 /* OpenBrainTests */,
-				770D42D81BCF047300C2C3A6 /* OpenBrainUITests */,
-			);
-		};
-/* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		770D42B81BCF047300C2C3A6 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				770D42C81BCF047300C2C3A6 /* LaunchScreen.storyboard in Resources */,
-				77DF26351BD6EA550013696A /* metacontroller.js in Resources */,
-				770D42EC1BCF094700C2C3A6 /* Games.bundle in Resources */,
-				770D42C51BCF047300C2C3A6 /* Assets.xcassets in Resources */,
-				770D42C31BCF047300C2C3A6 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		770D42CC1BCF047300C2C3A6 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		770D42D71BCF047300C2C3A6 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		775186201CB858F300BF06A5 /* Copy Games */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Games";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "mkdir -p $PROJECT_DIR/OpenBrain/Games.bundle/\ncp $PROJECT_DIR/../web/games/* $PROJECT_DIR/OpenBrain/Games.bundle/";
-		};
-/* End PBXShellScriptBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		770D42B61BCF047300C2C3A6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				77DF26271BD113CB0013696A /* WebViewComponent.swift in Sources */,
-				770D42C01BCF047300C2C3A6 /* ActivityViewController.swift in Sources */,
-				770D42BE1BCF047300C2C3A6 /* AppDelegate.swift in Sources */,
-				77DF262B1BD595970013696A /* GamesBundle.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		770D42CA1BCF047300C2C3A6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				77DF262D1BD5996C0013696A /* GamesBundleUnitTests.swift in Sources */,
-				77C7F3CB1CB5E3D7008E6318 /* JSONUnitTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		770D42D51BCF047300C2C3A6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				770D42DE1BCF047300C2C3A6 /* ActivWikiUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		770D42D01BCF047300C2C3A6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 770D42B91BCF047300C2C3A6 /* OpenBrain */;
-			targetProxy = 770D42CF1BCF047300C2C3A6 /* PBXContainerItemProxy */;
-		};
-		770D42DB1BCF047300C2C3A6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 770D42B91BCF047300C2C3A6 /* OpenBrain */;
-			targetProxy = 770D42DA1BCF047300C2C3A6 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		770D42C11BCF047300C2C3A6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				770D42C21BCF047300C2C3A6 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		770D42C61BCF047300C2C3A6 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				770D42C71BCF047300C2C3A6 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
-/* Begin XCBuildConfiguration section */
-		770D42E01BCF047300C2C3A6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		770D42E11BCF047300C2C3A6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		770D42E31BCF047300C2C3A6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = OpenBrain/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.OpenBrain;
-				PRODUCT_NAME = OpenBrain;
-				PROVISIONING_PROFILE = "";
-			};
-			name = Debug;
-		};
-		770D42E41BCF047300C2C3A6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = OpenBrain/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.OpenBrain;
-				PRODUCT_NAME = OpenBrain;
-				PROVISIONING_PROFILE = "";
-			};
-			name = Release;
-		};
-		770D42E61BCF047300C2C3A6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = OpenBrainTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.OpenBrainTests;
-				PRODUCT_NAME = OpenBrainTests;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenBrain.app/OpenBrain";
-			};
-			name = Debug;
-		};
-		770D42E71BCF047300C2C3A6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = OpenBrainTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.OpenBrainTests;
-				PRODUCT_NAME = OpenBrainTests;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenBrain.app/OpenBrain";
-			};
-			name = Release;
-		};
-		770D42E91BCF047300C2C3A6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = OpenBrainUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.OpenBrainUITests;
-				PRODUCT_NAME = OpenBrainUITests;
-				PROVISIONING_PROFILE = "";
-				TEST_TARGET_NAME = OpenBrain;
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		770D42EA1BCF047300C2C3A6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = OpenBrainUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.saltymule.OpenBrainUITests;
-				PRODUCT_NAME = OpenBrainUITests;
-				PROVISIONING_PROFILE = "";
-				TEST_TARGET_NAME = OpenBrain;
-				USES_XCTRUNNER = YES;
-			};
-			name = Release;
-		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCConfigurationList section */
-		770D42B51BCF047300C2C3A6 /* Build configuration list for PBXProject "OpenBrain" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				770D42E01BCF047300C2C3A6 /* Debug */,
-				770D42E11BCF047300C2C3A6 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		770D42E21BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "OpenBrain" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				770D42E31BCF047300C2C3A6 /* Debug */,
-				770D42E41BCF047300C2C3A6 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		770D42E51BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "OpenBrainTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				770D42E61BCF047300C2C3A6 /* Debug */,
-				770D42E71BCF047300C2C3A6 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		770D42E81BCF047300C2C3A6 /* Build configuration list for PBXNativeTarget "OpenBrainUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				770D42E91BCF047300C2C3A6 /* Debug */,
-				770D42EA1BCF047300C2C3A6 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
-	};
-	rootObject = 770D42B21BCF047300C2C3A6 /* Project object */;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>archiveVersion</key>
+	<string>1</string>
+	<key>classes</key>
+	<dict/>
+	<key>objectVersion</key>
+	<string>46</string>
+	<key>objects</key>
+	<dict>
+		<key>0250ABCBE3E73471B0CEC78E</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>8743D44474BDED98C62D4CDB</string>
+				<string>544EC8087B9A112B06E66EEF</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>46630A26D9D811B076CF3601</key>
+		<dict>
+			<key>fileRef</key>
+			<string>75B431BB7C2A57282BFA3F34</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>4903020CB2DCE0F49D755838</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Embed Pods Frameworks</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>4EF2F4FFCEEEC1CDDDED53D4</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>75B431BB7C2A57282BFA3F34</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>544EC8087B9A112B06E66EEF</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods/Pods.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6731B8B3B8722EF224CF0D0E</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>75B431BB7C2A57282BFA3F34</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>770D42B11BCF047300C2C3A6</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>770D42BC1BCF047300C2C3A6</string>
+				<string>770D42D11BCF047300C2C3A6</string>
+				<string>770D42DC1BCF047300C2C3A6</string>
+				<string>770D42BB1BCF047300C2C3A6</string>
+				<string>4EF2F4FFCEEEC1CDDDED53D4</string>
+				<string>0250ABCBE3E73471B0CEC78E</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42B21BCF047300C2C3A6</key>
+		<dict>
+			<key>attributes</key>
+			<dict>
+				<key>LastUpgradeCheck</key>
+				<string>0700</string>
+				<key>ORGANIZATIONNAME</key>
+				<string>Daniel Mueller</string>
+				<key>TargetAttributes</key>
+				<dict>
+					<key>770D42B91BCF047300C2C3A6</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>7.0</string>
+						<key>DevelopmentTeam</key>
+						<string>NF8KPUS6K2</string>
+					</dict>
+					<key>770D42CD1BCF047300C2C3A6</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>7.0</string>
+						<key>TestTargetID</key>
+						<string>770D42B91BCF047300C2C3A6</string>
+					</dict>
+					<key>770D42D81BCF047300C2C3A6</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>7.0</string>
+						<key>DevelopmentTeam</key>
+						<string>NF8KPUS6K2</string>
+						<key>TestTargetID</key>
+						<string>770D42B91BCF047300C2C3A6</string>
+					</dict>
+				</dict>
+			</dict>
+			<key>buildConfigurationList</key>
+			<string>770D42B51BCF047300C2C3A6</string>
+			<key>compatibilityVersion</key>
+			<string>Xcode 3.2</string>
+			<key>developmentRegion</key>
+			<string>English</string>
+			<key>hasScannedForEncodings</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXProject</string>
+			<key>knownRegions</key>
+			<array>
+				<string>en</string>
+				<string>Base</string>
+			</array>
+			<key>mainGroup</key>
+			<string>770D42B11BCF047300C2C3A6</string>
+			<key>productRefGroup</key>
+			<string>770D42BB1BCF047300C2C3A6</string>
+			<key>projectDirPath</key>
+			<string></string>
+			<key>projectReferences</key>
+			<array/>
+			<key>projectRoot</key>
+			<string></string>
+			<key>targets</key>
+			<array>
+				<string>770D42B91BCF047300C2C3A6</string>
+				<string>770D42CD1BCF047300C2C3A6</string>
+				<string>770D42D81BCF047300C2C3A6</string>
+			</array>
+		</dict>
+		<key>770D42B51BCF047300C2C3A6</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>770D42E01BCF047300C2C3A6</string>
+				<string>770D42E11BCF047300C2C3A6</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>770D42B61BCF047300C2C3A6</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>77DF26271BD113CB0013696A</string>
+				<string>770D42C01BCF047300C2C3A6</string>
+				<string>770D42BE1BCF047300C2C3A6</string>
+				<string>77DF262B1BD595970013696A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>770D42B71BCF047300C2C3A6</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>46630A26D9D811B076CF3601</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>770D42B81BCF047300C2C3A6</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>770D42C81BCF047300C2C3A6</string>
+				<string>77DF26351BD6EA550013696A</string>
+				<string>770D42EC1BCF094700C2C3A6</string>
+				<string>770D42C51BCF047300C2C3A6</string>
+				<string>770D42C31BCF047300C2C3A6</string>
+			</array>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>770D42B91BCF047300C2C3A6</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>770D42E21BCF047300C2C3A6</string>
+			<key>buildPhases</key>
+			<array>
+				<string>A733C040D38739B552651731</string>
+				<string>775186201CB858F300BF06A5</string>
+				<string>770D42B61BCF047300C2C3A6</string>
+				<string>770D42B71BCF047300C2C3A6</string>
+				<string>770D42B81BCF047300C2C3A6</string>
+				<string>4903020CB2DCE0F49D755838</string>
+				<string>6731B8B3B8722EF224CF0D0E</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>OpenBrain</string>
+			<key>productName</key>
+			<string>ActivWiki</string>
+			<key>productReference</key>
+			<string>770D42BA1BCF047300C2C3A6</string>
+			<key>productType</key>
+			<string>com.apple.product-type.application</string>
+		</dict>
+		<key>770D42BA1BCF047300C2C3A6</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.application</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>OpenBrain.app</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>770D42BB1BCF047300C2C3A6</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>770D42BA1BCF047300C2C3A6</string>
+				<string>770D42CE1BCF047300C2C3A6</string>
+				<string>770D42D91BCF047300C2C3A6</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42BC1BCF047300C2C3A6</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>770D42BD1BCF047300C2C3A6</string>
+				<string>770D42BF1BCF047300C2C3A6</string>
+				<string>77DF26261BD113CB0013696A</string>
+				<string>77DF262A1BD595970013696A</string>
+				<string>770D42C11BCF047300C2C3A6</string>
+				<string>770D42C41BCF047300C2C3A6</string>
+				<string>770D42C61BCF047300C2C3A6</string>
+				<string>770D42C91BCF047300C2C3A6</string>
+				<string>77DF26341BD6EA550013696A</string>
+				<string>770D42EB1BCF094700C2C3A6</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>OpenBrain</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42BD1BCF047300C2C3A6</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>AppDelegate.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42BE1BCF047300C2C3A6</key>
+		<dict>
+			<key>fileRef</key>
+			<string>770D42BD1BCF047300C2C3A6</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>770D42BF1BCF047300C2C3A6</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>ActivityViewController.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42C01BCF047300C2C3A6</key>
+		<dict>
+			<key>fileRef</key>
+			<string>770D42BF1BCF047300C2C3A6</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>770D42C11BCF047300C2C3A6</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>770D42C21BCF047300C2C3A6</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>Main.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42C21BCF047300C2C3A6</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.storyboard</string>
+			<key>name</key>
+			<string>Base</string>
+			<key>path</key>
+			<string>Base.lproj/Main.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42C31BCF047300C2C3A6</key>
+		<dict>
+			<key>fileRef</key>
+			<string>770D42C11BCF047300C2C3A6</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>770D42C41BCF047300C2C3A6</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>folder.assetcatalog</string>
+			<key>path</key>
+			<string>Assets.xcassets</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42C51BCF047300C2C3A6</key>
+		<dict>
+			<key>fileRef</key>
+			<string>770D42C41BCF047300C2C3A6</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>770D42C61BCF047300C2C3A6</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>770D42C71BCF047300C2C3A6</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>LaunchScreen.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42C71BCF047300C2C3A6</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.storyboard</string>
+			<key>name</key>
+			<string>Base</string>
+			<key>path</key>
+			<string>Base.lproj/LaunchScreen.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42C81BCF047300C2C3A6</key>
+		<dict>
+			<key>fileRef</key>
+			<string>770D42C61BCF047300C2C3A6</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>770D42C91BCF047300C2C3A6</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42CA1BCF047300C2C3A6</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>77DF262D1BD5996C0013696A</string>
+				<string>77C7F3CB1CB5E3D7008E6318</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>770D42CB1BCF047300C2C3A6</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>770D42CC1BCF047300C2C3A6</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>770D42CD1BCF047300C2C3A6</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>770D42E51BCF047300C2C3A6</string>
+			<key>buildPhases</key>
+			<array>
+				<string>770D42CA1BCF047300C2C3A6</string>
+				<string>770D42CB1BCF047300C2C3A6</string>
+				<string>770D42CC1BCF047300C2C3A6</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>770D42D01BCF047300C2C3A6</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>OpenBrainTests</string>
+			<key>productName</key>
+			<string>ActivWikiTests</string>
+			<key>productReference</key>
+			<string>770D42CE1BCF047300C2C3A6</string>
+			<key>productType</key>
+			<string>com.apple.product-type.bundle.unit-test</string>
+		</dict>
+		<key>770D42CE1BCF047300C2C3A6</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>OpenBrainTests.xctest</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>770D42CF1BCF047300C2C3A6</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>770D42B21BCF047300C2C3A6</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>770D42B91BCF047300C2C3A6</string>
+			<key>remoteInfo</key>
+			<string>ActivWiki</string>
+		</dict>
+		<key>770D42D01BCF047300C2C3A6</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>770D42B91BCF047300C2C3A6</string>
+			<key>targetProxy</key>
+			<string>770D42CF1BCF047300C2C3A6</string>
+		</dict>
+		<key>770D42D11BCF047300C2C3A6</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>77DF262C1BD5996C0013696A</string>
+				<string>77C7F3CA1CB5E3D7008E6318</string>
+				<string>770D42D41BCF047300C2C3A6</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>OpenBrainTests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42D41BCF047300C2C3A6</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42D51BCF047300C2C3A6</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>770D42DE1BCF047300C2C3A6</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>770D42D61BCF047300C2C3A6</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>770D42D71BCF047300C2C3A6</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>770D42D81BCF047300C2C3A6</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>770D42E81BCF047300C2C3A6</string>
+			<key>buildPhases</key>
+			<array>
+				<string>770D42D51BCF047300C2C3A6</string>
+				<string>770D42D61BCF047300C2C3A6</string>
+				<string>770D42D71BCF047300C2C3A6</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>770D42DB1BCF047300C2C3A6</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>OpenBrainUITests</string>
+			<key>productName</key>
+			<string>ActivWikiUITests</string>
+			<key>productReference</key>
+			<string>770D42D91BCF047300C2C3A6</string>
+			<key>productType</key>
+			<string>com.apple.product-type.bundle.ui-testing</string>
+		</dict>
+		<key>770D42D91BCF047300C2C3A6</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>OpenBrainUITests.xctest</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>770D42DA1BCF047300C2C3A6</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>770D42B21BCF047300C2C3A6</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>770D42B91BCF047300C2C3A6</string>
+			<key>remoteInfo</key>
+			<string>ActivWiki</string>
+		</dict>
+		<key>770D42DB1BCF047300C2C3A6</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>770D42B91BCF047300C2C3A6</string>
+			<key>targetProxy</key>
+			<string>770D42DA1BCF047300C2C3A6</string>
+		</dict>
+		<key>770D42DC1BCF047300C2C3A6</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>770D42DD1BCF047300C2C3A6</string>
+				<string>770D42DF1BCF047300C2C3A6</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>OpenBrainUITests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42DD1BCF047300C2C3A6</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>ActivWikiUITests.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42DE1BCF047300C2C3A6</key>
+		<dict>
+			<key>fileRef</key>
+			<string>770D42DD1BCF047300C2C3A6</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>770D42DF1BCF047300C2C3A6</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42E01BCF047300C2C3A6</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>ENABLE_TESTABILITY</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.0</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>YES</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SWIFT_OPTIMIZATION_LEVEL</key>
+				<string>-Onone</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>770D42E11BCF047300C2C3A6</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>ENABLE_NS_ASSERTIONS</key>
+				<string>NO</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.0</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>770D42E21BCF047300C2C3A6</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>770D42E31BCF047300C2C3A6</string>
+				<string>770D42E41BCF047300C2C3A6</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>770D42E31BCF047300C2C3A6</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>8743D44474BDED98C62D4CDB</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Developer</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>INFOPLIST_FILE</key>
+				<string>OpenBrain/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.saltymule.OpenBrain</string>
+				<key>PRODUCT_NAME</key>
+				<string>OpenBrain</string>
+				<key>PROVISIONING_PROFILE</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>770D42E41BCF047300C2C3A6</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>544EC8087B9A112B06E66EEF</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Developer</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>INFOPLIST_FILE</key>
+				<string>OpenBrain/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.saltymule.OpenBrain</string>
+				<key>PRODUCT_NAME</key>
+				<string>OpenBrain</string>
+				<key>PROVISIONING_PROFILE</key>
+				<string></string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>770D42E51BCF047300C2C3A6</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>770D42E61BCF047300C2C3A6</string>
+				<string>770D42E71BCF047300C2C3A6</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>770D42E61BCF047300C2C3A6</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>BUNDLE_LOADER</key>
+				<string>$(TEST_HOST)</string>
+				<key>INFOPLIST_FILE</key>
+				<string>OpenBrainTests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.saltymule.OpenBrainTests</string>
+				<key>PRODUCT_NAME</key>
+				<string>OpenBrainTests</string>
+				<key>TEST_HOST</key>
+				<string>$(BUILT_PRODUCTS_DIR)/OpenBrain.app/OpenBrain</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>770D42E71BCF047300C2C3A6</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>BUNDLE_LOADER</key>
+				<string>$(TEST_HOST)</string>
+				<key>INFOPLIST_FILE</key>
+				<string>OpenBrainTests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.saltymule.OpenBrainTests</string>
+				<key>PRODUCT_NAME</key>
+				<string>OpenBrainTests</string>
+				<key>TEST_HOST</key>
+				<string>$(BUILT_PRODUCTS_DIR)/OpenBrain.app/OpenBrain</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>770D42E81BCF047300C2C3A6</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>770D42E91BCF047300C2C3A6</string>
+				<string>770D42EA1BCF047300C2C3A6</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>770D42E91BCF047300C2C3A6</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Developer</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>INFOPLIST_FILE</key>
+				<string>OpenBrainUITests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.saltymule.OpenBrainUITests</string>
+				<key>PRODUCT_NAME</key>
+				<string>OpenBrainUITests</string>
+				<key>PROVISIONING_PROFILE</key>
+				<string></string>
+				<key>TEST_TARGET_NAME</key>
+				<string>OpenBrain</string>
+				<key>USES_XCTRUNNER</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>770D42EA1BCF047300C2C3A6</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Developer</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>INFOPLIST_FILE</key>
+				<string>OpenBrainUITests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.saltymule.OpenBrainUITests</string>
+				<key>PRODUCT_NAME</key>
+				<string>OpenBrainUITests</string>
+				<key>PROVISIONING_PROFILE</key>
+				<string></string>
+				<key>TEST_TARGET_NAME</key>
+				<string>OpenBrain</string>
+				<key>USES_XCTRUNNER</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>770D42EB1BCF094700C2C3A6</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.plug-in</string>
+			<key>path</key>
+			<string>Games.bundle</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>770D42EC1BCF094700C2C3A6</key>
+		<dict>
+			<key>fileRef</key>
+			<string>770D42EB1BCF094700C2C3A6</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>775186201CB858F300BF06A5</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Copy Games</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>mkdir -p $PROJECT_DIR/OpenBrain/Games.bundle/
+cp $PROJECT_DIR/../web/games/* $PROJECT_DIR/OpenBrain/Games.bundle/</string>
+		</dict>
+		<key>77C7F3CA1CB5E3D7008E6318</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>JSONUnitTests.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>77C7F3CB1CB5E3D7008E6318</key>
+		<dict>
+			<key>fileRef</key>
+			<string>77C7F3CA1CB5E3D7008E6318</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>77DF26261BD113CB0013696A</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>indentWidth</key>
+			<string>2</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>WebViewComponent.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>tabWidth</key>
+			<string>2</string>
+		</dict>
+		<key>77DF26271BD113CB0013696A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>77DF26261BD113CB0013696A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>77DF262A1BD595970013696A</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>GamesBundle.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>77DF262B1BD595970013696A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>77DF262A1BD595970013696A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>77DF262C1BD5996C0013696A</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>GamesBundleUnitTests.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>77DF262D1BD5996C0013696A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>77DF262C1BD5996C0013696A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>77DF26341BD6EA550013696A</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.javascript</string>
+			<key>path</key>
+			<string>metacontroller.js</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>77DF26351BD6EA550013696A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>77DF26341BD6EA550013696A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>8743D44474BDED98C62D4CDB</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods/Pods.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>A733C040D38739B552651731</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+	</dict>
+	<key>rootObject</key>
+	<string>770D42B21BCF047300C2C3A6</string>
+</dict>
+</plist>

@@ -4,4 +4,5 @@ bin/
 derived/
 *.pyc
 Games.bundle
-
+node_modules
+Pods
