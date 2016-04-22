@@ -19,25 +19,7 @@ public class GamesBundle: NSBundle {
         
     }
     
-    lazy private(set) var savedBundle:NSBundle? = {
-        guard   let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first else{
-            return nil
-        }
-        
-        let savedurl = NSURL(fileURLWithPath: documentspath).URLByAppendingPathComponent("saved")
-        
-        do{
-            try NSFileManager.defaultManager().createDirectoryAtURL(savedurl, withIntermediateDirectories: true, attributes: nil)
-            
-        }catch _ {
-            return nil
-        }
-        
-        return NSBundle(URL: savedurl)
-        
-    }()
-    
-    lazy public private(set) var manifest:[[String:AnyObject]] = {
+    lazy public private(set) var manifest:[[String:String]] = {
         
         //seed the rand function
         srand(UInt32( time(nil) ))
@@ -55,7 +37,7 @@ public class GamesBundle: NSBundle {
             return [];
         }
         
-        guard let m = result as? [[String:AnyObject]] else {
+        guard let m = result as? [[String:String]] else {
             return [];
         }
         
@@ -63,40 +45,17 @@ public class GamesBundle: NSBundle {
         
     }()
     
-    public func nextItem() -> [String:AnyObject]? {
-        return manifest[ Int(rand()) % manifest.count ]
-    }
-    
-    public func getHTMLString(item:[String:AnyObject]) -> String? {
+    public func getResolvedManifest() -> [[String:String]] {
+        var result:[[String:String]] = []
         
-        if let savedURL = self.URL(item, baseURL: self.savedBundle?.bundleURL){
-            
-            do{
-                let string = try String(contentsOfURL: savedURL)
-                return string
-            }catch _ { }
+        for var item in self.manifest {
+            if let url = self.URL(item, baseURL: self.bundleURL)?.absoluteString {
+                item["url"] = url
+                result.append(item)
+            }
         }
         
-        if let bundledURL = self.URL(item, baseURL: self.bundleURL){
-            
-            do{
-                let string = try String(contentsOfURL: bundledURL)
-                return string
-            }catch _ { }
-        }
-        
-        return nil
-        
-    }
-    
-    public func setHTMLString( string:String, item:[String:AnyObject] ) -> Void {
-        
-        guard let htmlURL = self.URL(item, baseURL: self.savedBundle?.bundleURL) else {
-            return
-        }
-        do{
-            try string.writeToURL(htmlURL, atomically: true, encoding: NSUTF8StringEncoding)
-        }catch _ { }
+        return result
     }
     
     func URL(item:[String:AnyObject], baseURL:NSURL?) -> NSURL? {

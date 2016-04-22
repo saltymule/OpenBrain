@@ -60,18 +60,36 @@ class WebViewComponent: NSObject, WKScriptMessageHandler {
     
     private(set) var htmlString:String = ""
 
+    private(set) var url:NSURL = NSURL()
+
     private(set) var options:[String:AnyObject] = [:]
 
+  /// this is more or less deprecated
     func start(html:String, options:[String:AnyObject]){
         
         self.htmlString = html
         
+        self.options = options
+      
         webView.loadHTMLString(htmlString, baseURL: NSBundle.mainBundle().bundleURL)
         
-        self.options = options
-        
+    }
+
+  func start(urlString urlString:String, options:[String:AnyObject]){
+    
+    guard let url = NSURL(string: urlString) else {
+      return
     }
     
+    self.url = url
+    
+    self.options = options
+    
+    webView.loadFileURL(url, allowingReadAccessToURL: NSBundle.mainBundle().bundleURL)
+    
+    
+  }
+
     func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
         
         guard let body = message.body as? [String:AnyObject],
@@ -88,8 +106,9 @@ class WebViewComponent: NSObject, WKScriptMessageHandler {
             self.webView.evaluateJavaScript(self.getStartJavascript(), completionHandler: nil)
             break
         case .Complete:
-            let options = body["options"] as? [String:AnyObject]
-            let message = body["message"] as? String
+          
+            let message = self.getMessage(body)
+            let options = self.getOptions(body)
             self.delegate?.webViewComponentDidComplete(self, options: options, message: message)
             break
         case .ForceComplete:
@@ -97,7 +116,19 @@ class WebViewComponent: NSObject, WKScriptMessageHandler {
             break
         }
     }
-    
+  
+  private func getMessage(body:[String:AnyObject]) -> String? {
+      return body["message"] as? String
+  }
+  
+  private func getOptions(body:[String:AnyObject]) -> [String:AnyObject]? {
+    guard let options = body["options"] as? [String:AnyObject]
+    where  NSJSONSerialization.isValidJSONObject(options) else {
+      return nil
+    }
+    return options
+  }
+  
   private func getStartJavascript() -> String{
     let param = JSONStringWithObject(self.options, defaultString: "null")
     return "start(\(param))"
