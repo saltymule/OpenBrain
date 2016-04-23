@@ -15,15 +15,15 @@ protocol GameViewDelegate{
 
 class GameView: UIView, WebViewComponentDelegate  {
     
-    var gameViewDelegate:GameViewDelegate?
+    weak var gameViewDelegate:GameViewDelegate?
 
     var data:[String:AnyObject]?{
         didSet{
             guard let game = self.data?["game"] as? [String:AnyObject],
-                let options = self.data?["options"] as? [String:AnyObject],
                 let urlString = game["url"] as? String else {
                     return
             }
+            let options:[String:AnyObject] = (self.data?["options"] as? [String:AnyObject]) ?? [:]
             self.webViewComponent.start(urlString: urlString, options: options)
         }
     }

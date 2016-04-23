@@ -55,6 +55,29 @@ export default class OpenBrain extends Component {
 
   render() {
 
+    const {options, gameCount, currentGame} = this.state;
+
+    if(options != null && gameCount != null && currentGame != null){
+      const data = {
+        game:currentGame,
+        options:options[currentGame.name],
+        count:gameCount
+      };
+      console.log(data);
+      return this.renderGame(data);
+    }else{
+      return this.renderLoading();
+    }
+
+  }
+
+  renderLoading(){
+    return(
+      <View><Text>Loading</Text></View>
+    );
+  }
+
+  renderGame(data){
     const width = Dimensions.get('window').width;
     const height = Dimensions.get('window').height;
 
@@ -68,12 +91,6 @@ export default class OpenBrain extends Component {
         width: width,
       },
     });
-    const options = {level:2};
-    const data = {
-      game:this.state.currentGame,
-      options:{level:2},
-      count:this.state.gameCount
-    };
     return (
       <View style={styles.container}>
         <GameView style={styles.webview}
@@ -81,6 +98,7 @@ export default class OpenBrain extends Component {
         />
       </View>
     );
+
   }
 
   gameViewDidComplete = (body) => {
@@ -94,6 +112,7 @@ export default class OpenBrain extends Component {
     // console.log(body)
     this.setState({
       ...this.state,
+      options:options,
       gameCount:this.state.gameCount + 1,
       currentGame:this.nextGame(this.props),
     });
