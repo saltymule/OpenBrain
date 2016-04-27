@@ -9,7 +9,7 @@ export default class GameOptions {
     AsyncStorage.getItem(STORAGE_KEY).then(
       (error, value) => JSON.parse(value)
     ).then(
-      (options) => callback(options,null)
+      options => callback(options,null)
     ).catch(
       error => callback(null,error)
     );

@@ -3,18 +3,20 @@
  */
 
 import React, {
-  AppRegistry,
   Component,
+  Dimensions,
   StyleSheet,
   Text,
   View,
-  WebView,
-  Dimensions,
   NativeAppEventEmitter,
 } from 'react-native';
 
+import OverlayView from '../component/OverlayView'
 import GameView from '../native/GameView'
 import GameOptions from '../lib/GameOptions'
+
+const UI_STATE_GAME = "UI_STATE_GAME"
+const UI_STATE_CHROME = "UI_STATE_CHROME"
 
 export default class OpenBrain extends Component {
 
@@ -22,12 +24,12 @@ export default class OpenBrain extends Component {
     super(props);
     this.state = {
       gameCount: 0,
-      currentGame: this.nextGame(props)
+      uiState:UI_STATE_CHROME,
     };
     GameOptions.load(this._didLoadOptions)
   }
 
-  _didLoadOptions = (error, result) => {
+  _didLoadOptions = (result, error) => {
     const options = result == null ? {} : result;
 
     this.setState({
@@ -54,51 +56,47 @@ export default class OpenBrain extends Component {
   }
 
   render() {
+    const data = this.currentGameData()
+    const overlay = this.renderOverlay()
+    return (
+      <View style={styles.container}>
+        <GameView style={styles.webview} data={data} />
+        {overlay}
+      </View>
+    )
+  }
 
+  renderOverlay() {
+    if(this.state.uiState == UI_STATE_GAME){
+      return null
+    }else{
+      return (<OverlayView style={styles.overlay} onPressPlay={this.onPressPlay} />)
+    }
+  }
+
+  currentGameData() {
     const {options, gameCount, currentGame} = this.state;
 
-    if(options != null && gameCount != null && currentGame != null){
+    if(this.state.uiState == UI_STATE_GAME
+      && options != null
+      && gameCount != null
+      && currentGame != null){
       const data = {
         game:currentGame,
         options:options[currentGame.name],
         count:gameCount
       };
-      console.log(data);
-      return this.renderGame(data);
+      return data;
     }else{
-      return this.renderLoading();
+      return {}
     }
-
   }
 
-  renderLoading(){
-    return(
-      <View><Text>Loading</Text></View>
-    );
-  }
-
-  renderGame(data){
-    const width = Dimensions.get('window').width;
-    const height = Dimensions.get('window').height;
-
-    const styles = StyleSheet.create({
-      container: {
-        height: height,
-        width: width,
-      },
-      webview: {
-        height: height,
-        width: width,
-      },
-    });
-    return (
-      <View style={styles.container}>
-        <GameView style={styles.webview}
-          data={data}
-        />
-      </View>
-    );
-
+  onPressPlay = () => {
+    this.setState({
+      uiState:UI_STATE_GAME,
+      currentGame:this.nextGame(this.props)
+    })
   }
 
   gameViewDidComplete = (body) => {
@@ -109,12 +107,36 @@ export default class OpenBrain extends Component {
 
     GameOptions.save(options);
 
-    // console.log(body)
     this.setState({
       ...this.state,
       options:options,
       gameCount:this.state.gameCount + 1,
-      currentGame:this.nextGame(this.props),
+      uiState:UI_STATE_CHROME,
     });
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    position:'absolute',
+    top:0,
+    left:0,
+    bottom:0,
+    right:0,
+  },
+  webview: {
+    position:'absolute',
+    top:0,
+    left:0,
+    bottom:0,
+    right:0,
+  },
+  overlay: {
+    position:'absolute',
+    top:0,
+    left:0,
+    bottom:0,
+    right:0,
+    backgroundColor:"#00000044",
+  }
+});
