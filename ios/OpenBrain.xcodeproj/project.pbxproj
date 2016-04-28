@@ -181,6 +181,7 @@
 			buildPhases = (
 				A733C040D38739B552651731 /* Check Pods Manifest.lock */,
 				775186201CB858F300BF06A5 /* Copy Games */,
+				7739A40D1CD21EDE004C8896 /* Bundle React Native */,
 				770D42B61BCF047300C2C3A6 /* Sources */,
 				770D42B71BCF047300C2C3A6 /* Frameworks */,
 				770D42B81BCF047300C2C3A6 /* Resources */,
@@ -335,6 +336,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		7739A40D1CD21EDE004C8896 /* Bundle React Native */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
 		};
 		775186201CB858F300BF06A5 /* Copy Games */ = {
 			isa = PBXShellScriptBuildPhase;

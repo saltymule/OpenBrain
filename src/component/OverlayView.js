@@ -27,7 +27,7 @@ export default class OverlayView extends Component {
     return (
       <View style={this.props.style}>
         <TouchableHighlight onPress={this.props.onPressPlay}>
-          <Text>Play</Text>
+          <Text style={styles.button}>Play</Text>
         </TouchableHighlight>
       </View>
     );
@@ -38,11 +38,10 @@ export default class OverlayView extends Component {
 
 
 const styles = StyleSheet.create({
-  container: {
-    position:'absolute',
-    top:0,
-    left:0,
-    bottom:0,
-    right:0,
+  button: {
+    width:100,
+    height:100,
+    backgroundColor:"#88FF88"
   }
+
 });
