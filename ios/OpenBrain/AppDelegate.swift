@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func getJSURL() -> NSURL {
         var jsCodeLocation:NSURL?
         
-        if(NSProcessInfo.processInfo().arguments.contains("--use-dev-server")){
+        if(self.isSimulator()){
             jsCodeLocation = NSURL(string:"http://localhost:8081/index.ios.bundle?platform=ios&dev=true");
         }else{
             jsCodeLocation = NSBundle.mainBundle().URLForResource("main", withExtension: "jsbundle")
@@ -56,6 +56,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return location;
 
+    }
+    
+    func isSimulator() -> Bool {
+        return TARGET_OS_SIMULATOR != 0
     }
 }
 

@@ -207,7 +207,7 @@
               var failCount = state.failCount;
               var message = "(no problem)"
               if ( hasCompleteAllClocks(state) ) {
-                level = level++;
+                level = level + 1;
                 message = "(nice work) level up : "+level
               } else {
                 failCount = failCount + 1;

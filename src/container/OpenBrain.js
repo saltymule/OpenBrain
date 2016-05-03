@@ -56,12 +56,10 @@ export default class OpenBrain extends Component {
   }
 
   render() {
-    const data = this.currentGameData()
-    const overlay = this.renderOverlay()
     return (
       <View style={styles.container}>
-        <GameView style={styles.webview} data={data} />
-        {overlay}
+        {this.renderGameView()}
+        {this.renderOverlay()}
       </View>
     )
   }
@@ -70,8 +68,19 @@ export default class OpenBrain extends Component {
     if(this.state.uiState == UI_STATE_GAME){
       return null
     }else{
-      return (<OverlayView style={styles.overlay} onPressPlay={this.onPressPlay} />)
+      return (<OverlayView
+        oldGameOptions={this.state.oldGameOptions}
+        newGameOptions={this.state.newGameOptions}
+        style={styles.overlay}
+        onPressPlay={this.onPressPlay} />)
     }
+  }
+
+  renderGameView() {
+    const data = this.currentGameData()
+    const webviewStyles = this.state.uiState == UI_STATE_GAME ? styles.webview :
+      StyleSheet.flatten([styles.webview,styles.webviewInactive]);
+    return (<GameView style={webviewStyles} data={data} /> )
   }
 
   currentGameData() {
@@ -99,16 +108,18 @@ export default class OpenBrain extends Component {
     })
   }
 
-  gameViewDidComplete = (body) => {
+  gameViewDidComplete = (newGameOptions) => {
 
-    var {options, currentGame} = this.state;
-
-    options[currentGame.name] = body;
+    const {options, currentGame} = this.state;
+    const oldGameOptions = options[currentGame.name];
+    options[currentGame.name] = newGameOptions;
 
     GameOptions.save(options);
 
     this.setState({
       ...this.state,
+      oldGameOptions,
+      newGameOptions,
       options:options,
       gameCount:this.state.gameCount + 1,
       uiState:UI_STATE_CHROME,
@@ -123,6 +134,7 @@ const styles = StyleSheet.create({
     left:0,
     bottom:0,
     right:0,
+    backgroundColor:"#AAAAAA",
   },
   webview: {
     position:'absolute',
@@ -137,6 +149,12 @@ const styles = StyleSheet.create({
     left:0,
     bottom:0,
     right:0,
-    backgroundColor:"#00000044",
+  },
+  webviewInactive: {
+    transform:[{
+      scaleX:0.8,
+    },{
+      scaleY:0.8,
+    },],
   }
 });

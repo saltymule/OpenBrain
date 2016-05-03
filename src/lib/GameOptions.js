@@ -7,7 +7,7 @@ const STORAGE_KEY = "GameOptions"
 export default class GameOptions {
   static load(callback) {
     AsyncStorage.getItem(STORAGE_KEY).then(
-      (error, value) => JSON.parse(value)
+      (value, error) => JSON.parse(value)
     ).then(
       options => callback(options,null)
     ).catch(
