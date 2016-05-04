@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 
 protocol WebViewComponentDelegate{
-    func webViewComponentDidComplete(component:WebViewComponent, options:[String:AnyObject]?, message:String?)
+    func webViewComponentDidComplete(component:WebViewComponent, options:[String:AnyObject]?)
 }
 
 enum Action: String{
@@ -107,19 +107,14 @@ class WebViewComponent: NSObject, WKScriptMessageHandler {
             break
         case .Complete:
           
-            let message = self.getMessage(body)
             let options = self.getOptions(body)
-            self.delegate?.webViewComponentDidComplete(self, options: options, message: message)
+            self.delegate?.webViewComponentDidComplete(self, options: options)
             break
         case .ForceComplete:
-            self.delegate?.webViewComponentDidComplete(self, options:nil, message: nil)
+            self.delegate?.webViewComponentDidComplete(self, options:nil)
             break
         }
     }
-  
-  private func getMessage(body:[String:AnyObject]) -> String? {
-      return body["message"] as? String
-  }
   
   private func getOptions(body:[String:AnyObject]) -> [String:AnyObject]? {
     guard let options = body["options"] as? [String:AnyObject]

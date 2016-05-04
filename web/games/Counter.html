@@ -72,9 +72,9 @@
             // this is available to be easily swapped out by the container with
             // custom logic (WKWebView on iOS, WebView on android)
             var metaController = {
-                didComplete:function(opts, message){
+                didComplete:function(opts){
                     setSavedOptions(opts);
-                    alert(message)
+                    alert(opts.level)
                 },
                 didLoad:function(){
                     var opts = savedOptions();
@@ -205,23 +205,20 @@
             function didComplete(state, controller){
               var level = state.level;
               var failCount = state.failCount;
-              var message = "(no problem)"
               if ( hasCompleteAllClocks(state) ) {
                 level = level + 1;
-                message = "(nice work) level up : "+level
               } else {
                 failCount = failCount + 1;
                 if(failCount == 2){
                   failCount = 0;
                   level = Math.max(level - 1, 1);
-                  message = "(no problem) level down : "+level
                 }
               }
               var options = {
                 "level":level,
                 "failCount":failCount,
               }
-              controller.didComplete(options,message);
+              controller.didComplete(options);
             }
 
             /************************************************/

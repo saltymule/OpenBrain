@@ -40,14 +40,14 @@ export default class OverlayView extends Component {
 
   renderMessage() {
 
-    const {oldGameOptions, newGameOptions} = this.props;
+    const oldGameOptions = this.props.oldGameOptions ||
+      {level:1,failCount:0,successCount:0};
+    const {newGameOptions} = this.props;
+
     if( newGameOptions == null ){
       return null;
     }
 
-    if( oldGameOptions == null ){
-      return (<Text style={styles.message}>(nice work!)</Text>);
-    }
     const oldLevel = oldGameOptions.level;
     const newLevel = newGameOptions.level;
 
@@ -55,7 +55,7 @@ export default class OverlayView extends Component {
       return (<Text style={styles.message}>(aweseome!) level {oldLevel} -> {newLevel}</Text>);
     }else if( newLevel < oldLevel){
       return (<Text style={styles.message}>(no worries!) level {oldLevel} -> {newLevel}</Text>);
-    }else if( newGameOptions.failCount < oldGameOptions.failCount ){
+    }else if( oldGameOptions.failCount < newGameOptions.failCount ){
       return (<Text style={styles.message}>(no problem!) level {newLevel}</Text>);
     }else{
       return (<Text style={styles.message}>(nice work!)</Text>);

@@ -70,7 +70,7 @@ class GameView: UIView, WebViewComponentDelegate  {
         
     }
     
-    func webViewComponentDidComplete(component: WebViewComponent, options:[String:AnyObject]?, message:String?) {
+    func webViewComponentDidComplete(component: WebViewComponent, options:[String:AnyObject]?) {
         // callback options
         self.gameViewDelegate?.gameView(self, didCompleteWithOptions: options)
         //when we show the menu, the screen can turn off automatically

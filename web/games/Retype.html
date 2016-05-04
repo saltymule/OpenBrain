@@ -242,7 +242,7 @@
 
                 if(options == null || options.level == null){
                   //reset to defaults
-                  options = {"level":1,"correctCount":0};
+                  options = {"level":1,"successCount":0, "failCount":0};
                 }
 
                 if(getDebugFromQueryString(window.location.search)){
@@ -423,9 +423,9 @@
             // this is available to be easily swapped out by the container with
             // custom logic (WKWebView on iOS, WebView on android)
             var metaController = {
-                didComplete:function(opts, message){
+                didComplete:function(opts){
                     setSavedOptions(opts);
-                    alert(message)
+                    alert(opts.level)
                 },
                 didLoad:function(){
                     var opts = savedOptions();
@@ -741,16 +741,17 @@
             function incrementOptions(options){
                 var result = {};
                 result.level = options.level;
-                result.correctCount = options.correctCount;
-                if(result.correctCount == null){
-                    result.correctCount = 0;
+                result.failCount = 0;
+                result.successCount = options.successCount;
+                if(result.successCount == null){
+                    result.successCount = 0;
                 }
                 if(result.level == null){
                     result.level = 1;
                 }
-                result.correctCount++;
-                if(result.correctCount == 3){
-                    result.correctCount = 0;
+                result.successCount++;
+                if(result.successCount == 3){
+                    result.successCount = 0;
                     if(result.level < MAX_LEVEL){
                         result.level++;
                     }
@@ -776,13 +777,7 @@
                 if(difference == ""){
                   document.body.className = "correct";
                     var newOptions = incrementOptions(options);
-
-                    var message = "(nice work)"
-                    if(newOptions.level != options.level){
-                      message = message + " level up : "+newOptions.level;
-                    }
-
-                    metaController.didComplete(newOptions,message)
+                    metaController.didComplete(newOptions)
                 }
             }
 
@@ -794,7 +789,8 @@
             }
 
             function didClickSkipButton(event){
-                options.correctCount = 0;
+                options.successCount = 0;
+                options.failCount = options.failCount + 1;
                 metaController.didComplete(options,"no problem!")
             }
 
