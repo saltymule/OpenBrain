@@ -20,13 +20,20 @@ class GameView: UIView, WebViewComponentDelegate  {
     var data:[String:AnyObject]?{
         didSet{
             guard let game = self.data?["game"] as? [String:AnyObject],
-                let urlString = game["url"] as? String else {
+                let relativeLocalPath = game["relativeLocalPath"] as? String else {
                     return
             }
+            let url = self.documentsDirectory.URLByAppendingPathComponent(relativeLocalPath)
             let options:[String:AnyObject] = (self.data?["options"] as? [String:AnyObject]) ?? [:]
-            self.webViewComponent.start(urlString: urlString, options: options)
+            self.webViewComponent.start(URL: url, options: options)
         }
     }
+    
+    private var documentsDirectory:NSURL = {
+        let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        return NSURL(fileURLWithPath: path, isDirectory: true)
+    }()
+    
     
     lazy var webViewComponent:WebViewComponent = WebViewComponent()
     

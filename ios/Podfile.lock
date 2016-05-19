@@ -1,4 +1,6 @@
 PODS:
+  - React (0.23.1):
+    - React/Core (= 0.23.1)
   - React/Core (0.23.1)
   - React/RCTImage (0.23.1):
     - React/Core
@@ -9,6 +11,8 @@ PODS:
     - React/Core
   - React/RCTWebSocket (0.23.1):
     - React/Core
+  - RNFS (1.3.0):
+    - React
 
 DEPENDENCIES:
   - React/Core (from `../node_modules/react-native`)
@@ -16,12 +20,16 @@ DEPENDENCIES:
   - React/RCTNetwork (from `../node_modules/react-native`)
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
+  - RNFS (from `../node_modules/react-native-fs`)
 
 EXTERNAL SOURCES:
   React:
     :path: ../node_modules/react-native
+  RNFS:
+    :path: ../node_modules/react-native-fs
 
 SPEC CHECKSUMS:
   React: 0bc1e9a6369dc610ff0b29415ed0cab5229614f5
+  RNFS: 6ce44e4597f0cc2cbe39e4d33cd67a663c9c5b09
 
 COCOAPODS: 0.39.0

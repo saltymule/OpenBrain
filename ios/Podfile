@@ -6,3 +6,4 @@ pod 'React', :path => '../node_modules/react-native', :subspecs => [
   'RCTText',
   'RCTWebSocket',
 ]
+pod 'RNFS', :path => '../node_modules/react-native-fs'

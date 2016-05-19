@@ -14,6 +14,7 @@ import React, {
 import OverlayView from '../component/OverlayView'
 import GameView from '../native/GameView'
 import GameOptions from '../lib/GameOptions'
+import AssetManager from '../lib/AssetManager/AssetManager'
 
 const UI_STATE_GAME = "UI_STATE_GAME"
 const UI_STATE_CHROME = "UI_STATE_CHROME"
@@ -26,7 +27,17 @@ export default class OpenBrain extends Component {
       gameCount: 0,
       uiState:UI_STATE_CHROME,
     };
+
     GameOptions.load(this._didLoadOptions)
+    AssetManager.getCachedAssets(props.localManifestURL).then(
+      (assets) => this.setState({assets})
+    )
+
+
+    // const remoteURL = "http://localhost/ActivWiki/web/games/manifest.json";
+    // AssetManager.downloadRemote(remoteURL).then(
+    //   (assets) => this.setState({assets})
+    // )
   }
 
   _didLoadOptions = (result, error) => {
@@ -38,11 +49,11 @@ export default class OpenBrain extends Component {
     });
   }
 
-  nextGame(props) {
-    const {manifest} = props;
-    if(manifest && manifest.length > 0){
-      const index = Math.floor(Math.random()*manifest.length)
-      return manifest[index];
+  nextGame(state) {
+    const {assets} = state;
+    if(assets && assets.length > 0){
+      const index = Math.floor(Math.random()*assets.length)
+      return assets[index];
     }
     return null;
   }
@@ -104,7 +115,7 @@ export default class OpenBrain extends Component {
   onPressPlay = () => {
     this.setState({
       uiState:UI_STATE_GAME,
-      currentGame:this.nextGame(this.props)
+      currentGame:this.nextGame(this.state)
     })
   }
 

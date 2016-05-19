@@ -60,7 +60,7 @@ class WebViewComponent: NSObject, WKScriptMessageHandler {
     
     private(set) var htmlString:String = ""
 
-    private(set) var url:NSURL = NSURL()
+    private(set) var URL:NSURL = NSURL()
 
     private(set) var options:[String:AnyObject] = [:]
 
@@ -75,17 +75,18 @@ class WebViewComponent: NSObject, WKScriptMessageHandler {
         
     }
 
-  func start(urlString urlString:String, options:[String:AnyObject]){
+  func start(URL URL:NSURL, options:[String:AnyObject]){
     
-    guard let url = NSURL(string: urlString) else {
+    //we need the baseURL to allow read access
+    guard let baseURL = URL.URLByDeletingLastPathComponent else {
       return
     }
     
-    self.url = url
+    self.URL = URL
     
     self.options = options
     
-    webView.loadFileURL(url, allowingReadAccessToURL: NSBundle.mainBundle().bundleURL)
+    webView.loadFileURL(self.URL, allowingReadAccessToURL: baseURL)
     
     
   }

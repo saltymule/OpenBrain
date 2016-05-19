@@ -13,15 +13,19 @@ import React
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool{
+ 
+    func application(application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool{
         
-        guard let manifest = GamesBundle.gamesBundle()?.getResolvedManifest() else{
+        guard let path = NSBundle.mainBundle().pathForResource("Games", ofType: "bundle"),
+            let localManifestURL = NSBundle(path: path)?
+                .URLForResource("manifest", withExtension: "json"),
+            let localManifestPath = localManifestURL.path else{
             return false;
         }
         
         let jsCodeLocation = self.getJSURL()
-        let props = ["manifest":manifest]
+        let props = ["localManifestURL":localManifestPath]
         
         let rootView = RCTRootView(bundleURL: jsCodeLocation,
                                    moduleName: "OpenBrain",

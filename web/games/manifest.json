@@ -1,4 +1,20 @@
 [
- {"filename": "NBack.html","name": "NBack"},
- {"filename": "Retype.html","name": "Retype"},
- {"filename": "Counter.html","name": "Counter"}]
+    {
+        "relativePath": "/Counter.html",
+        "filename": "Counter.html",
+        "name": "Counter",
+        "checksum": "0cf273b8e488ae412f5b260be1cd3f3b"
+    },
+    {
+        "relativePath": "/NBack.html",
+        "filename": "NBack.html",
+        "name": "NBack",
+        "checksum": "0cf273b8e488ae412f5b260be1cd3f3b"
+    },
+    {
+        "relativePath": "/Retype.html",
+        "filename": "Retype.html",
+        "name": "Retype",
+        "checksum": "0cf273b8e488ae412f5b260be1cd3f3b"
+    }
+]
