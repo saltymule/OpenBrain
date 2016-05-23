@@ -25,7 +25,8 @@ class GameView: UIView, WebViewComponentDelegate  {
             }
             let url = self.documentsDirectory.URLByAppendingPathComponent(relativeLocalPath)
             let options:[String:AnyObject] = (self.data?["options"] as? [String:AnyObject]) ?? [:]
-            self.webViewComponent.start(URL: url, options: options)
+            
+            self.webViewComponent.start(URL: url, baseURL:self.documentsDirectory, options: options)
         }
     }
     

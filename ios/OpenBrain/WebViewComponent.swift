@@ -64,23 +64,7 @@ class WebViewComponent: NSObject, WKScriptMessageHandler {
 
     private(set) var options:[String:AnyObject] = [:]
 
-  /// this is more or less deprecated
-    func start(html:String, options:[String:AnyObject]){
-        
-        self.htmlString = html
-        
-        self.options = options
-      
-        webView.loadHTMLString(htmlString, baseURL: NSBundle.mainBundle().bundleURL)
-        
-    }
-
-  func start(URL URL:NSURL, options:[String:AnyObject]){
-    
-    //we need the baseURL to allow read access
-    guard let baseURL = URL.URLByDeletingLastPathComponent else {
-      return
-    }
+  func start(URL URL:NSURL, baseURL:NSURL, options:[String:AnyObject]){
     
     self.URL = URL
     

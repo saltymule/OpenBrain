@@ -52,7 +52,7 @@ export default class OverlayView extends Component {
     const newLevel = newGameOptions.level;
 
     if( oldLevel < newLevel ){
-      return (<Text style={styles.message}>(aweseome!) level {oldLevel} -> {newLevel}</Text>);
+      return (<Text style={styles.message}>(awesome!) level {oldLevel} -> {newLevel}</Text>);
     }else if( newLevel < oldLevel){
       return (<Text style={styles.message}>(no worries!) level {oldLevel} -> {newLevel}</Text>);
     }else if( oldGameOptions.failCount < newGameOptions.failCount ){
