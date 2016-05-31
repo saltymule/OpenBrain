@@ -12,6 +12,7 @@
 		770D42C81BCF047300C2C3A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 770D42C61BCF047300C2C3A6 /* LaunchScreen.storyboard */; };
 		770D42DE1BCF047300C2C3A6 /* ActivWikiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770D42DD1BCF047300C2C3A6 /* ActivWikiUITests.swift */; };
 		770D42EC1BCF094700C2C3A6 /* Games.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 770D42EB1BCF094700C2C3A6 /* Games.bundle */; };
+		775ACDFE1CF31E4900E32616 /* BundlePreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 775ACDFD1CF31E4900E32616 /* BundlePreferences.m */; };
 		77C7F3CB1CB5E3D7008E6318 /* JSONUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C7F3CA1CB5E3D7008E6318 /* JSONUnitTests.swift */; };
 		77CA008A1CC6DC0C001959EE /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 77CA00891CC6DC0C001959EE /* main.jsbundle */; };
 		77CA008C1CC7042D001959EE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CA008B1CC7042D001959EE /* MainViewController.swift */; };
@@ -52,6 +53,8 @@
 		770D42DD1BCF047300C2C3A6 /* ActivWikiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivWikiUITests.swift; sourceTree = "<group>"; };
 		770D42DF1BCF047300C2C3A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		770D42EB1BCF094700C2C3A6 /* Games.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Games.bundle; sourceTree = "<group>"; };
+		775ACDFC1CF31E4900E32616 /* BundlePreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BundlePreferences.h; sourceTree = "<group>"; };
+		775ACDFD1CF31E4900E32616 /* BundlePreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BundlePreferences.m; sourceTree = "<group>"; };
 		77C7F3CA1CB5E3D7008E6318 /* JSONUnitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONUnitTests.swift; sourceTree = "<group>"; };
 		77CA00891CC6DC0C001959EE /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = SOURCE_ROOT; };
 		77CA008B1CC7042D001959EE /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -134,6 +137,8 @@
 			children = (
 				77CA00921CC70F2D001959EE /* GameViewManager.h */,
 				77CA00931CC70F2D001959EE /* GameViewManager.m */,
+				775ACDFC1CF31E4900E32616 /* BundlePreferences.h */,
+				775ACDFD1CF31E4900E32616 /* BundlePreferences.m */,
 				770D42BD1BCF047300C2C3A6 /* AppDelegate.swift */,
 				77CA008D1CC7049A001959EE /* GameView.swift */,
 				77CA008B1CC7042D001959EE /* MainViewController.swift */,
@@ -381,6 +386,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				775ACDFE1CF31E4900E32616 /* BundlePreferences.m in Sources */,
 				77DF26271BD113CB0013696A /* WebViewComponent.swift in Sources */,
 				770D42BE1BCF047300C2C3A6 /* AppDelegate.swift in Sources */,
 				77CA00941CC70F2D001959EE /* GameViewManager.m in Sources */,

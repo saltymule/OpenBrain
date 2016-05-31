@@ -54,10 +54,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //the info plist
         if  let index = args.indexOf("--dev-server") where  index + 1 < args.count {
             jsCodeLocation = NSURL(string:args[index+1]);
-        }else if self.isSimulator() {
-            jsCodeLocation = NSURL(string:"http://localhost:8081/index.ios.bundle?platform=ios&dev=true");
         }else{
-            jsCodeLocation = NSBundle.mainBundle().URLForResource("main", withExtension: "jsbundle")
+            if let bundleAsset = NSUserDefaults.standardUserDefaults().objectForKey("bundleAsset") as? [String:AnyObject],
+               let relativePath = bundleAsset["relativeLocalPath"] as? String
+            {
+                let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+                jsCodeLocation = NSURL(fileURLWithPath: path+"/"+relativePath, isDirectory: false)
+            }
+            
+            if jsCodeLocation == nil
+            {
+                jsCodeLocation = NSBundle.mainBundle().URLForResource("main", withExtension: "jsbundle")
+            }
         }
         
         guard let location = jsCodeLocation else {

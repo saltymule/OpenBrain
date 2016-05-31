@@ -11,10 +11,11 @@ import React, {
   NativeAppEventEmitter,
 } from 'react-native';
 
-import OverlayView from '../component/OverlayView'
-import GameView from '../native/GameView'
-import GameOptions from '../lib/GameOptions'
 import AssetManager from '../lib/AssetManager/AssetManager'
+import BundlePreferences from '../native/BundlePreferences'
+import GameOptions from '../lib/GameOptions'
+import GameView from '../native/GameView'
+import OverlayView from '../component/OverlayView'
 
 const UI_STATE_GAME = "UI_STATE_GAME"
 const UI_STATE_CHROME = "UI_STATE_CHROME"
@@ -29,15 +30,23 @@ export default class OpenBrain extends Component {
     };
 
     GameOptions.load(this._didLoadOptions)
-    AssetManager.getCachedAssets(props.localManifestURL).then(
-      (assets) => this.setState({assets})
-    )
+    AssetManager.getCachedAssets(props.localManifestURL).then(this._parseAssets)
 
 
     // const remoteURL = "http://localhost/ActivWiki/web/games/manifest.json";
     // AssetManager.downloadRemote(remoteURL).then(
     //   (assets) => this.setState({assets})
     // )
+  }
+
+  _parseAssets = (assets) => {
+    //all htmlfiles are games
+    var games = assets.filter((asset) => asset.filename.indexOf('.html') > 0)
+    this.setState({games})
+    var bundle = assets.filter((asset) => asset.name == "ios.index")[0]
+    if(bundle){
+      BundlePreferences.setBundleAsset(bundle)
+    }
   }
 
   _didLoadOptions = (result, error) => {
@@ -50,10 +59,10 @@ export default class OpenBrain extends Component {
   }
 
   nextGame(state) {
-    const {assets} = state;
-    if(assets && assets.length > 0){
-      const index = Math.floor(Math.random()*assets.length)
-      return assets[index];
+    const {games} = state;
+    if(games && games.length > 0){
+      const index = Math.floor(Math.random()*games.length)
+      return games[index];
     }
     return null;
   }
