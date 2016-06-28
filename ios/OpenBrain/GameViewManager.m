@@ -10,6 +10,7 @@
 #import "OpenBrain-Swift.h"
 
 NSString* const GameViewDidComplete = @"GameViewDidComplete";
+NSString* const GameViewDidCancel = @"GameViewDidCancel";
 
 @interface GameViewManager()<GameViewDelegate>
 
@@ -32,9 +33,15 @@ RCT_EXPORT_VIEW_PROPERTY(data, NSDictionary)
     [self.bridge.eventDispatcher sendAppEventWithName:GameViewDidComplete body:options];
 }
 
+-(void)gameViewDidCancel:(GameView *)gameView{
+    //message RN
+    [self.bridge.eventDispatcher sendAppEventWithName:GameViewDidCancel body:nil];
+}
+
 -(NSDictionary<NSString *,id> *)constantsToExport{
     return @{
-             @"gameViewDidComplete":GameViewDidComplete
+             @"gameViewDidComplete":GameViewDidComplete,
+             @"gameViewDidCancel":GameViewDidCancel
              };
 }
 

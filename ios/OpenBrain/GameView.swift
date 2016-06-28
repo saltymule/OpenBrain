@@ -11,6 +11,7 @@ import UIKit
 @objc
 protocol GameViewDelegate{
     func gameView(gameView:GameView, didCompleteWithOptions options:[String:AnyObject]?)
+    func gameViewDidCancel(gameView:GameView)
 }
 
 class GameView: UIView, WebViewComponentDelegate  {
@@ -57,7 +58,7 @@ class GameView: UIView, WebViewComponentDelegate  {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+        
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -67,6 +68,7 @@ class GameView: UIView, WebViewComponentDelegate  {
     
     func handleUIApplicationWillResignActiveNotification(notification:NSNotification){
         self.webViewComponent.clear()
+        self.gameViewDelegate?.gameViewDidCancel(self)
     }
     
     func loadActivity(item:[String:AnyObject]){

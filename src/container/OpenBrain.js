@@ -73,6 +73,10 @@ export default class OpenBrain extends Component {
       "GameViewDidComplete",
       this.gameViewDidComplete
     )
+    NativeAppEventEmitter.addListener(
+      "GameViewDidCancel",
+      this.gameViewDidCancel
+    )
   }
 
   render() {
@@ -141,6 +145,15 @@ export default class OpenBrain extends Component {
       oldGameOptions,
       newGameOptions,
       options:options,
+      gameCount:this.state.gameCount + 1,
+      uiState:UI_STATE_CHROME,
+    });
+  }
+
+  gameViewDidCancel = () => {
+
+    this.setState({
+      ...this.state,
       gameCount:this.state.gameCount + 1,
       uiState:UI_STATE_CHROME,
     });
