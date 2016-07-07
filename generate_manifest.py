@@ -45,12 +45,12 @@ def generate_bundle(args):
 def generate_manifest(args):
   game_dir = args.root
 
-  assetfiles = [f for f in os.listdir(game_dir) if os.path.isfile(join(game_dir, f)) and ( '.html' in f or '.jsbundle' in f )]
+  assetfiles = [f for f in os.listdir(game_dir) if os.path.isfile(os.path.join(game_dir, f)) and ( ".html" in f or ".jsbundle" in f )]
 
   assets = []
 
   for assetfile in assetfiles:
-    path = join(game_dir, assetfile)
+    path = os.path.join(game_dir, assetfile)
 
     checksum = md5(open(path, 'rb').read()).hexdigest()
 

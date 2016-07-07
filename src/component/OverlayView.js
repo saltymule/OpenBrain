@@ -12,19 +12,42 @@ import React, {
 
 export default class OverlayView extends Component {
 
-     static propTypes = {
-       onPressPlay: React.PropTypes.func.isRequired,
-       oldGameOptions: React.PropTypes.object,
-       newGameOptions: React.PropTypes.object,
-     };
+   static propTypes = {
+     onPressPlay: React.PropTypes.func.isRequired,
+     onPressGame: React.PropTypes.func.isRequired,
+     oldGameOptions: React.PropTypes.object,
+     newGameOptions: React.PropTypes.object,
+     games: React.PropTypes.array.isRequired,
+   };
 
   constructor(props) {
     super(props);
     this.state = {
+      select:false
     };
   }
 
   render() {
+    if(this.props.games.length == 0){
+      return this.renderLoading();
+    }else if(this.state.select){
+      return this.renderGameButtons();
+    }else{
+      return this.renderNext();
+    }
+  }
+
+  renderLoading() {
+    const style = StyleSheet.flatten([this.props.style,styles.container])
+    return (
+      <View style={style}>
+          <Text style={styles.message}>Loading</Text>
+      </View>
+    );
+
+  }
+
+  renderNext() {
     const message = this.renderMessage();
     const style = StyleSheet.flatten([this.props.style,styles.container])
     return (
@@ -33,9 +56,38 @@ export default class OverlayView extends Component {
         <TouchableHighlight style={styles.touchable} onPress={this.props.onPressPlay}>
           <Text style={styles.button}>Play</Text>
         </TouchableHighlight>
+        <TouchableHighlight style={styles.touchable} onPress={() => this.setState({select:true})}>
+          <Text style={styles.button}>Select</Text>
+        </TouchableHighlight>
       </View>
     );
 
+  }
+
+  renderGameButtons() {
+    const style = StyleSheet.flatten([this.props.style,styles.container])
+    var gameButtons = [];
+    for(game of this.props.games){
+      gameButtons.push(this.renderGameButton(game, styles))
+    }
+    return (
+      <View style={style}>
+        {gameButtons}
+      </View>
+    );
+
+  }
+
+  renderGameButton(game) {
+    return (<TouchableHighlight
+        style={styles.touchable}
+        key={game.name}
+        onPress={() => {
+          this.setState({select:false})
+          this.props.onPressGame(game)
+        }}>
+        <Text style={styles.button}>{game.name}</Text>
+      </TouchableHighlight>);
   }
 
   renderMessage() {

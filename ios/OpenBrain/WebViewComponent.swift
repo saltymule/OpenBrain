@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-protocol WebViewComponentDelegate{
+protocol WebViewComponentDelegate:class{
     func webViewComponentDidComplete(component:WebViewComponent, options:[String:AnyObject]?)
 }
 
@@ -19,7 +19,7 @@ enum Action: String{
 
 class WebViewComponent: NSObject, WKScriptMessageHandler {
     
-    var delegate:WebViewComponentDelegate? = nil
+    weak var delegate:WebViewComponentDelegate? = nil
     
     func createWebView()->WKWebView{
         let config = WKWebViewConfiguration()

@@ -22,15 +22,21 @@ const UI_STATE_CHROME = "UI_STATE_CHROME"
 
 export default class OpenBrain extends Component {
 
+  static propTypes = {
+    localManifestURL: React.PropTypes.string.isRequired,
+    forceLocal: React.PropTypes.bool,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       gameCount: 0,
       uiState:UI_STATE_CHROME,
+      games: [],
     };
 
     GameOptions.load(this._didLoadOptions)
-    AssetManager.getCachedAssets(props.localManifestURL).then(this._parseAssets)
+    AssetManager.getCachedAssets(props.localManifestURL, props.forceLocal).then(this._parseAssets)
 
 
     // const remoteURL = "http://localhost/ActivWiki/web/games/manifest.json";
@@ -93,10 +99,13 @@ export default class OpenBrain extends Component {
       return null
     }else{
       return (<OverlayView
+        games={this.state.games}
         oldGameOptions={this.state.oldGameOptions}
         newGameOptions={this.state.newGameOptions}
         style={styles.overlay}
-        onPressPlay={this.onPressPlay} />)
+        onPressPlay={this.onPressPlay}
+        onPressGame={this.onPressGame}
+        />)
     }
   }
 
@@ -129,6 +138,13 @@ export default class OpenBrain extends Component {
     this.setState({
       uiState:UI_STATE_GAME,
       currentGame:this.nextGame(this.state)
+    })
+  }
+
+  onPressGame = (game) => {
+    this.setState({
+      uiState:UI_STATE_GAME,
+      currentGame:game
     })
   }
 

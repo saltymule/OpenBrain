@@ -35,10 +35,11 @@ var AssetManager = {
 
   // returns the last cached assets
   // or loads the assets from the store
-  getCachedAssets(localURL){
+  getCachedAssets(localURL, forceLocal){
     return this.getAssets().then(
       (assets) => {
-        if(assets && assets.length){
+        //if we aren't forcing local, and we have assets, use those
+        if(!forceLocal && assets && assets.length){
           return assets;
         }else{
           return AssetManager.loadLocal(localURL)

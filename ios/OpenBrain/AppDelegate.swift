@@ -24,8 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return false;
         }
         
+        let forceLocal =  NSProcessInfo.processInfo().arguments.contains("--force-local")
+        
         let jsCodeLocation = self.getJSURL()
-        let props = ["localManifestURL":localManifestPath]
+        let props:[NSObject:AnyObject] = ["localManifestURL":localManifestPath, "forceLocal":forceLocal]
         
         let rootView = RCTRootView(bundleURL: jsCodeLocation,
                                    moduleName: "OpenBrain",
